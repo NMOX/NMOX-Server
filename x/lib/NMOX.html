@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!-- Visit http://localhost:8000/NMOX.html after running `python -m http.server 8000` in this directory, and use Ctrl-C to exit the server. -->
+<html>
+    <head>
+        <!-- NMOX Server JavaScript Version 3.0.0 -->
+        <title>NMOX Server JS v3</title>
+        <meta charset="UTF-8"> <!-- Ensures the page handles text encoding properly -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensures responsiveness on different devices -->
+        <style>
+            /* Basic CSS reset to remove default browser styles for consistent appearance */
+            * {
+                margin:     0;
+                padding:    0;
+                box-sizing: border-box; /* Ensures padding and border are included in element's total width/height */
+            }
+            
+            body {
+                font-family:      'Courier New', Courier, monospace; /* Monospace font for a technical feel */
+                background-color: #333333; /* Dark gray background for reduced eye strain */
+                color:            #AAAAAA; /* Light gray text for high contrast without being too harsh */
+                line-height:      1.6; /* Adjusted line height for better readability */
+                margin:           0;
+                padding:          0;
+            }
+            
+            #diva, #divb, #divc {
+                font-family:      monospace; /* Consistent font styling across all divs */
+                padding:          20px; /* Adds space within the div for better readability */
+                border-radius:    5px; /* Adds some rounding for a softer visual appeal */
+                color:            #AAAAAA; /* Ensures text color is consistent and readable */
+            }
+            
+            #diva {
+                background-color: #222222; /* Slightly darker gray for visual distinction */
+            }
+            
+            #divb {
+                background-color: #111111; /* Even darker gray to create hierarchy */
+            }
+            
+            #divc {
+                background-color: #000000; /* Black background for the highest contrast */
+            }
+        </style>
+        
+        <script>
+            /**
+             * NMOX: New Media On X
+             * 
+             * @version 3.0.0
+             * @author David Christian Liedle <david.liedle@protonmail.com>
+             * 
+             * NMOX is a cross-language meta-framework, which means
+             * you can pick which programming language you want to
+             * work in, and you can re-use the same framework design
+             * patterns across any language or stack.
+             */
+
+            // Defining key constants for the framework
+            const NMOX = {
+                VERSION: "3.0.0",
+                EDITION: "JavaScript",
+                AUTHOR: "David Christian Liedle <david.liedle@protonmail.com>"
+            };
+
+            // Base class X representing content
+            class X {
+                constructor(content) {
+                    this.content = content;
+                }
+
+                render() {
+                    return typeof this.content.render === 'function' ? this.content.render() : this.content;
+                }
+            }
+
+            // PAGE class representing a specific webpage
+            class PAGE extends X {
+                constructor(title, content) {
+                    super(content);
+                    this.title = title;
+                }
+
+                render() {
+                    return `<!DOCTYPE html>\n<html><head><title>${this.title}</title></head>${this.content.render()}</html>`;
+                }
+            }
+
+            // HTML5 class representing the HTML structure
+            class HTML5 extends X {
+                constructor(content) {
+                    super(content);
+                }
+
+                render() {
+                    return `<body>${this.content.render()}</body>`;
+                }
+            }
+
+            // P class representing a paragraph element
+            class P extends X {
+                constructor(text) {
+                    super(text);
+                }
+
+                render() {
+                    return `<p>${this.content}</p>`;
+                }
+            }
+
+            // Function to load and use the WebAssembly module
+            async function loadWasm() {
+                try {
+                    const response = await fetch('./wasm/target/release/fib_module.wasm'); // Assuming the WASM module is named 'fib_module.wasm'
+                    const bytes = await response.arrayBuffer();
+                    const results = await WebAssembly.instantiate(bytes);
+                    return results.instance.exports;
+                } catch (error) {
+                    console.error('Error loading WASM module:', error);
+                }
+            }
+
+            // Example usage to build the page structure recursively
+            const nmoxPage = new X(
+                new PAGE("Welcome to NMOX", 
+                    new HTML5(
+                        new P("This is a simple paragraph inside the NMOX page, demonstrating recursive rendering in action.")
+                    )
+                )
+            );
+
+            // Load WASM and calculate Fibonacci sequence on load
+            loadWasm().then(wasmModule => {
+                if (wasmModule) {
+                    const fibNumber = 10; // Example input to calculate the 10th Fibonacci number
+                    const fibResult = wasmModule.fib(fibNumber);
+                    console.log(`WASM: Fibonacci(${fibNumber}) = ${fibResult}`);
+                }
+            });
+
+            // To generate the HTML, you would call:
+            console.log(nmoxPage.render());
+        </script>
+    </head>
+    <body>
+        <div id="divmain">
+            <div id="diva">
+                This is DIV A, or #diva in the CSS or JavaScript.
+                Its Id is "diva". In JavaScript, the "d" in "Id" is lowercase.
+                Little gotcha there to watch out for. Also, remember that "monospace" fonts give consistent width, which makes technical details easier to align and understand.
+            </div>
+            <div id="divb">This is DIV B. Did you know? The "background-color" property in CSS can be used to create visual separation between elements, helping users understand context. Here, we use progressively darker shades to establish hierarchy.</div>
+            <div id="divc">This is DIV C. The color contrast is important for accessibility (a11y). Black backgrounds with light text ensure a high contrast ratio, making content more readable for users with visual impairments.</div>
+        </div>
+    </body>
+</html>
