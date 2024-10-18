@@ -2,6 +2,10 @@
 
 Candy is a collection (or suite) of tools that make the CLI slightly more fun and/or better. Think of it as syntactic sugar, but modular, following the Unix philosophy.
 
+## History
+
+The Candy Suite goes back to a 2008 project called CLI-MAX (Command Line Interface - MySQL/Apache/Unix). It was an early attempt at syntactic sugar for the CLI.
+
 ## Usage
 
 The files in the Candy Suite are meant to be added to your path on the command line. You can do this by editing the resource file for your shell, in a file that looks like one of these:
