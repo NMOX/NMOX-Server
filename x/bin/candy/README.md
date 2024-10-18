@@ -1,6 +1,6 @@
 # candy
 
-Candy is a collection (or suite) of tools that make the CLI slightly more fun and/or better.
+Candy is a collection (or suite) of tools that make the CLI slightly more fun and/or better. Think of it as syntactic sugar, but modular, following the Unix philosophy.
 
 ## Usage
 
@@ -15,3 +15,9 @@ export PATH=~/bin/candy:$PATH
 
 (If you install candy inside your home directory's bin folder, for example.) For use with NMOX Server, place x/bin/candy in your path.
 
+## Applications
+
+The following apps are listed in alphabetical order for the candy suite, and may or may not yet be built:
+- uptime - a slightly fancier uptime
+- status - a status viewer for the system
+- ...

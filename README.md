@@ -1,12 +1,24 @@
-# NMOX-Server
+# NMOX Server
 
-New Media On X Server
+New Media On X Server: Squeak Smalltalk and Rust WASM demos included.
 
 ## Overview
 
-NMOX-Server is a comprehensive framework designed to build modern media applications based on the Unix philosophy. At the core of NMOX-Server is an object called "x". This versatile object can represent a PAGE, an API, or various other entities. "X" symbolizes UNIX, emphasizing the principles of modularity, simplicity, and portability that underpin UNIX systems.
+NMOX-Server is a comprehensive cross-language meta-framework designed to build modern media applications based on the Unix philosophy. It emphasizes building small, simple, modular programs that do one thing well and work together through clear, standardized interfaces.
+
+At the core of NMOX-Server is an object called "x", which can represent a PAGE, an API, or DATA. The "X" in NMOX symbolizes UNIX, emphasizing the principles of modularity, simplicity, and portability. The x object contains an x instance variable that can be one of three data types:
+
+```
+x = "text";          // Text
+x = X.new();         // An X object
+x = ['a', 'b', 'c']; // An array
+```
 
 By conceptualizing web-connected entities as objects (or structs in languages like C, Go, Rust), NMOX-Server ensures that standards permeate every aspect of your project. For example, the `P` object creates a Paragraph, while the `DIV` object creates a Division. These objects can be composed to form standards-compliant pages, APIs, or other instances of "x".
+
+## Peace, Love, and Harmony
+
+The motto of NMOX is "Peace, Love, and Harmony". These concepts are represented in the three data types: Strings, X objects, and arrays. A string is the resolved state of an object in NMOX. Arrays of these objects can serialize and deserialize into and out of JSON or XML. See `x/lib/org/NMOX.org` for more about these principles.
 
 ## Features
 
@@ -18,15 +30,18 @@ By conceptualizing web-connected entities as objects (or structs in languages li
 
 To get started with NMOX-Server, follow these steps:
 
-1. **Clone the Repository**:
-    ```sh
-    git clone https://github.com/yourusername/nmox-server.git
-    ```
-2. **Navigate to the Project Directory**:
-    ```sh
-    cd nmox-server
-    ```
-3. **READ ON**
+1. Clone the Repository:
+   ```sh
+   git clone https://github.com/nmox/nmox-server.git
+   ```
+
+2. Navigate to the x library Directory:
+   ```sh
+   cd nmox-server/x/lib/
+   ```
+
+3. Inspect the Code:
+   Open the .image file in Squeak 6, or open the HTML or Rust source files in your preferred text editor.
 
 ## Filesystem Hierarchy Standard
 
@@ -53,3 +68,5 @@ We would like to thank the contributors and the open-source community for their 
 ---
 
 For more information, visit our [website](https://nmox.org/).
+
+

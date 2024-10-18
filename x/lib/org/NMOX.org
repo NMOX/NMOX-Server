@@ -1,0 +1,32 @@
+* NMOX: New Media On X
+** NMOX stands for /New Media On X/—a cross-language meta-framework for building the web.
+
+** What Does the "X" Stand For?
+
+The "X" in NMOX represents three core concepts:
+
+*** 1. Data (/Peace/)
+
+X Object Becomes Text: Data transforms into text.
+Model Equivalent: Functions like the Model in MVC architecture.
+Represents Peace: Data at rest, elegantly encapsulated in string form.
+
+*** 2. Functionality (/Love/)
+
+Serialization & Deserialization: Bringing data to life.
+Controller Equivalent: Acts as the Controller, managing data flow.
+Represents Love: Recognizing the shared spark in all elements.
+
+*** 3. Order (/Harmony/)
+
+UniX Philosophy Orders Data: Embracing simplicity and efficiency.
+View Equivalent: Similar to the View, presenting organized data.
+Represents Harmony: Data arrays playing smoothly together.
+
+** Peace, Love, and Harmony
+
+Peace: Data at rest in perfect string form.
+Love: Connection between data pieces through serialization.
+Harmony: Seamless orchestration of data working together.
+
+Experience the fusion of Peace, Love, and Harmony with NMOX—building the web with elegance and joy!
