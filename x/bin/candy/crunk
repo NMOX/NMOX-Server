@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+################################################################################
+#                                                                              #
+# crunk - C Run Kit                                                            #
+#         Automates the process of compiling & running C programs on the CLI   #
+#                                                                              #
+################################################################################
+ #      Copyright (c) 2008, David Christian Liedle. All rights reserved.      #
+################################################################################
+
+echo
+echo "Crunk 1.0 - C RUN Kit, 2008.09.23 [BASH]"
+
+if [ $# -gt 0 ]; then
+
+    if [ $# -lt 2 ]; then
+
+	targetFile=$1.c
+
+	if [ -f $targetFile ]; then
+	    echo "Compiling with gcc -o $1 $targetFile..."
+	    gcc -o $1 $targetFile
+	    echo "Done! Attempting to run $1..."
+	    $1
+	    echo "[end of crunk tasks]"
+	    exit 0
+	else
+	    echo "Hmm... I'm not seeing the file $targetFile as an actual file on this system... Sorry!"
+	    echo
+	    exit 1
+	fi
+
+
+    else
+	echo "received $# arguments; program not yet finished though."
+	echo
+	exit 0
+    fi
+
+else
+    echo "Compile and run your .c source files in one step."
+    echo "Feed me one argument, the name of your .c file (with correct path), but leave OFF the .c of the filename; I'll add that."
+    echo
+    exit 0
+fi
+
+

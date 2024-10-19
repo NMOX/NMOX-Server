@@ -1,0 +1,12 @@
+#!/bin/sh
+################################################################################
+# demac - if you're on a Mac, this will remove the .DS_Store folder in the
+#         current directory, just to clean up before distribution to non-Macs.
+#
+# Part of the CLIMAX Candy Suite by David Christian Liedle
+# (c)2008 David Christian Liedle <david.liedle@gmail.com> All rights reserved.
+# Released under the terms of the MIT Open Source License.
+#
+rm ./.DS_Store
+echo "./.DS_Store REMOVED"
+exit 0

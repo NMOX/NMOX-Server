@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+################################################################################
+#                                                                              #
+# junk - Java rUN Kit                                                          #
+#        Automates the process of compiling & running J programs on the CLI    #
+#        Entirely based upon CRUNK, the C RUN Kit.                             #
+#                                                                              #
+################################################################################
+ #      Copyright (c) 2008, David Christian Liedle. All rights reserved.      #
+ #      Created: 2008.10.05 - 1.0                                             #
+ #      Updated: 2008.10.06 - 1.1 - added sh shortcut +x feature              #
+################################################################################
+
+echo
+echo "Junk 1.1 - Java rUN Kit, 2008.10.05 [BASH]"
+
+if [ $# -gt 0 ]; then
+
+    if [ $# -lt 2 ]; then
+
+	targetFile=${1}.java
+
+	if [ -f $targetFile ]; then
+	    echo "Compiling with javac ${1}.java..."
+	    javac ${1}.java
+	    echo "Compiled! (If you saw no errors above this line, that is...)"
+	    echo "Creating executable shell script to run this with java..."
+	    
+	    if [ -f $1 ]; then
+	        echo "Oh, the shell script shortcut already exists - you're good."
+	    else
+	        echo -e "#!/bin/sh\njava $1 \$@" > $1
+	        chmod +x $1
+	        echo "Shell script ./${1} created and set to executable. Type '${1}' to run it."
+	    fi
+	    
+	    echo "Done! Attempting to run 'java ${1}'..."
+	    echo "--------------------------------------junk--------------------------------------"
+	    java $1
+	    echo "--------------------------------------------------------------------------------"
+	    echo "                             [ end of junk tasks ]"
+	    echo
+	    exit 0
+	else
+	    echo "Hmm... I'm not seeing the file '${targetFile}' as an actual file on this system... Sorry!"
+	    echo
+	    exit 1
+	fi
+
+
+    else
+	echo "received $# arguments; program not yet finished though."
+	echo
+	exit 0
+    fi
+
+else
+    echo "Compile and run your .java source files in one step."
+    echo "Feed me one argument, the name of your .java file (with correct path), but leave OFF the .java of the filename; I'll add that."
+    echo
+    exit 0
+fi

@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+#
+# oscar -- output phonetic alphabet words
+#
+# Options:  -A across
+#           -D down
+#           -T tall
+#
+# version 2008.08.04 - 1.0
+# updated 2008.09.15 - 1.1
+# updated 2008.09.16 - 1.2
+#
+# List of "mappings"
+# Alpha  . Bravo . Charlie . Delta  . Echo     . Foxtrot . Golf . Hotel  . India
+# Juliet . Kilo  . Lima    . Mike   . November . Oscar   . Papa . Quebec . Romeo
+# Sierra . Tango . Uniform . Victor . Whiskey  . X-ray   . Yankee        . Zulu
+#
+# (c)2008 David Christian Liedle, all rights reserved. MIT license.
+
+################################################################################
+# Setup variables:
+
+OSCAR_VERSION="1.2.0"
+OSCAR_DATE="2008.09.16"
+
+################################################################################
+# Setup functions for program flow:
+
+function mainLoop {
+    
+    local myInput=FALSE
+    echo -n ">>> "
+    read myInput
+    if [ "$myInput" = "a" ]; then
+        dotsAcross
+    fi
+    echo $myInput
+    
+}
+
+################################################################################
+# Setup functions for output:
+
+function titleScreen {
+    echo
+    echo ". . . . . . . . . . . . . . ."
+    echo ". Oscar $OSCAR_VERSION :: $OSCAR_DATE ."
+    echo ". . . . . . . . . . . . . . ."
+}
+
+function dotsAcross {
+    
+    echo "
+................................................................................
+Alpha  . Bravo . Charlie . Delta  . Echo     . Foxtrot . Golf   . Hotel  . India
+Juliet . Kilo  . Lima    . Mike   . November . Oscar   . Papa   . Quebec . Romeo
+Sierra . Tango . Uniform . Victor . Whiskey  . X-ray   . Yankee . Zulu
+................................................................................
+"
+
+}
+
+function dotsDown {
+    echo "
+................................................................................
+. Alpha   . Echo    . India  . Mike     . Quebec . Uniform . Sierra  . Whiskey .
+. Bravo   . Foxtrot . Juliet . November . Romeo  . Victor  . Tango   . X-ray   .
+. Charlie . Golf    . Kilo   . Oscar    . Sierra . Whiskey . Uniform . Yankee  .
+. Delta   . Hotel   . Lima   . Papa     . Tango  . X-ray   . Victor  . Zulu    .
+................................................................................
+"
+
+}
+
+function dotsTall {
+
+    echo "
+................
+. A . Alpha    .
+. B . Bravo    .
+. C . Charlie  .
+. D . Delta    .
+. E . Echo     .
+. F . Foxtrot  .
+. G . Golf     .
+. H . Hotel    .
+. I . India    .
+. J . Juliet   .
+. K . Kilo     .
+. L . Lima     .
+. M . Mike     .
+. N . November .
+. O . Oscar    .
+. P . Papa     .
+. Q . Quebec   .
+. R . Romeo    .
+. S . Sierra   .
+. T . Tango    .
+. U . Uniform  .
+. V . Victor   .
+. W . Whiskey  .
+. X . X-ray    .
+. Y . Yankee   .
+. Z . Zulu     .
+................
+"
+
+}
+
+
+################################################################################
+# Evaluate flags from the command line:
+
+# if -A, dotsAcross
+# if -D, dotsDown
+# if -T, dotsTall
+
+################################################################################
+# BEGIN OUTPUT:
+
+titleScreen
+dotsDown
+mainLoop
+
+################################################################################
+#Ideas:
+# echo the name per key press
+# translate a string into letter names
+# echo across, down, and straight list
+# wire it in with mac's "say" command to speak strings

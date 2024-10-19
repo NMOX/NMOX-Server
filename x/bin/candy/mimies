@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+###################
+# mimies - log when you sleep/wakeup
+#
+# usage: type mimies at the command line, and a timestamp is written to the log
+#        use once when going to sleep, and once when waking up, and you'll have
+#        a record to look back at. (it *can* be hard to keep track of those
+#        things!)
+#
+# (c)2008 David Christian Liedle <david.liedle@gmail.com> All rights reserved.
+# Released under the terms of the MIT Open Source License. Part of The CLIMAX
+# Candy Suite: http://code.google.com/p/climax/
+#
+
+if [ ! -f ~/.mimies ]; then
+   touch ~/.mimies
+fi
+
+date >> ~/.mimies
+
+echo "mimies!"
+
+

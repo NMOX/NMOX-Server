@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+################################################################################
+# Bash Trash
+# (c) 2008 David Christian Liedle <david.liedle@gmail.com> All Rights Reserved
+# Licensed under the terms of the MIT Open Source License
+#
+
+if [ $# = 1 ]
+then
+    if [ ! -d ~/.Trash ]; then
+        mkdir -p ~/.Trash
+	echo "~/.Trash/ folder created. (Look there for your trashed files if you need them"
+	echo "back.) Don't forget to empty it now and then!"
+    fi
+    mv $1 ~/.Trash/
+    echo 'Moved' $1 'to the trash...'
+else
+    # Add an else if to test for -x flag, which REMOVES x bit on the file instead of adding it.
+    echo I need a single argument... Feed me a filename, and I will move it to ~/.Trash/
+fi
+exit 0
+

@@ -1,0 +1,13 @@
+#!/bin/sh
+################################################################################
+# demacs - clean the littered emacs tilde-files in the current directory
+#
+# Part of the CLIMAX Candy Suite by David Christian Liedle
+# (c)2008 David Christian Liedle <david.liedle@gmail.com> All rights reserved.
+# Released under the terms of the MIT Open Source License.
+#
+echo "Cleaning emacs tilde-files in " `pwd` " :"
+ls ./*~
+rm ./*~
+echo "Done."
+exit 0

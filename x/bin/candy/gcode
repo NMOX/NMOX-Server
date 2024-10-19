@@ -1,0 +1,71 @@
+#!/bin/bash
+################################################################################
+# Checkout Google Code
+# Google's example:
+#  svn checkout https://climax.googlecode.com/svn/trunk/ climax --username david.liedle
+# My desired format:
+#  cd /VCS/SVN/${WHOSE}/
+#  svn checkout https://climax.googlecode.com/svn/ . --username david.liedle
+#
+# Here is Google's example for non-priv checkout:
+#  svn checkout http://climax.googlecode.com/svn/trunk/ climax-read-only
+# And what I would like it to be:
+# svn checkout http://climax.googlecode.com/svn/ .
+#
+# (c)2008 David Christian Liedle - All rights reserved. MIT License.
+#
+
+clear # Give the user a fresh screen
+
+echo "gcode 1.0a [ 2008.10.25 ] A part of the CLIMAX Candy Suite."
+echo
+echo "Welcome to GCode - a utility to organize and retrieve Google Code projects."
+echo "I will be assisting you in the setup and checkout of a Google Code project."
+echo "I use a dedicated folder called /VCS/SVN/ to store all working copies."
+echo
+echo -n "Will you be logging in to check out a privileged copy? [ yes/no ]: "
+
+read GCYN
+if [ $GCYN = "yes" ]; then
+    # get user name
+    echo -n "Alright, then I will need the username you want to use: "
+    read GCUNAME
+    echo "Thank you, ${GCUNAME}. Please have your Google Code password ready."
+elif [ $GCYN = "no" ]; then
+    # run regular
+    echo "Alright, we'll do an anonymous SVN checkout then. This will be read-only."
+else
+    # bad args
+    echo "I'm sorry, I didn't see a 'yes' or 'no' answer. Goodbye."
+    exit 1
+fi
+
+echo -n "Please specify your relationship to this project to use for this download [ mine, others, team ]: "
+read WHOSE
+if [ ! -d /VCS/SVN/${WHOSE} ]; then
+    mkdir -p /VCS/SVN/${WHOSE}
+    echo "Directory /VCS/SVN/${WHOSE} created."
+fi
+
+echo -n "Now, simply specify the Google Code project name, and I will download it: "
+read GCPROJ
+if [ ! -d /VCS/SVN/${WHOSE}/${GCPROJ} ]; then
+    mkdir -p /VCS/SVN/${WHOSE}/${GCPROJ}
+fi
+cd /VCS/SVN/${WHOSE}/${GCPROJ}/
+echo "Changed to" `pwd`
+if [ -n "$GCUNAME" ]; then
+    # do priv checkout
+    echo "Running SVN command: svn checkout https://${GCPROJ}.googlecode.com/svn/ . --username ${GCUNAME}"
+    svn checkout https://${GCPROJ}.googlecode.com/svn/ . --username ${GCUNAME}
+else
+    # do reg checkout
+    echo "Running SVN command: svn checkout http://${GCPROJ}.googlecode.com/svn/ ."
+    svn checkout http://${GCPROJ}.googlecode.com/svn/ .
+fi
+echo "Alright, here's what we've got:"
+ls -lFa /VCS/SVN/${WHOSE}/${GCPROJ}/
+echo
+echo "Finished. Goodbye!"
+exit 0
+

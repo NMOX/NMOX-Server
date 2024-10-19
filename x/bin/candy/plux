@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# plux, a.k.a. Plus X
+#
+# A simple BASH script to run chmod +x on the file you feed it.
+# For example, if you want to make a file called myscript.sh executable, run:
+#
+#     [shell]$ plux ./myscript.sh
+#
+# And you'll have it all set! =)
+#
+# Copyright 2008 David Christian Liedle, All Rights Reserved
+# Released under the terms of the MIT Open Source license, available here:
+# http://www.opensource.org/licenses/mit-license.php
+#
+# Visit David here: http://guessmedia.com/
+#
+
+if [ $# = 1 ]
+then
+    chmod +x $1
+    echo 'Running chmod +x on' $1
+    echo "Result:"
+    ls -lF $1
+else
+    # Add an else if to test for -x flag, which REMOVES x bit on the file instead of adding it.
+    echo I need a single argument... Feed me a filename, and I will chmod +x it!
+fi
+exit 0

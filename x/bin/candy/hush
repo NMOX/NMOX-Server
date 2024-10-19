@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+################################################################################
+#
+# hush - Toggle and manage the ~/.hushlogin file [MIT License, (c) David Liedle]
+#
+# Options: --on     Turn on hushlogin
+#          --off    Turn off hushlogin
+#          --status Show whether hush is ON or OFF
+#
+# Action with no arguments given:
+#          if ~/.hushlogin exists, delete it. otherwise, create it.
+#
+
+function idMyself {
+    echo
+    echo "hush - Toggles the ~/.hushlogin file to view or hide MOTD messages at login."
+}
+
+function echoUsage {
+    echo "Usage: hush [ --on | --off | --status ]"
+    echo
+}
+
+function hushloginStatus {
+    if [ -f ~/.hushlogin ]; then
+        figOn
+        echo "HUSH ON: ~/.hushlogin exists, and is preventing MOTD messages."
+    else
+        figOff
+        echo "HUSH OFF: You should currently see MOTD messages at each login."
+    fi
+}
+
+function hushloginCreate {
+    if [ -f ~/.hushlogin ]; then
+        figOn
+        echo "You're good.. the hushlogin file already exists, so hush is ON."
+    else
+        echo
+        touch ~/.hushlogin
+        echo "+ HUSH is now ON +"
+    fi
+}
+
+function hushloginRemove {
+    if [ -f ~/.hushlogin ]; then
+        echo
+        rm ~/.hushlogin
+        echo "- HUSH is now OFF -"
+    else
+        figOff
+        echo "You're good.. there is no hushlogin file, so hush is OFF"
+    fi
+}
+
+function finalGoodbye {
+    echo
+    echo "Verification check for ~/.hushlogin using ls -l:"
+    ls -l ~/.hushlogin
+    echo
+    exit 0
+}
+
+function figOn {
+    echo "
+      ___  _   _ 
+     / _ \| \ | |
+    | | | |  \| |
+    | |_| | |\  |
+     \___/|_| \_|
+"
+}
+
+function figOff {
+    echo "
+     ___  _____ _____ 
+    / _ \|  ___|  ___|
+   | | | | |_  | |_   
+   | |_| |  _| |  _|  
+    \___/|_|   |_|
+"
+}
+
+
+################################################################################
+# Program flow:
+#
+if [ $# -gt 0 ]; then
+    
+    if [ $# -gt 1 ]; then
+        echo "Too many arguments!"
+        echoUsage
+    else
+    
+        if [ $1 = "--on" ]; then
+            hushloginCreate
+            finalGoodbye
+        elif [ $1 = "--off" ]; then
+            hushloginRemove
+            finalGoodbye
+        elif [ $1 = "--status" ]; then
+            hushloginStatus
+            finalGoodbye
+        else
+            idMyself
+            echoUsage
+            finalGoodbye
+        fi
+    fi
+    
+else
+    if [ -f ~/.hushlogin ]; then
+        hushloginRemove
+    else
+        hushloginCreate
+    fi
+fi
+
+finalGoodbye
