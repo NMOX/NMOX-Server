@@ -219,9 +219,9 @@ Core web security practices:
 
 ## Compliance
 
-- GDPR compliance for EU users
-- CCPA compliance for California users
-- SOC 2 Type II certification (in progress)
+- GDPR compliance for EU users (TODO)
+- CCPA compliance for California users (TODO)
+- SOC 2 Type II certification (TODO)
 
 ## Recognition
 
@@ -234,3 +234,6 @@ This security policy is reviewed and updated quarterly. Last update: Q2 2024
 ---
 
 For questions about this security policy, contact security@nmox.org.
+
+This document was written by AI, and doesn't constitute an agreement of any kind.
+Many aspects of this document are plans or intentions and do not exist.
