@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NMOX - New Media On X :: Nginx Static Files</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to NMOX</h1>
+    
+    <h2>What is NMOX?</h2>
+    <p>NMOX (New Media On X) is a meta-framework that bridges the gap
+        between traditional UNIX philosophy and modern web development.
+        It builds on a central X object across multiple programming languages,
+        providing a unified approach to web development with Docker-centric deployment.</p>
+    
+    <p>Key features include:</p>
+    <ul>
+        <li>UNIX-inspired architecture and file system structure</li>
+        <li>Multi-language support (C, Perl, Go, Dart, Ruby, Python, PHP, Clojure, and Rust)</li>
+        <li>Docker-based deployment and development environment</li>
+        <li>Built-in support for modern web standards</li>
+    </ul>
+
+    <h2>Nginx</h2>
+    <p>Nginx (pronounced "engine-x") is a high-performance HTTP server,
+        reverse proxy, and load balancer that serves as NMOX's default
+        static file server. Selected for its exceptional efficiency and
+        small footprint, Nginx excels at serving static content and can
+        handle thousands of concurrent connections with minimal resource
+        usage. In NMOX's Docker implementation, Nginx runs on Alpine Linux,
+        resulting in a lightweight container that's perfect for both development
+        and production environments. While NMOX supports other web servers,
+        Nginx's UNIX-like configuration style and robust feature set make it
+        an ideal default choice for serving NMOX applications.</p>
+    <p>NMOX Server works seamlessly with Nginx. It is intended that you fire up
+        the Docker container and start serving your static files immediately.
+        You can find the Dockerfile for Nginx in x/Docker/nmox-nginx.Dockerfile
+    </p>
+
+    <h2>Quick Start with Docker</h2>
+    <p>To get started with NMOX's static file serving capability:</p>
+    
+    <ol>
+        <li>Clone the NMOX repository to your local machine</li>
+        <li>Navigate to the project directory</li>
+        <li>Build the Docker image with:
+            <pre>docker build -t nmox-static .</pre>
+        </li>
+        <li>Run the container with:
+            <pre>docker run -d -p 8080:80 --name nmox-static nmox-static</pre>
+        </li>
+    </ol>
+
+    <p>Your static files will be served from <code>x/usr/share/nginx/html</code> within the container. To serve your own static files, you can mount a local directory:</p>
+
+    <pre>docker run -d -p 8080:80 -v $(pwd)/static:/usr/share/nginx/html --name nmox-static nmox-static</pre>
+
+    <h2>Philosophy</h2>
+    <p>NMOX embodies three core principles:</p>
+    <ul>
+        <li><strong>Peace:</strong> Represented through Strings - resolution and clarity in code</li>
+        <li><strong>Love:</strong> Represented through the X object - finding commonality across different languages and systems</li>
+        <li><strong>Harmony:</strong> Represented through Arrays - bringing different components together</li>
+    </ul>
+
+    <h2>Getting Help</h2>
+    <p>NMOX is an open-source project designed for UNIX-savvy developers and system administrators. For more information:</p>
+    <ul>
+        <li>Check our documentation (Org-mode formatted)</li>
+        <li>Join our community channels</li>
+        <li>Explore example projects in our repository</li>
+    </ul>
+
+    <footer>
+        <p><small>NMOX is licensed under the MIT License. Built with ❤️ for the UNIX philosophy.</small></p>
+    </footer>
+</body>
+</html>

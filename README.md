@@ -1,72 +1,201 @@
 # NMOX Server
 
-New Media On X Server: Squeak Smalltalk and Rust WASM demos included.
+New Media On X Server: A meta-framework implementing UNIX philosophy in web development, featuring live programming through Squeak Smalltalk and high-performance computing via Rust WebAssembly. Built on the central X object pattern, NMOX Server unifies cross-language web development with Docker-centric deployment.
+
+[![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+## Key Features
+
+- **UNIX Philosophy Integration**
+  - Directory structure following FHS standards
+  - Modular components that do one thing well
+  - Simple interfaces using pipes and filters pattern
+  - Text-based data formats for interoperability
+
+- **Cross-Language Architecture**
+  - Squeak Smalltalk for live programming and dynamic development
+  - Rust/WebAssembly modules for performance-critical operations
+  - Language-agnostic X object pattern implementation
+  - Docker-based deployment with Nginx front-end
+
+- **Development Tools**
+  - GToolkit integration for moldable development
+  - Live programming environment
+  - WebAssembly performance examples
+  - Integrated debugging tools
 
 ## Overview
 
-NMOX-Server is a comprehensive cross-language meta-framework designed to build modern media applications based on the Unix philosophy. It emphasizes building small, simple, modular programs that do one thing well and work together through clear, standardized interfaces.
+NMOX Server implements a meta-framework for building modern web applications using UNIX principles. It emphasizes:
 
-At the core of NMOX-Server is an object called "x", which can represent a PAGE, an API, or DATA. The "X" in NMOX symbolizes UNIX, emphasizing the principles of modularity, simplicity, and portability. The x object contains an x instance variable that can be one of three data types:
+- Small, focused modules
+- Clear interfaces
+- Text-stream processing
+- Composition over complexity
+
+### The X Object
+
+At its core, NMOX uses an `x` object that can represent:
 
 ```
-x = "text";          // Text
-x = X.new();         // An X object
-x = ['a', 'b', 'c']; // An array
+x = "text"           # Peace (Resolution)
+x = X.new()         # Love (Connection)
+x = ['a', 'b', 'c'] # Harmony (Collection)
 ```
 
-By conceptualizing web-connected entities as objects (or structs in languages like C, Go, Rust), NMOX-Server ensures that standards permeate every aspect of your project. For example, the `P` object creates a Paragraph, while the `DIV` object creates a Division. These objects can be composed to form standards-compliant pages, APIs, or other instances of "x".
+This pattern is implemented across languages:
 
-## Peace, Love, and Harmony
+```python
+# Python
+x = X("text")
+```
 
-The motto of NMOX is "Peace, Love, and Harmony". These concepts are represented in the three data types: Strings, X objects, and arrays. A string is the resolved state of an object in NMOX. Arrays of these objects can serialize and deserialize into and out of JSON or XML. See `x/lib/org/NMOX.org` for more about these principles.
+```rust
+// Rust
+let x = X::new("text");
+```
 
-## Features
+```ruby
+# Ruby
+x = X.new("text")
+```
 
-- **Modular Design**: Build applications using a consistent object-oriented approach.
-- **Standards Compliance**: Ensures adherence to web standards and UNIX principles.
-- **Extensibility**: Easily extend and customize objects to fit specific needs.
+## Directory Structure
 
-## Getting Started
+```
+/nmox-server
+├── /bin           # Executable programs
+├── /etc           # Configuration files
+├── /lib           # Libraries
+│   ├── /org       # Organization-specific code
+│   └── /x         # Core X object implementations
+├── /opt           # Optional packages
+├── /srv           # Service data
+├── /tmp           # Temporary files
+└── /var           # Variable data
+    ├── /log       # Log files
+    └── /www       # Web content
+```
 
-To get started with NMOX-Server, follow these steps:
+## Quick Start
 
-1. Clone the Repository:
+1. **Clone the Repository**
    ```sh
    git clone https://github.com/nmox/nmox-server.git
+   cd nmox-server
    ```
 
-2. Navigate to the x library Directory:
+2. **Start with Docker**
    ```sh
-   cd nmox-server/x/lib/
+   docker compose up -d
    ```
 
-3. Inspect the Code:
-   Open the .image file in Squeak 6, or open the HTML or Rust source files in your preferred text editor.
+3. **Access Development Environment**
+   ```sh
+   open http://localhost:8080/studio
+   ```
 
-## Filesystem Hierarchy Standard
+## Development Workflow
 
-NMOX-Server adheres to the [Filesystem Hierarchy Standard](https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard) to ensure compatibility with *NIX systems. This standard defines the directory structure and directory contents in UNIX-like operating systems, ensuring a predictable environment.
+1. **Live Programming (Squeak)**
+   - Open the `.image` file in Squeak 6
+   - Use GToolkit for moldable development
+   - Changes are reflected immediately
+
+2. **Performance Modules (Rust)**
+   ```sh
+   cd lib/x/wasm
+   wasm-pack build
+   ```
+
+3. **Deploy Changes**
+   ```sh
+   docker compose build
+   docker compose up -d
+   ```
+
+## Architecture
+
+NMOX Server implements three core principles:
+
+1. **Peace** (Resolution)
+   - String representations
+   - Final rendered content
+   - Serialized data
+
+2. **Love** (Connection)
+   - X objects linking components
+   - Cross-language bridges
+   - Service interfaces
+
+3. **Harmony** (Collection)
+   - Arrays of objects
+   - Component composition
+   - Data structures
+
+## Standards Compliance
+
+- HTML5/CSS3/ES2022 web standards
+- POSIX compliance
+- WAI-ARIA accessibility
+- OAuth 2.0 authentication
+- WebAssembly 2.0
+
+## Performance Considerations
+
+- Server-side rendering with hydration
+- WebAssembly for compute-intensive tasks
+- Edge caching support
+- HTTP/3 ready
+- Built-in performance monitoring
 
 ## Contributing
 
-We welcome contributions to NMOX-Server. Please follow these steps to contribute:
+1. Fork the repository
+2. Create a feature branch
+   ```sh
+   git checkout -b feature/amazing-feature
+   ```
+3. Commit changes
+   ```sh
+   git commit -m 'Add amazing feature'
+   ```
+4. Push to branch
+   ```sh
+   git push origin feature/amazing-feature
+   ```
+5. Open a Pull Request
 
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a new Pull Request.
+## Testing
+
+```sh
+# Run unit tests
+cargo test
+
+# Run integration tests
+npm run test:integration
+
+# Run Squeak tests
+./bin/test-image.sh
+```
 
 ## License
 
-NMOX-Server is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+MIT License - see [LICENSE](LICENSE)
 
-## Acknowledgements
+## Project History
 
-We would like to thank the contributors and the open-source community for their support and contributions.
+- 2001: Initial release
+- 2008: Second edition
+- 2024: Current v3 release
+
+## Community
+
+- [Discord](https://discord.gg/nmox)
+- [Forum](https://discuss.nmox.org)
+- [Wiki](https://wiki.nmox.org)
 
 ---
 
-For more information, visit our [website](https://nmox.org/).
-
-
+Documentation: [https://docs.nmox.org](https://docs.nmox.org)  
+Contributing Guidelines: [CONTRIBUTING.md](CONTRIBUTING.md)
