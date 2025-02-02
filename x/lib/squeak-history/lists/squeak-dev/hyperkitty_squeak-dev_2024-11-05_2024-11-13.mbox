@@ -1,0 +1,2987 @@
+From lewis@mail.msen.com Tue Nov  5 03:32:17 2024
+From: lewis@mail.msen.com
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Mon, 04 Nov 2024 22:24:31 -0500
+Message-ID: <1730777502-108969@mid.hostedemail.com>
+In-Reply-To: <9440f8df-faa1-c593-8f0d-307bce6d661b@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1897419403170944201=="
+
+--===============1897419403170944201==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+You may still be able to recover your broken image.
+
+Squeak provides a mechanism for inserting code or debugging very early in the=
+ image startup processing, and you may be able to use this to fix your broken=
+ image.
+
+The implemention is in class DoItFirst, which is placed in the image startup =
+list to let to insert things into the startup processing, including opening a=
+ debugger at the earliest possible time (see the DoItFirst class comment).
+
+For example, if you are on a unix-like system and your VM executable is "sque=
+akvm", and your broken image is "squeak.image", then you might do this:
+
+$ squeakvm squeak.image --help
+
+Which will display this help message on your console output:
+
+  DoItFirst image arguments:
+	--doit argumentlist "evaluate each argument as a doIt expression"
+	--evaluate arg "evaluate arg, print result then exit"
+	--file filename "evaluate contents of filename, print result then exit"
+	--filein filelist "file in each file named in fileList"
+	--cwd path "set FileDirectory defaultDirectory to path prior to evaluating o=
+ther options"
+	--debug "enter a debugger as soon as possible in the startUp processing"
+	--help "print this message"
+  some arguments have single character synonyms, -f is a synonym for --file, =
+-d for --doit
+  single '-' may be used instead of '--', -help is interpreted as --help
+
+This gives a summary of the available command line options. As a starting poi=
+nt, you might want to see if you can get into a debugger before something bad=
+ happens, so you might (for example) do this:
+
+$ squeakvm squeak.image --debug
+
+If that does not work, but if you have an good idea of the problem that you n=
+eed to fix, then you may be able to use the --doit command line option to pas=
+s a Smalltalk doIt expression to be evaluated before the bad things happen.
+
+See also Eliot's explanation of how to directly signal the semaphore from a d=
+ebugger on the VM. I'm not sure what is the best approach but this should giv=
+e you a few options.
+
+HTH,
+Dave
+
+
+
+---
+Sent from Squeak Inbox Talk
+
+On 2024-11-03T12:44:09-07:00, drurowin(a)gmail.com wrote:
+
+> Hi List,
+>=20
+> I was trying to draw something in four background threads and resume the
+> UI thread with a chain of four Semaphore instances, but the background
+> thread had an error.  No problem.  Fix the error, close the debugger,
+> save, resume drawing.
+>=20
+> Long story short, something in the image file is waiting for a semaphore
+> that will never signal, so opening the image does absolutely nothing and
+> it is now a 157 MB e-brick.
+>=20
+> Now, if you'll excuse me, I need to grab a copy of my game.image out of
+> the daily system snapshot.
+>=20
+> The moral of this story is to make backups.  Or maybe utilize 'save as
+> new version'.  Or both.
+
+--===============1897419403170944201==--
+
+
+From kurt.kilpela@gemtalksystems.com Thu Nov  7 08:52:41 2024
+From: Kurt Kilpela <kurt.kilpela@gemtalksystems.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject:
+ [squeak-dev] Re: Retiring SS3 and GemSource - Read-only after 2024-11-01
+Date: Wed, 06 Nov 2024 10:36:25 -0800
+Message-ID:
+ <CAAhYTdHe6vP1r142RVP8RbEy8tuXd7VY-Zi3SMvhjYSLhrNcrA@mail.gmail.com>
+In-Reply-To:
+ <CAAhYTdEYTb37kaJvNE5mJ5Py1QYtBvzTheH9o_YtM06Od83L4g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5683950496880622461=="
+
+--===============5683950496880622461==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Hey all,
+
+SS3[1] and GemSource[2] now provide read-only archives of public mcz files.
+I do not expect clients to have issues obtaining mcz files. URLs for mcz
+files and project indexes remain the same.
+
+If you have any concerns, please let me know.
+
+Kurt
+
+[1] http://ss3.gemtalksystems.com/
+[2] http://seaside.gemtalksystems.com/ss/
+
+On Mon, Jul 29, 2024 at 9:23 AM Kurt Kilpela <
+kurt.kilpela(a)gemtalksystems.com> wrote:
+
+> Hey all,
+>
+> GemTalk plans to retire SS3[1] and GemSource[2] on or after November 1,
+> 2024. Public mcz files will remain available for download after this date.
+> The associated URLs will remain unchanged to avoid breaking any automations
+> relying on either site.
+>
+> If you have any concerns, please let me know.
+>
+> Kurt
+>
+> [1] http://ss3.gemtalksystems.com/
+> [2] http://seaside.gemtalksystems.com/ss/
+>
+
+
+
+--===============5683950496880622461==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGRpdj5IZXkgYWxsLDwvZGl2PjxkaXY+PGJy
+PjwvZGl2PjxkaXY+PHNwYW4gY2xhc3M9ImdtYWlsLWlsIj5TUzM8L3NwYW4+WzFdCiBhbmQgR2Vt
+U291cmNlWzJdIG5vdyBwcm92aWRlIHJlYWQtb25seSBhcmNoaXZlcyBvZiBwdWJsaWMgbWN6IGZp
+bGVzLiBJIGRvIG5vdCBleHBlY3QgY2xpZW50cyB0byBoYXZlIGlzc3VlcyBvYnRhaW5pbmcgbWN6
+IGZpbGVzLiBVUkxzIGZvciBtY3ogZmlsZXMgYW5kIHByb2plY3QgaW5kZXhlcyByZW1haW4gdGhl
+IHNhbWUuPGJyPjwvZGl2Pjxicj48ZGl2PklmIHlvdSBoYXZlIGFueSBjb25jZXJucywgcGxlYXNl
+IGxldCBtZSBrbm93LiA8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pkt1cnQ8L2Rpdj48ZGl2Pjxi
+cj48L2Rpdj48ZGl2PlsxXSA8YSBocmVmPSJodHRwOi8vc3MzLmdlbXRhbGtzeXN0ZW1zLmNvbS8i
+IHRhcmdldD0iX2JsYW5rIj5odHRwOi8vPHNwYW4gY2xhc3M9ImdtYWlsLWlsIj5zczM8L3NwYW4+
+LmdlbXRhbGtzeXN0ZW1zLmNvbS88L2E+PC9kaXY+PGRpdj5bMl0gPGEgaHJlZj0iaHR0cDovL3Nl
+YXNpZGUuZ2VtdGFsa3N5c3RlbXMuY29tL3NzLyIgdGFyZ2V0PSJfYmxhbmsiPmh0dHA6Ly9zZWFz
+aWRlLmdlbXRhbGtzeXN0ZW1zLmNvbS9zcy88L2E+PC9kaXY+PC9kaXY+PC9kaXY+PGJyPjxkaXYg
+Y2xhc3M9ImdtYWlsX3F1b3RlIj48ZGl2IGRpcj0ibHRyIiBjbGFzcz0iZ21haWxfYXR0ciI+T24g
+TW9uLCBKdWwgMjksIDIwMjQgYXQgOToyM+KAr0FNIEt1cnQgS2lscGVsYSAmbHQ7PGEgaHJlZj0i
+bWFpbHRvOmt1cnQua2lscGVsYUBnZW10YWxrc3lzdGVtcy5jb20iPmt1cnQua2lscGVsYUBnZW10
+YWxrc3lzdGVtcy5jb208L2E+Jmd0OyB3cm90ZTo8YnI+PC9kaXY+PGJsb2NrcXVvdGUgY2xhc3M9
+ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFyZ2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0
+OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwyMDQpO3BhZGRpbmctbGVmdDoxZXgiPjxkaXYgZGlyPSJs
+dHIiPjxkaXY+SGV5IGFsbCw8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PkdlbVRhbGsgcGxhbnMg
+dG8gcmV0aXJlIFNTM1sxXSBhbmQgR2VtU291cmNlWzJdIG9uIG9yIGFmdGVyIE5vdmVtYmVyIDEs
+IDIwMjQuIFB1YmxpYyBtY3ogZmlsZXMgd2lsbCByZW1haW4gYXZhaWxhYmxlIGZvciBkb3dubG9h
+ZCBhZnRlciB0aGlzIGRhdGUuIFRoZSBhc3NvY2lhdGVkIFVSTHMgd2lsbCByZW1haW4gdW5jaGFu
+Z2VkIHRvIGF2b2lkIGJyZWFraW5nIGFueSBhdXRvbWF0aW9ucyByZWx5aW5nIG9uIGVpdGhlciBz
+aXRlLjxicj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PklmIHlvdSBoYXZlIGFueSBjb25jZXJu
+cywgcGxlYXNlIGxldCBtZSBrbm93LiA8L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2Pkt1cnQ8L2Rp
+dj48ZGl2Pjxicj48L2Rpdj48ZGl2PlsxXSA8YSBocmVmPSJodHRwOi8vc3MzLmdlbXRhbGtzeXN0
+ZW1zLmNvbS8iIHRhcmdldD0iX2JsYW5rIj5odHRwOi8vc3MzLmdlbXRhbGtzeXN0ZW1zLmNvbS88
+L2E+PC9kaXY+PGRpdj5bMl0gPGEgaHJlZj0iaHR0cDovL3NlYXNpZGUuZ2VtdGFsa3N5c3RlbXMu
+Y29tL3NzLyIgdGFyZ2V0PSJfYmxhbmsiPmh0dHA6Ly9zZWFzaWRlLmdlbXRhbGtzeXN0ZW1zLmNv
+bS9zcy88L2E+PC9kaXY+PC9kaXY+CjwvYmxvY2txdW90ZT48L2Rpdj4K
+
+--===============5683950496880622461==--
+
+
+From Das.Linux@gmx.de Thu Nov  7 09:01:56 2024
+From: Tobias Pape <Das.Linux@gmx.de>
+To: squeak-dev@lists.squeakfoundation.org
+Subject:
+ [squeak-dev] Re: Retiring SS3 and GemSource - Read-only after 2024-11-01
+Date: Thu, 07 Nov 2024 10:01:34 +0100
+Message-ID: <F88A9F68-8763-44CB-A302-91B8506751FF@gmx.de>
+In-Reply-To:
+ <CAAhYTdHe6vP1r142RVP8RbEy8tuXd7VY-Zi3SMvhjYSLhrNcrA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3813408167682204576=="
+
+--===============3813408167682204576==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hey Kurt
+
+
+Thanks for letting us know.
+Having had my hands on ss3 while back, its good to see that the archive conti=
+nues to  live :)
+
+Thanks and best regards
+	-Tobias
+
+> On 6. Nov 2024, at 19:36, Kurt Kilpela <kurt.kilpela(a)gemtalksystems.com> =
+wrote:
+>=20
+> Hey all,
+>=20
+> SS3[1] and GemSource[2] now provide read-only archives of public mcz files.=
+ I do not expect clients to have issues obtaining mcz files. URLs for mcz fil=
+es and project indexes remain the same.
+>=20
+> If you have any concerns, please let me know.=20
+>=20
+> Kurt
+>=20
+> [1] http://ss3.gemtalksystems.com/
+> [2] http://seaside.gemtalksystems.com/ss/
+>=20
+> On Mon, Jul 29, 2024 at 9:23=E2=80=AFAM Kurt Kilpela <kurt.kilpela(a)gemtal=
+ksystems.com> wrote:
+> Hey all,
+>=20
+> GemTalk plans to retire SS3[1] and GemSource[2] on or after November 1, 202=
+4. Public mcz files will remain available for download after this date. The a=
+ssociated URLs will remain unchanged to avoid breaking any automations relyin=
+g on either site.
+>=20
+> If you have any concerns, please let me know.=20
+>=20
+> Kurt
+>=20
+> [1] http://ss3.gemtalksystems.com/
+> [2] http://seaside.gemtalksystems.com/ss/
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.o=
+rg
+
+
+
+--===============3813408167682204576==--
+
+
+From drurowin@gmail.com Thu Nov  7 18:11:06 2024
+From: Lauren Pullen <drurowin@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Thu, 07 Nov 2024 11:10:53 -0700
+Message-ID: <665f0426-15bc-a574-198d-3d799e568fd2@gmail.com>
+In-Reply-To: <1730777502-108969@mid.hostedemail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6029277716059056899=="
+
+--===============6029277716059056899==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi all,
+
+Thanks for all the great tips for recovering from an e-brick.  I'm happy
+to see there are a couple ways to interact with both the VM and the
+image from the outside.
+
+I take frequent backups of my whole computer, so my brick recovery
+process involved fetching a copy from the freezer and 'Recover Changes',
+of which there weren't that many.
+
+I'm working on a direct manipulation level editor; this experience has
+convinced me to make it so I can get a reference to the game world from
+DoItFirst to save the object file in case a recovery situation comes up
+while level editing.
+
+On 11/4/24 20:24, lewis(a)mail.msen.com wrote:
+> You may still be able to recover your broken image.
+>=20
+> Squeak provides a mechanism for inserting code or debugging very early in t=
+he image startup processing, and you may be able to use this to fix your brok=
+en image.
+>=20
+> The implemention is in class DoItFirst, which is placed in the image startu=
+p list to let to insert things into the startup processing, including opening=
+ a debugger at the earliest possible time (see the DoItFirst class comment).
+>=20
+> For example, if you are on a unix-like system and your VM executable is "sq=
+ueakvm", and your broken image is "squeak.image", then you might do this:
+>=20
+> $ squeakvm squeak.image --help
+>=20
+> Which will display this help message on your console output:
+>=20
+>   DoItFirst image arguments:
+> 	--doit argumentlist "evaluate each argument as a doIt expression"
+> 	--evaluate arg "evaluate arg, print result then exit"
+> 	--file filename "evaluate contents of filename, print result then exit"
+> 	--filein filelist "file in each file named in fileList"
+> 	--cwd path "set FileDirectory defaultDirectory to path prior to evaluating=
+ other options"
+> 	--debug "enter a debugger as soon as possible in the startUp processing"
+> 	--help "print this message"
+>   some arguments have single character synonyms, -f is a synonym for --file=
+, -d for --doit
+>   single '-' may be used instead of '--', -help is interpreted as --help
+>=20
+> This gives a summary of the available command line options. As a starting p=
+oint, you might want to see if you can get into a debugger before something b=
+ad happens, so you might (for example) do this:
+>=20
+> $ squeakvm squeak.image --debug
+>=20
+> If that does not work, but if you have an good idea of the problem that you=
+ need to fix, then you may be able to use the --doit command line option to p=
+ass a Smalltalk doIt expression to be evaluated before the bad things happen.
+>=20
+> See also Eliot's explanation of how to directly signal the semaphore from a=
+ debugger on the VM. I'm not sure what is the best approach but this should g=
+ive you a few options.
+>=20
+> HTH,
+> Dave
+>=20
+>=20
+>=20
+> ---
+> Sent from Squeak Inbox Talk
+>=20
+> On 2024-11-03T12:44:09-07:00, drurowin(a)gmail.com wrote:
+>=20
+>> Hi List,
+>>
+>> I was trying to draw something in four background threads and resume the
+>> UI thread with a chain of four Semaphore instances, but the background
+>> thread had an error.  No problem.  Fix the error, close the debugger,
+>> save, resume drawing.
+>>
+>> Long story short, something in the image file is waiting for a semaphore
+>> that will never signal, so opening the image does absolutely nothing and
+>> it is now a 157 MB e-brick.
+>>
+>> Now, if you'll excuse me, I need to grab a copy of my game.image out of
+>> the daily system snapshot.
+>>
+>> The moral of this story is to make backups.  Or maybe utilize 'save as
+>> new version'.  Or both.
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.o=
+rg
+>=20
+
+
+--===============6029277716059056899==--
+
+
+From christoph.thiede@student.hpi.uni-potsdam.de Fri Nov  8 00:52:14 2024
+From: christoph.thiede@student.hpi.uni-potsdam.de
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Review Request: regexCapturingGroupNameUnderscores.1.cs
+Date: Fri, 08 Nov 2024 01:52:05 +0100
+Message-ID:
+ <6bab57cf-71fd-4fb1-840b-9255a9838772@MX2018-DAG1.hpi.uni-potsdam.de>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0189596702093115926=="
+
+--===============0189596702093115926==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+
+PT09PT09PT09PT09PT09IFN1bW1hcnkgPT09PT09PT09PT09PT09CgpDaGFuZ2UgU2V0OsKgwqDC
+oMKgwqDCoMKgwqByZWdleENhcHR1cmluZ0dyb3VwTmFtZVVuZGVyc2NvcmVzCkRhdGU6wqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgOCBOb3ZlbWJlciAyMDI0CkF1dGhvcjrCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqBDaHJpc3RvcGggVGhpZWRlCgpBZGRzIHN1cHBvcnQgZm9yIHVuZGVyc2NvcmVzIGlu
+IGNhcHR1cmluZyBncm91cCBuYW1lcyBvZiByZWd1bGFyIGV4cHJlc3Npb25zIGFuZCB0ZXN0cyB0
+aGUgY2hhbmdlcy4gVGhpcyBpbXByb3ZlcyBjb21wYXRpYmlsaXR5IHdpdGggcmVnZXggZGlhbGVj
+dHMgc3VjaCBhcyBQQ1JFLCBFQ01BU2NyaXB0LCBhbmQgLk5FVC4KCj09PT09PT09PT09PT09PSBE
+aWZmID09PT09PT09PT09PT09PQoKUnhQYXJzZXI+Pmdyb3VwIHtyZWN1cnNpdmUgZGVzY2VudH0g
+wrcgY3QgMTEvOC8yMDI0IDAxOjQ1IChjaGFuZ2VkKQpncm91cAoKwqDCoMKgwqBzZWxmIG1hdGNo
+OiAkKC4KwqDCoMKgwqBsb29rYWhlYWQgPT0gJD8KwqDCoMKgwqDCoMKgwqDCoGlmRmFsc2U6IFsK
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgfCBncm91cCB8CsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCI8Z3JvdXA+IDo6PSAnKCcgPHJlZ2V4PiAnKScgIgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBn
+cm91cCA6PSBzZWxmIHJlZ2V4LgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBzZWxmIG1hdGNoOiAk
+KS4KwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgXiBncm91cF0uCsKgwqDCoMKgCsKgwqDCoMKgc2Vs
+ZiBuZXh0LgrCoMKgwqDCoArCoMKgwqDCoGxvb2thaGVhZCA9PSAkOgrCoMKgwqDCoMKgwqDCoMKg
+aWZUcnVlOiBbCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCJub24tY2FwdHVyaW5nIGdyb3VwIgrC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAiPGdyb3VwPiA6Oj0gJyg/OicgPHJlZ2V4PiAnKScgIgrC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqB8IGdyb3VwIHwKwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+c2VsZiBuZXh0LgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBncm91cCA6PSBzZWxmIHJlZ2V4LgrC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBncm91cCBiZU5vbkNhcHR1cmluZy4KwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgc2VsZiBtYXRjaDogJCkuCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoF4gZ3Jv
+dXBdLgrCoMKgwqDCoArCoMKgwqDCoChsb29rYWhlYWQgPT0gJCcgb3I6IFtsb29rYWhlYWQgPT0g
+JDwKLSDCoMKgwqDCoMKgwqDCoMKgYW5kOiBbc291cmNlIGF0RW5kIG5vdF0gYW5kOiBbc291cmNl
+IHBlZWsgaXNBbHBoYU51bWVyaWNdXSkKKyDCoMKgwqDCoMKgwqDCoMKgYW5kOiBbc291cmNlIGF0
+RW5kIG5vdF0gYW5kOiBbc291cmNlIHBlZWsgPT0gJF8gb3I6IFtzb3VyY2UgcGVlayBpc0FscGhh
+TnVtZXJpY11dXSkKwqDCoMKgwqDCoMKgwqDCoGlmVHJ1ZTogWwrCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAibmFtZWQgY2FwdHVyZSBncm91cCIKwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIjxncm91
+cCA6Oj0gJyg/PCcgPGtleT4gJz4nIDxyZWdleD4gJykgfCAnKD8nJycgPGtleT4gJycnJyA8cmVn
+ZXg+ICcpJyAiCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHwgY2xvc2luZyBrZXkgZ3JvdXAgfArC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBjbG9zaW5nIDo9ICMoJCckPikgYXQ6ICgjKCQnJDwpIGlu
+ZGV4T2Y6IGxvb2thaGVhZCkuCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHNlbGYgbmV4dC4KwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKga2V5IDo9IHNlbGYKLSDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoGlucHV0V2hpbGU6ICNpc0FscGhhTnVtZXJpYworIMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgaW5wdXRXaGlsZTogWzpjIHwgYyA9PSAkXyBvcjogW2MgaXNBbHBoYU51
+bWVyaWNdXQrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGVycm9yTWVzc2FnZTogJ2lu
+dmFsaWQgY2FwdHVyZSBncm91cCBuYW1lJyB0cmFuc2xhdGVkLgrCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqBzZWxmIG1hdGNoOiBjbG9zaW5nLgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBncm91cCA6
+PSBzZWxmIHJlZ2V4LgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBncm91cCBrZXk6IGtleS4KwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgc2VsZiBtYXRjaDogJCkuCsKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoF4gZ3JvdXBdLgrCoMKgwqDCoArCoMKgwqDCoCgnPD0hJyBpbmNsdWRlczogbG9va2FoZWFk
+KQrCoMKgwqDCoMKgwqDCoMKgaWZUcnVlOiBbCsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoHwgbG9v
+a2Fyb3VuZCB8CsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoGxvb2thcm91bmQgOj0gc2VsZiBsb29r
+QXJvdW5kLgrCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqBzZWxmIG1hdGNoOiAkKS4KwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgXiBsb29rYXJvdW5kIF0uCsKgwqDCoMKgCsKgwqDCoMKgXiBzZWxmIHNp
+Z25hbFBhcnNlRXJyb3IKClJ4UGFyc2VyVGVzdD4+dGVzdE5hbWVkQ2FwdHVyaW5nR3JvdXAge3Rl
+c3RzfSDCtyBjdCAxMS84LzIwMjQgMDE6NDYKKyB0ZXN0TmFtZWRDYXB0dXJpbmdHcm91cAorIAor
+IMKgwqDCoMKgc2VsZiBhc3NlcnQ6ICgnKD88YWI+Y2QpZScgYXNSZWdleCBtYXRjaGVzOiAnY2Rl
+JykuCisgwqDCoMKgwqBzZWxmIGFzc2VydDogJ2NkJyBlcXVhbHM6ICgnKD88YWI+Y2QpZScgYXNS
+ZWdleCBtYXRjaGVzOiAnY2RlJzsga2V5ZWRTdWJleHByZXNzaW9uOiAnYWInKS4KKyDCoMKgwqDC
+oHNlbGYgYXNzZXJ0OiAoJyg/PF9hMV8+YiljJyBhc1JlZ2V4IG1hdGNoZXM6ICdiYycpLgorIMKg
+wqDCoMKgc2VsZiBhc3NlcnQ6ICdiJyBlcXVhbHM6ICgnKD88X2ExXz5iKWMnIGFzUmVnZXggbWF0
+Y2hlczogJ2JjJzsga2V5ZWRTdWJleHByZXNzaW9uOiAnX2ExXycpLgorIMKgwqDCoMKgCisgwqDC
+oMKgwqBzZWxmIHNob3VsZFJhaXNlRXJyb3I6IFsnKD88YScnPmIpYycgYXNSZWdleF0uCgpbInJl
+Z2V4Q2FwdHVyaW5nR3JvdXBOYW1lVW5kZXJzY29yZXMuMS5jcyJdCgotLS0KU2VudCBmcm9tIFNx
+dWVhayBJbmJveCBUYWxrCgoK
+
+--===============0189596702093115926==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGI+PT09PT09PT09PT09PT09IFN1bW1hcnkgPT09PT09PT09PT09PT09PC9iPjxicj4KPGJyPgpD
+aGFuZ2UgU2V0OiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+O3JlZ2V4Q2FwdHVyaW5nR3JvdXBOYW1lVW5kZXJzY29yZXM8YnI+CkRhdGU6Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7OCBOb3ZlbWJlciAyMDI0PGJyPgpBdXRob3I6Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Q2hyaXN0b3BoIFRo
+aWVkZTxicj4KPGJyPgpBZGRzIHN1cHBvcnQgZm9yIHVuZGVyc2NvcmVzIGluIGNhcHR1cmluZyBn
+cm91cCBuYW1lcyBvZiByZWd1bGFyIGV4cHJlc3Npb25zIGFuZCB0ZXN0cyB0aGUgY2hhbmdlcy4g
+VGhpcyBpbXByb3ZlcyBjb21wYXRpYmlsaXR5IHdpdGggcmVnZXggZGlhbGVjdHMgc3VjaCBhcyBQ
+Q1JFLCBFQ01BU2NyaXB0LCBhbmQgLk5FVC48YnI+Cjxicj4KPGI+PT09PT09PT09PT09PT09IERp
+ZmYgPT09PT09PT09PT09PT09PC9iPjxicj4KPGJyPgo8Yj5SeFBhcnNlciZndDsmZ3Q7Z3JvdXAg
+e3JlY3Vyc2l2ZSBkZXNjZW50fSAmbWlkZG90OyBjdCAxMS84LzIwMjQgMDE6NDUgKGNoYW5nZWQp
+PC9iPjxicj4KZ3JvdXA8YnI+Cjxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7c2VsZiBtYXRj
+aDogJCguPGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtsb29rYWhlYWQgPT0gJD88YnI+CiZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO2lmRmFsc2U6IFs8
+YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwO3wgZ3JvdXAgfDxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7JnF1b3Q7Jmx0
+O2dyb3VwJmd0OyA6Oj0gJygnICZsdDtyZWdleCZndDsgJyknICZxdW90Ozxicj4KJm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Z3JvdXAgOj0gc2VsZiByZWdleC48YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO3NlbGYgbWF0Y2g6
+ICQpLjxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7XiBncm91cF0uPGJyPgombmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDs8YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO3NlbGYgbmV4dC48YnI+CiZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOzxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7bG9va2FoZWFkID09
+ICQ6PGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtp
+ZlRydWU6IFs8YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZxdW90O25vbi1jYXB0dXJpbmcgZ3JvdXAmcXVv
+dDs8YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZxdW90OyZsdDtncm91cCZndDsgOjo9ICcoPzonICZsdDty
+ZWdleCZndDsgJyknICZxdW90Ozxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7fCBncm91cCB8PGJyPgombmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDtzZWxmIG5leHQuPGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtncm91cCA6PSBzZWxmIHJl
+Z2V4Ljxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Z3JvdXAgYmVOb25DYXB0dXJpbmcuPGJyPgombmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDtzZWxmIG1hdGNoOiAkKS48YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO14gZ3JvdXBdLjxicj4K
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7PGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsobG9v
+a2FoZWFkID09ICQnIG9yOiBbbG9va2FoZWFkID09ICQmbHQ7PGJyPgo8cz48Zm9udCBjb2xvcj0i
+IzAwMDBGRiI+LSAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDthbmQ6IFtzb3VyY2UgYXRFbmQgbm90XSBhbmQ6IFtzb3VyY2UgcGVlayBpc0FscGhhTnVtZXJp
+Y11dKTxicj4KPC9mb250Pjwvcz48Zm9udCBjb2xvcj0iI0ZGMDAwMCI+KyAmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDthbmQ6IFtzb3VyY2UgYXRFbmQgbm90
+XSBhbmQ6IFtzb3VyY2UgcGVlayA9PSAkXyBvcjogW3NvdXJjZSBwZWVrIGlzQWxwaGFOdW1lcmlj
+XV1dKTxicj4KPC9mb250PiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwO2lmVHJ1ZTogWzxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7JnF1b3Q7bmFtZWQgY2FwdHVyZSBn
+cm91cCZxdW90Ozxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7JnF1b3Q7Jmx0O2dyb3VwIDo6PSAnKD8mbHQ7
+JyAmbHQ7a2V5Jmd0OyAnJmd0OycgJmx0O3JlZ2V4Jmd0OyAnKSB8ICcoPycnJyAmbHQ7a2V5Jmd0
+OyAnJycnICZsdDtyZWdleCZndDsgJyknICZxdW90Ozxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7fCBjbG9z
+aW5nIGtleSBncm91cCB8PGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtjbG9zaW5nIDo9ICMoJCckJmd0Oykg
+YXQ6ICgjKCQnJCZsdDspIGluZGV4T2Y6IGxvb2thaGVhZCkuPGJyPgombmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtz
+ZWxmIG5leHQuPGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtrZXkgOj0gc2VsZjxicj4KPHM+PGZvbnQgY29s
+b3I9IiMwMDAwRkYiPi0gJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7aW5w
+dXRXaGlsZTogI2lzQWxwaGFOdW1lcmljPGJyPgo8L2ZvbnQ+PC9zPjxmb250IGNvbG9yPSIjRkYw
+MDAwIj4rICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO2lucHV0V2hpbGU6
+IFs6YyB8IGMgPT0gJF8gb3I6IFtjIGlzQWxwaGFOdW1lcmljXV08YnI+CjwvZm9udD4mbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtlcnJvck1lc3NhZ2U6ICdpbnZhbGlkIGNh
+cHR1cmUgZ3JvdXAgbmFtZScgdHJhbnNsYXRlZC48YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO3NlbGYgbWF0
+Y2g6IGNsb3NpbmcuPGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtncm91cCA6PSBzZWxmIHJlZ2V4Ljxicj4K
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Z3JvdXAga2V5OiBrZXkuPGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtzZWxmIG1h
+dGNoOiAkKS48YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO14gZ3JvdXBdLjxicj4KJm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7PGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsoJyZsdDs9IScgaW5jbHVkZXM6
+IGxvb2thaGVhZCk8YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwO2lmVHJ1ZTogWzxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7fCBsb29rYXJvdW5kIHw8YnI+CiZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwO2xvb2thcm91bmQgOj0gc2VsZiBsb29rQXJvdW5kLjxicj4KJm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7c2VsZiBtYXRjaDogJCkuPGJyPgombmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDteIGxvb2thcm91bmQgXS48
+YnI+CiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOzxicj4KJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+XiBzZWxmIHNpZ25hbFBhcnNlRXJyb3I8YnI+Cjxicj4KPGI+UnhQYXJzZXJUZXN0Jmd0OyZndDt0
+ZXN0TmFtZWRDYXB0dXJpbmdHcm91cCB7dGVzdHN9ICZtaWRkb3Q7IGN0IDExLzgvMjAyNCAwMTo0
+NjwvYj48YnI+Cjxmb250IGNvbG9yPSIjRkYwMDAwIj4rIHRlc3ROYW1lZENhcHR1cmluZ0dyb3Vw
+PGJyPgorIDxicj4KKyAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtzZWxmIGFzc2VydDogKCcoPyZs
+dDthYiZndDtjZCllJyBhc1JlZ2V4IG1hdGNoZXM6ICdjZGUnKS48YnI+CisgJm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7c2VsZiBhc3NlcnQ6ICdjZCcgZXF1YWxzOiAoJyg/Jmx0O2FiJmd0O2NkKWUn
+IGFzUmVnZXggbWF0Y2hlczogJ2NkZSc7IGtleWVkU3ViZXhwcmVzc2lvbjogJ2FiJykuPGJyPgor
+ICZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO3NlbGYgYXNzZXJ0OiAoJyg/Jmx0O19hMV8mZ3Q7Yilj
+JyBhc1JlZ2V4IG1hdGNoZXM6ICdiYycpLjxicj4KKyAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtz
+ZWxmIGFzc2VydDogJ2InIGVxdWFsczogKCcoPyZsdDtfYTFfJmd0O2IpYycgYXNSZWdleCBtYXRj
+aGVzOiAnYmMnOyBrZXllZFN1YmV4cHJlc3Npb246ICdfYTFfJykuPGJyPgorICZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOzxicj4KKyAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtzZWxmIHNob3VsZFJh
+aXNlRXJyb3I6IFsnKD8mbHQ7YScnJmd0O2IpYycgYXNSZWdleF0uPC9mb250Pjxicj4KPGJyPgpb
+JnF1b3Q7cmVnZXhDYXB0dXJpbmdHcm91cE5hbWVVbmRlcnNjb3Jlcy4xLmNzJnF1b3Q7XTxicj4K
+PGJyPgo8Zm9udCBjb2xvcj0iIzgwODA4MCI+LS0tPGJyPgo8L2ZvbnQ+PGZvbnQgY29sb3I9IiM4
+MDgwODAiPjxpPlNlbnQgZnJvbSA8L2k+PC9mb250Pjxmb250IGNvbG9yPSIjODA4MDgwIj48aT48
+YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vaHBpLXN3YS1sYWIvc3F1ZWFrLWluYm94LXRhbGsi
+Pjx1Pjxmb250IGNvbG9yPSIjODA4MDgwIj5TcXVlYWsgSW5ib3ggVGFsazwvZm9udD48L3U+PC9h
+PjwvaT48L2ZvbnQ+
+
+--===============0189596702093115926==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="regexCapturingGroupNameUnderscores.1.cs"
+MIME-Version: 1.0
+
+J0Zyb20gU3F1ZWFrNi4xYWxwaGEgb2YgMjQgT2N0b2JlciAyMDI0IFtsYXRlc3QgdXBkYXRlOiAj
+MjMxNThdIG9uIDggTm92ZW1iZXIgMjAyNCBhdCAxOjUxOjIyIGFtJyENIkNoYW5nZSBTZXQ6CQly
+ZWdleENhcHR1cmluZ0dyb3VwTmFtZVVuZGVyc2NvcmVzDURhdGU6CQkJOCBOb3ZlbWJlciAyMDI0
+DUF1dGhvcjoJCQlDaHJpc3RvcGggVGhpZWRlDQ1BZGRzIHN1cHBvcnQgZm9yIHVuZGVyc2NvcmVz
+IGluIGNhcHR1cmluZyBncm91cCBuYW1lcyBvZiByZWd1bGFyIGV4cHJlc3Npb25zIGFuZCB0ZXN0
+cyB0aGUgY2hhbmdlcy4gVGhpcyBpbXByb3ZlcyBjb21wYXRpYmlsaXR5IHdpdGggcmVnZXggZGlh
+bGVjdHMgc3VjaCBhcyBQQ1JFLCBFQ01BU2NyaXB0LCBhbmQgLk5FVC4iIQ0NDSFSeFBhcnNlciBt
+ZXRob2RzRm9yOiAncmVjdXJzaXZlIGRlc2NlbnQnIHN0YW1wOiAnY3QgMTEvOC8yMDI0IDAxOjQ1
+JyENZ3JvdXANDQlzZWxmIG1hdGNoOiAkKC4NCWxvb2thaGVhZCA9PSAkPw0JCWlmRmFsc2U6IFsN
+CQkJfCBncm91cCB8DQkJCSI8Z3JvdXA+IDo6PSAnKCcgPHJlZ2V4PiAnKScgIg0JCQlncm91cCA6
+PSBzZWxmIHJlZ2V4Lg0JCQlzZWxmIG1hdGNoOiAkKS4NCQkJXiBncm91cF0uDQkNCXNlbGYgbmV4
+dC4NCQ0JbG9va2FoZWFkID09ICQ6DQkJaWZUcnVlOiBbDQkJCSJub24tY2FwdHVyaW5nIGdyb3Vw
+Ig0JCQkiPGdyb3VwPiA6Oj0gJyg/OicgPHJlZ2V4PiAnKScgIg0JCQl8IGdyb3VwIHwNCQkJc2Vs
+ZiBuZXh0Lg0JCQlncm91cCA6PSBzZWxmIHJlZ2V4Lg0JCQlncm91cCBiZU5vbkNhcHR1cmluZy4N
+CQkJc2VsZiBtYXRjaDogJCkuDQkJCV4gZ3JvdXBdLg0JDQkobG9va2FoZWFkID09ICQnIG9yOiBb
+bG9va2FoZWFkID09ICQ8DQkJYW5kOiBbc291cmNlIGF0RW5kIG5vdF0gYW5kOiBbc291cmNlIHBl
+ZWsgPT0gJF8gb3I6IFtzb3VyY2UgcGVlayBpc0FscGhhTnVtZXJpY11dXSkNCQlpZlRydWU6IFsN
+CQkJIm5hbWVkIGNhcHR1cmUgZ3JvdXAiDQkJCSI8Z3JvdXAgOjo9ICcoPzwnIDxrZXk+ICc+JyA8
+cmVnZXg+ICcpIHwgJyg/JycnIDxrZXk+ICcnJycgPHJlZ2V4PiAnKScgIg0JCQl8IGNsb3Npbmcg
+a2V5IGdyb3VwIHwNCQkJY2xvc2luZyA6PSAjKCQnJD4pIGF0OiAoIygkJyQ8KSBpbmRleE9mOiBs
+b29rYWhlYWQpLg0JCQlzZWxmIG5leHQuDQkJCWtleSA6PSBzZWxmDQkJCQlpbnB1dFdoaWxlOiBb
+OmMgfCBjID09ICRfIG9yOiBbYyBpc0FscGhhTnVtZXJpY11dDQkJCQllcnJvck1lc3NhZ2U6ICdp
+bnZhbGlkIGNhcHR1cmUgZ3JvdXAgbmFtZScgdHJhbnNsYXRlZC4NCQkJc2VsZiBtYXRjaDogY2xv
+c2luZy4NCQkJZ3JvdXAgOj0gc2VsZiByZWdleC4NCQkJZ3JvdXAga2V5OiBrZXkuDQkJCXNlbGYg
+bWF0Y2g6ICQpLg0JCQleIGdyb3VwXS4NCQ0JKCc8PSEhJyBpbmNsdWRlczogbG9va2FoZWFkKQ0J
+CWlmVHJ1ZTogWw0JCQl8IGxvb2thcm91bmQgfA0JCQlsb29rYXJvdW5kIDo9IHNlbGYgbG9va0Fy
+b3VuZC4NCQkJc2VsZiBtYXRjaDogJCkuDQkJCV4gbG9va2Fyb3VuZCBdLg0JDQleIHNlbGYgc2ln
+bmFsUGFyc2VFcnJvciEgIQ0NDSFSeFBhcnNlclRlc3QgbWV0aG9kc0ZvcjogJ3Rlc3RzJyBzdGFt
+cDogJ2N0IDExLzgvMjAyNCAwMTo0NichDXRlc3ROYW1lZENhcHR1cmluZ0dyb3VwDQ0Jc2VsZiBh
+c3NlcnQ6ICgnKD88YWI+Y2QpZScgYXNSZWdleCBtYXRjaGVzOiAnY2RlJykuDQlzZWxmIGFzc2Vy
+dDogJ2NkJyBlcXVhbHM6ICgnKD88YWI+Y2QpZScgYXNSZWdleCBtYXRjaGVzOiAnY2RlJzsga2V5
+ZWRTdWJleHByZXNzaW9uOiAnYWInKS4NCXNlbGYgYXNzZXJ0OiAoJyg/PF9hMV8+YiljJyBhc1Jl
+Z2V4IG1hdGNoZXM6ICdiYycpLg0Jc2VsZiBhc3NlcnQ6ICdiJyBlcXVhbHM6ICgnKD88X2ExXz5i
+KWMnIGFzUmVnZXggbWF0Y2hlczogJ2JjJzsga2V5ZWRTdWJleHByZXNzaW9uOiAnX2ExXycpLg0J
+CglzZWxmIHNob3VsZFJhaXNlRXJyb3I6IFsnKD88YScnPmIpYycgYXNSZWdleF0uISAhDQ0=
+
+--===============0189596702093115926==--
+
+
+From christoph.thiede@student.hpi.uni-potsdam.de Fri Nov  8 01:00:07 2024
+From: christoph.thiede@student.hpi.uni-potsdam.de
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: The Inbox: Collections-ct.1063.mcz
+Date: Fri, 08 Nov 2024 01:59:50 +0100
+Message-ID:
+ <ce00e373-2a6c-47be-8275-0d4d530534ea@MX2018-DAG1.hpi.uni-potsdam.de>
+In-Reply-To: <da8c1a3e-fd32-451f-b265-0f6831c0193e@caesar.elte.hu>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1233896033734982006=="
+
+--===============1233896033734982006==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+
+Thank you! Moved to treated.
+
+Best,
+Christoph
+
+---
+Sent from Squeak Inbox Talk
+
+On 2024-03-05T18:52:07+01:00, leves(a)caesar.elte.hu wrote:
+
+> Hi Christoph,
+> 
+> On 2024. 03. 04. 16:19, Thiede, Christoph wrote:
+> > Hi Levente,
+> > 
+> > I wish I could! I can tell you that I have seen a NotFound error 
+> > signaled from WeakSet(Collection)>>removeAllSuchThat: while cleaning up 
+> > a WeakSet of processes in the background:
+> > 
+> > processes removeAllSuchThat: [:ea|eaterminate. true].
+> > 
+> > Unfortunately, I was not able to reproduce this again ... I just 
+> > debugged the above example again and it seems that each element is 
+> > indeed strongly referenced from the activation of the block closure up 
+> > to its removal. Maybe, I was facing a concurrency issue (multiple 
+> > #removeAllSuchThat: sends from different processes at the same time) 
+> > instead. In that case, I fear I would have to use a Mutex because none 
+> > of the removal methods are concurrency-safe, right?
+> 
+> I'm pretty sure it was a side effect of concurrent access.
+> HashedCollections are not thread-safe by default. I think, with the 
+> current implementations, it's safe to read them concurrently, but I 
+> wouldn't rely on that.
+> So, yes, you need to use a Mutex, a Semaphore, a Monitor, or some 
+> priority hacking to avoid concurrent access.
+> 
+> Best,
+> Levente
+
+--===============1233896033734982006==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:21:34 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Collections-ct.1074.mcz
+Date: Fri, 08 Nov 2024 01:21:27 +0000
+Message-ID: <20241108012131.466285800FA@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4501191525291149495=="
+
+--===============4501191525291149495==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Collections to project The Trunk:
+http://source.squeak.org/trunk/Collections-ct.1074.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Collections-ct.1074
+Author: ct
+Time: 8 November 2024, 2:21:16.841595 am
+UUID: c9cad87d-1332-4f8a-b87e-36ead1bc13c4
+Ancestors: Collections-eem.1073, Collections-ct.1065, Collections-ct.1061, Co=
+llections-ct.1058, Collections-ct.1055
+
+Merges some inbox versions.
+
+Collections-ct.1065:
+	Fixes Text>>addAttribute:from:to: for not inserting attributes beyond stop w=
+hen the interval is empty.
+
+Collections-ct.1061:
+	Implements #sameAs: on Text.
+
+Collections-ct.1058:
+	When clicking on a TextInspectIt, do not send #inspect to the result as it m=
+ight be a proxy.
+
+Collections-ct.1055:
+	Fixes #reset for streams, do not keep previous attributes.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Collections-eem.10=
+73 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: Text>>addAttribute:from:to: (in category 'emphasis') -----
+  addAttribute: att from: start to: stop=20
+  	"Set the attribute for characters in the interval start to stop."
+  =09
+  	| stringSize realStart realStop |
+  	(stringSize :=3D self size) =3D 0 ifTrue: [^ self].
+  	start < 1
+  		ifTrue: [realStart :=3D 1]
+  		ifFalse: [realStart :=3D start min: stringSize].
+  	stop > self size
+  		ifTrue: [realStop :=3D stringSize]
++ 		ifFalse: [realStop :=3D stop].
++ 	realStart <=3D realStop ifFalse: [^ self].
+- 		ifFalse: [realStop :=3D stop max: realStart].
+  	runs :=3D  runs copyReplaceFrom: realStart to: realStop
+  			with: ((runs copyFrom: realStart to: realStop)
+  				replace:
+  				[:attributes | Text addAttribute: att toArray: attributes])
+  !
+
+Item was added:
++ ----- Method: Text>>sameAs: (in category 'comparing') -----
++ sameAs: aStringOrText
++ 	"Answer whether the receiver sorts equal to aStringOrText."
++=20
++ 	^ self string sameAs: aStringOrText asString!
+
+Item was changed:
+  ----- Method: TextInspectIt>>actOnClickFor:in:at:editor: (in category 'mous=
+e events') -----
+  actOnClickFor: anObject in: aParagraph at: clickPoint editor: editor
+  	"Note: evalString gets evaluated IN THE CONTEXT OF anObject
+  	 -- meaning that self and all instVars are accessible"
+  	Project current addDeferredUIMessage: [
++ 		ToolSet inspect: "do not send #inspect because the result might be a prox=
+y"
++ 			(self target
++ 				ifNil: [(Compiler evaluate: evalString for: anObject)]
++ 				ifNotNil: [:object | object]) ].
+- 		self target
+- 			ifNil: [(Compiler evaluate: evalString for: anObject) inspect]
+- 			ifNotNil: [:object | object inspect] ].
+  	^ true !
+
+Item was added:
++ ----- Method: TextStream>>reset (in category 'positioning') -----
++ reset
++=20
++ 	super reset.
++ 	collection removeAllAttributes.!
+
+
+--===============4501191525291149495==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:22:03 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Collections-ct.1065.mcz
+Date: Fri, 08 Nov 2024 01:21:54 +0000
+Message-ID: <20241108012158.C39BD580137@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============9003655396712444568=="
+
+--===============9003655396712444568==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Collections to project The Trunk:
+http://source.squeak.org/trunk/Collections-ct.1065.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Collections-ct.1065
+Author: ct
+Time: 30 April 2024, 11:11:49.008608 pm
+UUID: 0ec4bc54-aa90-442f-8d1c-0bdcaf1a7672
+Ancestors: Collections-nice.1060
+
+Fixes Text>>addAttribute:from:to: for not inserting attributes beyond stop wh=
+en the interval is empty.
+
+Example:
+	self assert: ((Text streamContents: [:stream |
+		stream nextPut: $a.
+		stream withAttribute: TextEmphasis bold do:
+			[].
+		stream nextPut: $b]) attributesAt: 2) isEmpty.
+
+Please review.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Collections-nice.1=
+060 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: Text>>addAttribute:from:to: (in category 'emphasis') -----
+  addAttribute: att from: start to: stop=20
+  	"Set the attribute for characters in the interval start to stop."
+  =09
+  	| stringSize realStart realStop |
+  	(stringSize :=3D self size) =3D 0 ifTrue: [^ self].
+  	start < 1
+  		ifTrue: [realStart :=3D 1]
+  		ifFalse: [realStart :=3D start min: stringSize].
+  	stop > self size
+  		ifTrue: [realStop :=3D stringSize]
++ 		ifFalse: [realStop :=3D stop].
++ 	realStart <=3D realStop ifFalse: [^ self].
+- 		ifFalse: [realStop :=3D stop max: realStart].
+  	runs :=3D  runs copyReplaceFrom: realStart to: realStop
+  			with: ((runs copyFrom: realStart to: realStop)
+  				replace:
+  				[:attributes | Text addAttribute: att toArray: attributes])
+  !
+
+
+--===============9003655396712444568==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:22:14 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Collections-ct.1061.mcz
+Date: Fri, 08 Nov 2024 01:22:04 +0000
+Message-ID: <20241108012209.EA5D658011B@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5133620833908354181=="
+
+--===============5133620833908354181==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Collections to project The Trunk:
+http://source.squeak.org/trunk/Collections-ct.1061.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Collections-ct.1061
+Author: ct
+Time: 2 January 2024, 5:18:37.636112 pm
+UUID: 93dafbe2-e958-8f4b-b1ce-70cf12d7c4e2
+Ancestors: Collections-mt.1058
+
+Implements #sameAs: on Text.
+
+This fixes a bug in IndentingListItemMorph>>#openPath: when some nodes in the=
+ tree have formatted text labels. Not sure whether there should be more strin=
+g casts around PluggableTreeItemNodes instead, though. See: https://lists.squ=
+eakfoundation.org/archives/list/squeak-dev(a)lists.squeakfoundation.org/messa=
+ge/MHYXMIRMPF6MAQO4C4QA7BCJ3C7ZCBVD/ Thanks to Jaromir (jar) for the bug repo=
+rt!
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Collections-mt.105=
+8 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was added:
++ ----- Method: Text>>sameAs: (in category 'comparing') -----
++ sameAs: aStringOrText
++ 	"Answer whether the receiver sorts equal to aString. The collation sequenc=
+e is ascii with case differences ignored."
++=20
++ 	^ self string sameAs: aStringOrText asString!
+
+
+--===============5133620833908354181==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:22:25 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Collections-ct.1058.mcz
+Date: Fri, 08 Nov 2024 01:22:14 +0000
+Message-ID: <20241108012221.BC8EA58012C@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5554607871422574993=="
+
+--===============5554607871422574993==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Collections to project The Trunk:
+http://source.squeak.org/trunk/Collections-ct.1058.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Collections-ct.1058
+Author: ct
+Time: 2 December 2023, 10:54:28.858859 pm
+UUID: 544526d5-2714-6d44-8bfa-54429ce1ecf8
+Ancestors: Collections-ct.1056
+
+When clicking on a TextInspectIt, do not send #inspect to the result as it mi=
+ght be a proxy. This aligns with the implementation of #inspectIt (note to my=
+self: we should also add an explaining comment there).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Collections-ct.105=
+6 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: TextInspectIt>>actOnClickFor:in:at:editor: (in category 'mous=
+e events') -----
+  actOnClickFor: anObject in: aParagraph at: clickPoint editor: editor
+  	"Note: evalString gets evaluated IN THE CONTEXT OF anObject
+  	 -- meaning that self and all instVars are accessible"
+  	Project current addDeferredUIMessage: [
++ 		ToolSet inspect: "do not send #inspect because the result might be a prox=
+y"
++ 			(self target
++ 				ifNil: [(Compiler evaluate: evalString for: anObject)]
++ 				ifNotNil: [:object | object]) ].
+- 		self target
+- 			ifNil: [(Compiler evaluate: evalString for: anObject) inspect]
+- 			ifNotNil: [:object | object inspect] ].
+  	^ true !
+
+
+--===============5554607871422574993==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:22:34 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Collections-ct.1055.mcz
+Date: Fri, 08 Nov 2024 01:22:25 +0000
+Message-ID: <20241108012229.55B71580134@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1766422080837330349=="
+
+--===============1766422080837330349==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Christoph Thiede uploaded a new version of Collections to project The Trunk:
+http://source.squeak.org/trunk/Collections-ct.1055.mcz
+
+==================== Summary ====================
+
+Name: Collections-ct.1055
+Author: ct
+Time: 13 November 2023, 9:34:08.710149 pm
+UUID: de56fe79-7040-45e0-8c9b-b8a01441ae84
+Ancestors: Collections-ul.1053
+
+Fixes #reset for streams, do not keep previous attributes.
+
+=============== Diff against Collections-ul.1053 ===============
+
+Item was added:
++ ----- Method: TextStream>>reset (in category 'positioning') -----
++ reset
++ 
++ 	super reset.
++ 	collection removeAllAttributes.!
+
+
+--===============1766422080837330349==--
+
+
+From tim@rowledge.org Fri Nov  8 01:24:30 2024
+From: Tim Rowledge <tim@rowledge.org>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Thu, 07 Nov 2024 17:24:18 -0800
+Message-ID: <B5A4B9A3-7614-4DBA-80D3-E89CC5296F0F@rowledge.org>
+In-Reply-To: <665f0426-15bc-a574-198d-3d799e568fd2@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3585002278859215553=="
+
+--===============3585002278859215553==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+That 'save as new version' is also well worth remembering, particularly when =
+you are doing things you suspect might blow up badly. It's almost like the an=
+cient and very useful behaviour of the Vax OS where any save added a version =
+number and kept older copies automagically.
+
+> On 2024-11-07, at 10:10 AM, Lauren Pullen <drurowin(a)gmail.com> wrote:
+>=20
+> Hi all,
+>=20
+> Thanks for all the great tips for recovering from an e-brick.  I'm happy
+> to see there are a couple ways to interact with both the VM and the
+> image from the outside.
+>=20
+> I take frequent backups of my whole computer, so my brick recovery
+> process involved fetching a copy from the freezer and 'Recover Changes',
+> of which there weren't that many.
+>=20
+> I'm working on a direct manipulation level editor; this experience has
+> convinced me to make it so I can get a reference to the game world from
+> DoItFirst to save the object file in case a recovery situation comes up
+> while level editing.
+>=20
+> On 11/4/24 20:24, lewis(a)mail.msen.com wrote:
+>> You may still be able to recover your broken image.
+>>=20
+>> Squeak provides a mechanism for inserting code or debugging very early in =
+the image startup processing, and you may be able to use this to fix your bro=
+ken image.
+>>=20
+>> The implemention is in class DoItFirst, which is placed in the image start=
+up list to let to insert things into the startup processing, including openin=
+g a debugger at the earliest possible time (see the DoItFirst class comment).
+>>=20
+>> For example, if you are on a unix-like system and your VM executable is "s=
+queakvm", and your broken image is "squeak.image", then you might do this:
+>>=20
+>> $ squeakvm squeak.image --help
+>>=20
+>> Which will display this help message on your console output:
+>>=20
+>>  DoItFirst image arguments:
+>> 	--doit argumentlist "evaluate each argument as a doIt expression"
+>> 	--evaluate arg "evaluate arg, print result then exit"
+>> 	--file filename "evaluate contents of filename, print result then exit"
+>> 	--filein filelist "file in each file named in fileList"
+>> 	--cwd path "set FileDirectory defaultDirectory to path prior to evaluatin=
+g other options"
+>> 	--debug "enter a debugger as soon as possible in the startUp processing"
+>> 	--help "print this message"
+>>  some arguments have single character synonyms, -f is a synonym for --file=
+, -d for --doit
+>>  single '-' may be used instead of '--', -help is interpreted as --help
+>>=20
+>> This gives a summary of the available command line options. As a starting =
+point, you might want to see if you can get into a debugger before something =
+bad happens, so you might (for example) do this:
+>>=20
+>> $ squeakvm squeak.image --debug
+>>=20
+>> If that does not work, but if you have an good idea of the problem that yo=
+u need to fix, then you may be able to use the --doit command line option to =
+pass a Smalltalk doIt expression to be evaluated before the bad things happen.
+>>=20
+>> See also Eliot's explanation of how to directly signal the semaphore from =
+a debugger on the VM. I'm not sure what is the best approach but this should =
+give you a few options.
+>>=20
+>> HTH,
+>> Dave
+>>=20
+>>=20
+>>=20
+>> ---
+>> Sent from Squeak Inbox Talk
+>>=20
+>> On 2024-11-03T12:44:09-07:00, drurowin(a)gmail.com wrote:
+>>=20
+>>> Hi List,
+>>>=20
+>>> I was trying to draw something in four background threads and resume the
+>>> UI thread with a chain of four Semaphore instances, but the background
+>>> thread had an error.  No problem.  Fix the error, close the debugger,
+>>> save, resume drawing.
+>>>=20
+>>> Long story short, something in the image file is waiting for a semaphore
+>>> that will never signal, so opening the image does absolutely nothing and
+>>> it is now a 157 MB e-brick.
+>>>=20
+>>> Now, if you'll excuse me, I need to grab a copy of my game.image out of
+>>> the daily system snapshot.
+>>>=20
+>>> The moral of this story is to make backups.  Or maybe utilize 'save as
+>>> new version'.  Or both.
+>> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+>> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.=
+org
+>>=20
+>=20
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.o=
+rg
+
+
+tim
+--
+tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+Useful Latin Phrases:- Romani quidem artem amatoriam invenerunt. =3D You know=
+, the Romans invented the art of love.
+
+
+
+--===============3585002278859215553==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:26:03 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-ct.1281.mcz
+Date: Fri, 08 Nov 2024 01:25:53 +0000
+Message-ID: <20241108012559.253505805E1@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0010110926965243984=="
+
+--===============0010110926965243984==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-ct.1281.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-ct.1281
+Author: ct
+Time: 8 November 2024, 2:25:39.907801 am
+UUID: 34d92e77-9440-4eb2-9a64-431cb670c975
+Ancestors: Tools-eem.1280
+
+Documents disadvantage of Object>>inspect vs ToolSet>>inspect:.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1280 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: Object>>inspect (in category '*Tools-Inspector') -----
+  inspect
++ 	"Create and schedule an inspector in which the user can examine the receiv=
+er's variables.
++ =09
++ 	NB: In a generic tooling context, consider always using 'ToolSet inspect: =
+anObject' instead. The difference is that 'anObject inspect' will possibly se=
+nd a message to a transparent proxy object and inspect the wrong object, whil=
+e 'ToolSet inspect: anObject' will bring up an inspector on the proxy itself =
+without removing the message forwarding layer. Example:
++ 		(ObjectViewer on: World evaluate: [Transcript showln: 'changed'] whenever=
+ChangeIn: [World submorphs]) inspect.  '<-- Changes won't be logged'
++ 		ToolSet inspect: (ObjectViewer on: World evaluate: [Transcript showln: 'c=
+hanged'] wheneverChangeIn: [World submorphs]).  '<-- Changes will be logged'
++ 	"
+- 	"Create and schedule an Inspector in which the user can examine the receiv=
+er's variables."
+  	ToolSet inspect: self!
+
+
+--===============0010110926965243984==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:27:01 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Morphic-ct.2167.mcz
+Date: Fri, 08 Nov 2024 01:26:50 +0000
+Message-ID: <20241108012657.4022B580179@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3031408449277012750=="
+
+--===============3031408449277012750==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Morphic to project The Trunk:
+http://source.squeak.org/trunk/Morphic-ct.2167.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Morphic-ct.2167
+Author: ct
+Time: 8 November 2024, 2:26:19.100138 am
+UUID: 0f041566-c21a-4dc5-aa8b-32419749e165
+Ancestors: Morphic-cmm.2166
+
+Complements Tools-ct.1281 (documents disadvantage of Object>>inspect vs ToolS=
+et>>inspect:.)
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Morphic-cmm.2166 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: TextEditor>>inspectIt (in category 'do-its') -----
+  inspectIt
+ =20
+  	 self evaluateSelectionAndDo: [:result |
+  		(model respondsTo: #inspectIt:result:)
+  			ifTrue: [model
+  				perform: #inspectIt:result:
+  				with: self selection
+  				with: result]
++ 			ifFalse: [ToolSet inspect: result "do not send #inspect because the resu=
+lt might be a proxy"]].!
+- 			ifFalse: [ToolSet inspect: result]].!
+
+
+--===============3031408449277012750==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:46:48 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: ToolBuilder-MVC-ct.73.mcz
+Date: Fri, 08 Nov 2024 01:46:41 +0000
+Message-ID: <20241108014644.8B4FF58011F@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============9212660690903087147=="
+
+--===============9212660690903087147==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of ToolBuilder-MVC to project The Tru=
+nk:
+http://source.squeak.org/trunk/ToolBuilder-MVC-ct.73.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: ToolBuilder-MVC-ct.73
+Author: ct
+Time: 8 November 2024, 2:46:41.152458 am
+UUID: e2ebc257-ecba-4a4e-9b45-6daba6158f16
+Ancestors: ToolBuilder-MVC-ct.72
+
+Merges informUserDuringResult.2.cs:
+	This changeset modifies all implementors of #informUser{:d,D}uring: to ensur=
+e that always the result of aBlock will be returned.
+
+Revision:
+	Provide optional access to bar inside aBlock.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against ToolBuilder-MVC-ct=
+.72 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: MVCUIManager>>informUser:during: (in category 'ui requests') =
+-----
+  informUser: aStringOrText during: aBlock
+  	"Display a message above (or below if insufficient room) the cursor=20
+  	during execution of the given block.
+  		Project uiManager informUser: 'Just a sec!!' during: [1 second wait].
+  	"
++ 	^ (SelectionMenu labels: '')
+- 	(SelectionMenu labels: '')
+  		displayAt: Sensor cursorPoint
+  		withCaption: (aStringOrText ifNotNil: [
+  			"This is a compromise. See commentary in DialogWindow >> #message:."
+  			aStringOrText withNoLineLongerThan: (aStringOrText size > 900 ifTrue: [6=
+5] ifFalse: [45])])
++ 		during: [aBlock cull: [:string | Transcript cr; show: string]]!
+- 		during: aBlock!
+
+Item was changed:
+  ----- Method: MVCUIManager>>informUserDuring: (in category 'ui requests') -=
+----
+  informUserDuring: aBlock
+  	"Display a message above (or below if insufficient room) the cursor=20
+  	during execution of the given block.
+  		UIManager default informUserDuring:[:bar|
+  			#(one two three) do:[:info|
+  				bar value: info.
+  				(Delay forSeconds: 1) wait]]"
++ 	^ aBlock value: [:string | Transcript cr; show: string]!
+- 	aBlock value:[:string| Transcript cr; show: string].!
+
+
+--===============9212660690903087147==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:47:35 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: ToolBuilder-Morphic-ct.353.mcz
+Date: Fri, 08 Nov 2024 01:47:26 +0000
+Message-ID: <20241108014730.02092581A67@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2602501888785744211=="
+
+--===============2602501888785744211==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of ToolBuilder-Morphic to project The=
+ Trunk:
+http://source.squeak.org/trunk/ToolBuilder-Morphic-ct.353.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: ToolBuilder-Morphic-ct.353
+Author: ct
+Time: 8 November 2024, 2:47:24.518552 am
+UUID: 97d92e45-20b5-4034-8e18-f676a4ad915e
+Ancestors: ToolBuilder-Morphic-eem.352
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against ToolBuilder-Morphi=
+c-eem.352 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: MorphicUIManager>>informUserDuring: (in category 'ui requests=
+') -----
+  informUserDuring: aBlock
+  	"Display a message above (or below if insufficient room) the cursor=20
+  	during execution of the given block.
+  		UIManager default informUserDuring:[:bar|
+  			#(one two three) do:[:info|
+  				bar value: info.
+  				(Delay forSeconds: 1) wait]]"
++ 	^ SystemProgressMorph
+- 	SystemProgressMorph
+  		informUserAt: nil during: aBlock.!
+
+
+--===============2602501888785744211==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:48:03 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: ToolBuilder-Kernel-ct.168.mcz
+Date: Fri, 08 Nov 2024 01:47:56 +0000
+Message-ID: <20241108014759.0926158017D@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3270535658408280986=="
+
+--===============3270535658408280986==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of ToolBuilder-Kernel to project The =
+Trunk:
+http://source.squeak.org/trunk/ToolBuilder-Kernel-ct.168.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: ToolBuilder-Kernel-ct.168
+Author: ct
+Time: 8 November 2024, 2:47:55.24335 am
+UUID: abd4d030-f574-440b-a1ab-06dd2298172b
+Ancestors: ToolBuilder-Kernel-mt.167
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against ToolBuilder-Kernel=
+-mt.167 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: UIManager>>informUser:during: (in category 'ui requests - pro=
+gress') -----
+  informUser: aString during: aBlock
+  	"Display a message above (or below if insufficient room) the cursor=20
+  	during execution of the given block.
++ 		Project uiManager informUser: 'Just a sec!!' during: [1 second wait].
++ 		Project uiManager informUser: 'Just a sec!!' during: [:bar | 1 second wai=
+t. bar value: 'Or maybe one more!!'. 1 second wait].
+- 		UIManager default informUser: 'Just a sec!!' during: [(Delay forSeconds: =
+1) wait].
+  	"
++ 	^self informUserDuring: [:bar | bar value: aString. aBlock cull: bar]!
+- 	^self informUserDuring:[:bar| bar value: aString. aBlock value].!
+
+
+--===============3270535658408280986==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:48:49 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-ct.1282.mcz
+Date: Fri, 08 Nov 2024 01:48:39 +0000
+Message-ID: <20241108014844.464DD581A7B@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6846280076365577113=="
+
+--===============6846280076365577113==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-ct.1282.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-ct.1282
+Author: ct
+Time: 8 November 2024, 2:48:26.205966 am
+UUID: bb955fe8-31bb-4763-bd6e-3a31d5147f5e
+Ancestors: Tools-ct.1281
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-ct.1281 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: PopUpMenu>>displayAt:withCaption:during: (in category 'displa=
+ying') -----
+  displayAt: aPoint withCaption: captionOrNil during: aBlock
+  	"Display the receiver just to the right of aPoint while aBlock is evaluate=
+d.  If the receiver is forced off screen, display it just to the right."
++ 	| delta savedArea captionForm captionSave outerFrame captionText tFrame fr=
+ameSaveLoc captionBox result |
+- 	| delta savedArea captionForm captionSave outerFrame captionText tFrame fr=
+ameSaveLoc captionBox |
+  	marker ifNil: [self computeForm].
+  	frame :=3D frame align: marker leftCenter with: aPoint + (2(a)0).
+  	outerFrame :=3D frame.
+  	captionOrNil notNil ifTrue:
+  		[captionText :=3D (DisplayText
+  				text: captionOrNil asText
+  				textStyle: self class standardMenuStyle copy centered)
+  					foregroundColor: (self userInterfaceTheme textColor ifNil: [Color blac=
+k])
+  					backgroundColor: (self userInterfaceTheme color ifNil: [Color white]).
+  		tFrame :=3D captionText boundingBox insetBy: -2.
+  		outerFrame :=3D frame merge: (tFrame align: tFrame bottomCenter
+  					with: frame topCenter + (0(a)2))].
+  	delta :=3D outerFrame amountToTranslateWithin: Display boundingBox.
+  	frame right > Display boundingBox right
+  		ifTrue: [delta :=3D 0 - frame width @ delta y].
+  	frame :=3D frame translateBy: delta.
+  	captionOrNil notNil ifTrue:
+  		[captionForm :=3D captionText form.
+  		captionBox :=3D captionForm boundingBox expandBy: 4.
+  		captionBox :=3D captionBox align: captionBox bottomCenter
+  								with: frame topCenter + (0(a)2).
+  		captionSave :=3D Form fromDisplay: captionBox.
+  		Display border: captionBox width: 4 fillColor: (self userInterfaceTheme c=
+olor ifNil: [Color white]).
+  		Display border: captionBox width: 2 fillColor: (self userInterfaceTheme t=
+extColor ifNil: [Color black]).
+  		captionForm displayAt: captionBox topLeft + 4].
+  	marker :=3D marker align: marker leftCenter with: aPoint + delta +  (2(a)0=
+).
+  	savedArea :=3D Form fromDisplay: frame.
+  	self menuForm displayOn: Display at: (frameSaveLoc :=3D frame topLeft).
+  	selection ~=3D 0 ifTrue: [Display reverse: marker].
++ 	result :=3D Cursor normal showWhile: aBlock.
+- 	Cursor normal showWhile: aBlock.
+  	savedArea displayOn: Display at: frameSaveLoc.
+  	captionOrNil notNil ifTrue:
++ 		[captionSave displayOn: Display at: captionBox topLeft].
++ 	^ result!
+- 		[captionSave displayOn: Display at: captionBox topLeft]!
+
+
+--===============6846280076365577113==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:49:45 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Morphic-ct.2168.mcz
+Date: Fri, 08 Nov 2024 01:49:31 +0000
+Message-ID: <20241108014942.36E03581A85@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5847020415344892568=="
+
+--===============5847020415344892568==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Morphic to project The Trunk:
+http://source.squeak.org/trunk/Morphic-ct.2168.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Morphic-ct.2168
+Author: ct
+Time: 8 November 2024, 2:49:01.25372 am
+UUID: affae8c5-45ae-452a-8f3d-bcb8412531c0
+Ancestors: Morphic-ct.2167
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Morphic-ct.2167 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: MVCMenuMorph>>informUserAt:during: (in category 'invoking') -=
+----
+  informUserAt: aPoint during: aBlock
+  	"Add this menu to the Morphic world during the execution of the given bloc=
+k."
+ =20
++ 	| title w result |
++ 	Smalltalk isMorphic ifFalse: [^ aBlock value].
+- 	| title w |
+- 	Smalltalk isMorphic ifFalse: [^ self].
+  =09
+  	title :=3D self allMorphs detect: [:ea | ea hasProperty: #titleString].
+  	title :=3D title submorphs first.
+  	self visible: false.
+  	w :=3D self currentWorld.
++ 	result :=3D aBlock value: [:string|
+- 	aBlock value: [:string|
+  		self visible ifFalse: [
+  			w addMorph: self centeredNear: aPoint.
+  			self visible: true].
+  		title contents: string.
+  		self setConstrainedPosition: Sensor cursorPoint hangOut: false.
+  		self changed.
+  		w displayWorld		 "show myself"
+  	].=20
+  	self delete.
++ 	w displayWorld.
++ 	^ result!
+- 	w displayWorld.!
+
+Item was changed:
+  ----- Method: MenuMorph>>informUserAt:during: (in category 'modal control')=
+ -----
+  informUserAt: aPoint during: aBlock
+  	"Add this menu to the Morphic world during the execution of the given bloc=
+k."
+ =20
++ 	| title world result |
+- 	| title world |
+  	title :=3D self allMorphs detect: [ :ea | ea hasProperty: #titleString ].
+  	title :=3D title submorphs first.
+  	self visible: false.
+  	world :=3D self currentWorld.
++ 	result :=3D aBlock value: [:string|
+- 	aBlock value: [:string|
+  		self visible ifFalse:[
+  			world addMorph: self centeredNear: aPoint.
+  			self visible: true].
+  		title contents: string.
+  		self setConstrainedPosition: self currentHand cursorPoint hangOut: false.
+  		self changed.
+  		world displayWorld "show myself"].=20
+  	self delete.
++ 	world displayWorld.
++ 	^ result!
+- 	world displayWorld.!
+
+Item was changed:
+  ----- Method: SystemProgressMorph class>>informUserAt:during: (in category =
+'instance creation') -----
+  informUserAt: aPoint during: workBlock
++ 	^ ProgressInitiationException=20
+- 	ProgressInitiationException=20
+  		display: ' '
+  		at: aPoint=20
+  		from: 0=20
+  		to: 0=20
+  		during: workBlock!
+
+
+--===============5847020415344892568==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:49:58 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: CommandLine-ct.26.mcz
+Date: Fri, 08 Nov 2024 01:49:51 +0000
+Message-ID: <20241108014954.DB426581A99@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2812657728862350496=="
+
+--===============2812657728862350496==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of CommandLine to project The Trunk:
+http://source.squeak.org/trunk/CommandLine-ct.26.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: CommandLine-ct.26
+Author: ct
+Time: 8 November 2024, 2:49:51.469492 am
+UUID: b3ed8d22-e003-4c91-be6a-48611ee4f286
+Ancestors: CommandLine-mt.25
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against CommandLine-mt.25 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: DummyUIManager>>informUserDuring: (in category 'ui requests')=
+ -----
+  informUserDuring: aBlock
++ 	^ aBlock value: Association new!
+- 	aBlock value: Association new.!
+
+
+--===============2812657728862350496==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:52:11 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: ToolBuilder-Tests-ct.7.mcz
+Date: Fri, 08 Nov 2024 01:52:04 +0000
+Message-ID: <20241108015207.16BF4581A74@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6296201425957753235=="
+
+--===============6296201425957753235==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of ToolBuilder-Tests to project The T=
+runk:
+http://source.squeak.org/trunk/ToolBuilder-Tests-ct.7.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: ToolBuilder-Tests-ct.7
+Author: ct
+Time: 8 November 2024, 2:52:03.956187 am
+UUID: e420e6fe-5c50-43ae-b17b-f33466f0ae91
+Ancestors: ToolBuilder-Tests-jr.6
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against ToolBuilder-Tests-=
+jr.6 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was added:
++ ----- Method: UIManagerTest>>testInformUserDuring (in category 'tests') ---=
+--
++ testInformUserDuring
++=20
++ 	self assert: 42 equals:
++ 		(Project uiManager informUser: 'test' during: [6 * 7]).!
+
+
+--===============6296201425957753235==--
+
+
+From commits@source.squeak.org Fri Nov  8 01:52:40 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Kernel-ct.1581.mcz
+Date: Fri, 08 Nov 2024 01:52:30 +0000
+Message-ID: <20241108015235.5E105581AA8@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4182802941014865863=="
+
+--===============4182802941014865863==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Christoph Thiede uploaded a new version of Kernel to project The Trunk:
+http://source.squeak.org/trunk/Kernel-ct.1581.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Kernel-ct.1581
+Author: ct
+Time: 8 November 2024, 2:52:15.259471 am
+UUID: ad20063e-1203-45e1-b59c-c843ce3bb5f3
+Ancestors: Kernel-eem.1580
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Kernel-eem.1580 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ClassBuilder>>informUserDuring: (in category 'private') -----
+  informUserDuring: aBlock
++=20
++ 	| result |
++ 	self class isSilent ifTrue: [^ aBlock value].
++ =09
++ 	result :=3D Project uiManager informUserDuring: [:bar |
+- 	self class isSilent ifTrue:[^aBlock value].
+- 	UIManager default informUserDuring:[:bar|
+  		progress :=3D bar.
+  		aBlock value].
++ 	progress :=3D nil.
++ 	^ result!
+- 	progress :=3D nil.!
+
+
+--===============4182802941014865863==--
+
+
+From christoph.thiede@student.hpi.uni-potsdam.de Fri Nov  8 01:52:49 2024
+From: christoph.thiede@student.hpi.uni-potsdam.de
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Review Request: informUserDuringResult.2.cs
+Date: Fri, 08 Nov 2024 02:52:25 +0100
+Message-ID:
+ <ef1d2dd1-dc5e-4685-8bbc-d7dc15765955@MX2018-DAG1.hpi.uni-potsdam.de>
+In-Reply-To:
+ <9870a667-5965-43c9-bbf6-c442e18a2a6f@MX2018-DAG2.hpi.uni-potsdam.de>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5154166973294721113=="
+
+--===============5154166973294721113==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Merged via ToolBuilder-MVC-ct.73.
+
+---
+Sent from Squeak Inbox Talk
+
+On 2022-05-25T22:40:08+02:00, christoph.thiede(a)student.hpi.uni-potsdam.de w=
+rote:
+
+> As we are in feature freeze, I am requesting a review from the list first, =
+but I would rather classify this as a fix than as a fixer. Unless any weird c=
+ode out there relied on #informUser:during: returning a UIManager instance or=
+ something similar, I would not expect any regressions with that.
+>=20
+> Best,
+> Christoph
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Change Set:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0informUserDuring=
+Result
+> Date:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A025 May 2022
+> Author:=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0Christoph Thiede
+>=20
+> This changeset modifies all implementors of #informUser{:d,D}uring: to ensu=
+re that always the result of aBlock will be returned.
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff =3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D
+>=20
+> ClassBuilder>>informUserDuring: {private} =C2=B7 ct 5/25/2022 22:32 (change=
+d)
+> informUserDuring: aBlock
+> - =C2=A0=C2=A0=C2=A0=C2=A0self class isSilent ifTrue:[^aBlock value].
+> - =C2=A0=C2=A0=C2=A0=C2=A0UIManager default informUserDuring:[:bar|
+> +=20
+> + =C2=A0=C2=A0=C2=A0=C2=A0| result |
+> + =C2=A0=C2=A0=C2=A0=C2=A0self class isSilent ifTrue: [^ aBlock value].
+> + =C2=A0=C2=A0=C2=A0=C2=A0
+> + =C2=A0=C2=A0=C2=A0=C2=A0result :=3D Project uiManager informUserDuring: [=
+:bar |
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0progress :=3D bar.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0aBlock value].
+> - =C2=A0=C2=A0=C2=A0=C2=A0progress :=3D nil.
+> + =C2=A0=C2=A0=C2=A0=C2=A0progress :=3D nil.
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ result
+>=20
+> DummyUIManager>>informUserDuring: {ui requests} =C2=B7 ct 5/25/2022 22:32 (=
+changed)
+> informUserDuring: aBlock
+> - =C2=A0=C2=A0=C2=A0=C2=A0aBlock value: Association new.
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ aBlock value: Association new
+>=20
+> MVCMenuMorph>>informUserAt:during: {invoking} =C2=B7 ct 5/25/2022 22:34 (ch=
+anged)
+> informUserAt: aPoint during: aBlock
+> =C2=A0=C2=A0=C2=A0=C2=A0"Add this menu to the Morphic world during the exec=
+ution of the given block."
+>=20
+> - =C2=A0=C2=A0=C2=A0=C2=A0| title w |
+> - =C2=A0=C2=A0=C2=A0=C2=A0Smalltalk isMorphic ifFalse: [^ self].
+> + =C2=A0=C2=A0=C2=A0=C2=A0| title w result |
+> + =C2=A0=C2=A0=C2=A0=C2=A0Smalltalk isMorphic ifFalse: [^ aBlock value].
+> =C2=A0=C2=A0=C2=A0=C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0title :=3D self allMorphs detect: [:ea | ea hasProp=
+erty: #titleString].
+> =C2=A0=C2=A0=C2=A0=C2=A0title :=3D title submorphs first.
+> =C2=A0=C2=A0=C2=A0=C2=A0self visible: false.
+> =C2=A0=C2=A0=C2=A0=C2=A0w :=3D self currentWorld.
+> - =C2=A0=C2=A0=C2=A0=C2=A0aBlock value: [:string|
+> + =C2=A0=C2=A0=C2=A0=C2=A0result :=3D aBlock value: [:string|
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0self visible ifFalse: [
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0w a=
+ddMorph: self centeredNear: aPoint.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0sel=
+f visible: true].
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0title contents: string.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0self setConstrainedPosition=
+: Sensor cursorPoint hangOut: false.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0self changed.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0w displayWorld=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "show myself"
+> =C2=A0=C2=A0=C2=A0=C2=A0].=20
+> =C2=A0=C2=A0=C2=A0=C2=A0self delete.
+> - =C2=A0=C2=A0=C2=A0=C2=A0w displayWorld.
+> + =C2=A0=C2=A0=C2=A0=C2=A0w displayWorld.
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ result
+>=20
+> MVCUIManager>>informUser:during: {ui requests} =C2=B7 ct 5/25/2022 22:31 (c=
+hanged)
+> informUser: aStringOrText during: aBlock
+> =C2=A0=C2=A0=C2=A0=C2=A0"Display a message above (or below if insufficient =
+room) the cursor=20
+> =C2=A0=C2=A0=C2=A0=C2=A0during execution of the given block.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Project uiManager informUse=
+r: 'Just a sec!' during: [1 second wait].
+> =C2=A0=C2=A0=C2=A0=C2=A0"
+> - =C2=A0=C2=A0=C2=A0=C2=A0(SelectionMenu labels: '')
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ (SelectionMenu labels: '')
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0displayAt: Sensor cursorPoi=
+nt
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0withCaption: (aStringOrText=
+ ifNotNil: [
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0"Th=
+is is a compromise. See commentary in DialogWindow >> #message:."
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0aSt=
+ringOrText withNoLineLongerThan: (aStringOrText size > 900 ifTrue: [65] ifFal=
+se: [45])])
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0during: aBlock
+>=20
+> MVCUIManager>>informUserDuring: {ui requests} =C2=B7 ct 5/25/2022 22:33 (ch=
+anged)
+> informUserDuring: aBlock
+> =C2=A0=C2=A0=C2=A0=C2=A0"Display a message above (or below if insufficient =
+room) the cursor=20
+> =C2=A0=C2=A0=C2=A0=C2=A0during execution of the given block.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0UIManager default informUse=
+rDuring:[:bar|
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0#(o=
+ne two three) do:[:info|
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0bar value: info.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0(Delay forSeconds: 1) wait]]"
+> - =C2=A0=C2=A0=C2=A0=C2=A0aBlock value:[:string| Transcript cr; show: strin=
+g].
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ aBlock value: [:string | Transcript cr; show: s=
+tring]
+>=20
+> MenuMorph>>informUserAt:during: {modal control} =C2=B7 ct 5/25/2022 22:34 (=
+changed)
+> informUserAt: aPoint during: aBlock
+> =C2=A0=C2=A0=C2=A0=C2=A0"Add this menu to the Morphic world during the exec=
+ution of the given block."
+>=20
+> - =C2=A0=C2=A0=C2=A0=C2=A0| title world |
+> + =C2=A0=C2=A0=C2=A0=C2=A0| title world result |
+> =C2=A0=C2=A0=C2=A0=C2=A0title :=3D self allMorphs detect: [ :ea | ea hasPro=
+perty: #titleString ].
+> =C2=A0=C2=A0=C2=A0=C2=A0title :=3D title submorphs first.
+> =C2=A0=C2=A0=C2=A0=C2=A0self visible: false.
+> =C2=A0=C2=A0=C2=A0=C2=A0world :=3D self currentWorld.
+> - =C2=A0=C2=A0=C2=A0=C2=A0aBlock value: [:string|
+> + =C2=A0=C2=A0=C2=A0=C2=A0result :=3D aBlock value: [:string|
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0self visible ifFalse:[
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0wor=
+ld addMorph: self centeredNear: aPoint.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0sel=
+f visible: true].
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0title contents: string.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0self setConstrainedPosition=
+: self currentHand cursorPoint hangOut: false.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0self changed.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0world displayWorld "show my=
+self"].=20
+> =C2=A0=C2=A0=C2=A0=C2=A0self delete.
+> - =C2=A0=C2=A0=C2=A0=C2=A0world displayWorld.
+> + =C2=A0=C2=A0=C2=A0=C2=A0world displayWorld.
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ result
+>=20
+> MorphicUIManager>>informUserDuring: {ui requests} =C2=B7 ct 5/25/2022 22:32=
+ (changed)
+> informUserDuring: aBlock
+> =C2=A0=C2=A0=C2=A0=C2=A0"Display a message above (or below if insufficient =
+room) the cursor=20
+> =C2=A0=C2=A0=C2=A0=C2=A0during execution of the given block.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0UIManager default informUse=
+rDuring:[:bar|
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0#(o=
+ne two three) do:[:info|
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0bar value: info.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0(Delay forSeconds: 1) wait]]"
+> - =C2=A0=C2=A0=C2=A0=C2=A0SystemProgressMorph
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ SystemProgressMorph
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0informUserAt: nil during: a=
+Block.
+>=20
+> PopUpMenu>>displayAt:withCaption:during: {displaying} =C2=B7 ct 5/25/2022 2=
+2:33 (changed)
+> displayAt: aPoint withCaption: captionOrNil during: aBlock
+> =C2=A0=C2=A0=C2=A0=C2=A0"Display the receiver just to the right of aPoint w=
+hile aBlock is evaluated.  If the receiver is forced off screen, display it j=
+ust to the right."
+> - =C2=A0=C2=A0=C2=A0=C2=A0| delta savedArea captionForm captionSave outerFr=
+ame captionText tFrame frameSaveLoc captionBox |
+> + =C2=A0=C2=A0=C2=A0=C2=A0| delta savedArea captionForm captionSave outerFr=
+ame captionText tFrame frameSaveLoc captionBox result |
+> =C2=A0=C2=A0=C2=A0=C2=A0marker ifNil: [self computeForm].
+> =C2=A0=C2=A0=C2=A0=C2=A0frame :=3D frame align: marker leftCenter with: aPo=
+int + (2(a)0).
+> =C2=A0=C2=A0=C2=A0=C2=A0outerFrame :=3D frame.
+> =C2=A0=C2=A0=C2=A0=C2=A0captionOrNil notNil ifTrue:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0[captionText :=3D (DisplayT=
+ext
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0text: captionOrNil asText
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0textStyle: self class standardMenuStyle copy centered)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0foregroundColor: (self userInter=
+faceTheme textColor ifNil: [Color black])
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0backgroundColor: (self userInter=
+faceTheme color ifNil: [Color white]).
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0tFrame :=3D captionText bou=
+ndingBox insetBy: -2.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0outerFrame :=3D frame merge=
+: (tFrame align: tFrame bottomCenter
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0with: frame topCenter + (0(a)2))=
+].
+> =C2=A0=C2=A0=C2=A0=C2=A0delta :=3D outerFrame amountToTranslateWithin: Disp=
+lay boundingBox.
+> =C2=A0=C2=A0=C2=A0=C2=A0frame right > Display boundingBox right
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0ifTrue: [delta :=3D 0 - fra=
+me width @ delta y].
+> =C2=A0=C2=A0=C2=A0=C2=A0frame :=3D frame translateBy: delta.
+> =C2=A0=C2=A0=C2=A0=C2=A0captionOrNil notNil ifTrue:
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0[captionForm :=3D captionTe=
+xt form.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0captionBox :=3D captionForm=
+ boundingBox expandBy: 4.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0captionBox :=3D captionBox =
+align: captionBox bottomCenter
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0with: frame topCenter + (0(a)2).
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0captionSave :=3D Form fromD=
+isplay: captionBox.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Display border: captionBox =
+width: 4 fillColor: (self userInterfaceTheme color ifNil: [Color white]).
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0Display border: captionBox =
+width: 2 fillColor: (self userInterfaceTheme textColor ifNil: [Color black]).
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0captionForm displayAt: capt=
+ionBox topLeft + 4].
+> =C2=A0=C2=A0=C2=A0=C2=A0marker :=3D marker align: marker leftCenter with: a=
+Point + delta +  (2(a)0).
+> =C2=A0=C2=A0=C2=A0=C2=A0savedArea :=3D Form fromDisplay: frame.
+> =C2=A0=C2=A0=C2=A0=C2=A0self menuForm displayOn: Display at: (frameSaveLoc =
+:=3D frame topLeft).
+> =C2=A0=C2=A0=C2=A0=C2=A0selection ~=3D 0 ifTrue: [Display reverse: marker].
+> - =C2=A0=C2=A0=C2=A0=C2=A0Cursor normal showWhile: aBlock.
+> + =C2=A0=C2=A0=C2=A0=C2=A0result :=3D Cursor normal showWhile: aBlock.
+> =C2=A0=C2=A0=C2=A0=C2=A0savedArea displayOn: Display at: frameSaveLoc.
+> =C2=A0=C2=A0=C2=A0=C2=A0captionOrNil notNil ifTrue:
+> - =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0[captionSave displayOn: D=
+isplay at: captionBox topLeft]
+> + =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0[captionSave displayOn: D=
+isplay at: captionBox topLeft].
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ result
+>=20
+> SystemProgressMorph class>>informUserAt:during: {instance creation} =C2=B7 =
+ct 5/25/2022 22:34 (changed)
+> informUserAt: aPoint during: workBlock
+> - =C2=A0=C2=A0=C2=A0=C2=A0ProgressInitiationException=20
+> + =C2=A0=C2=A0=C2=A0=C2=A0^ ProgressInitiationException=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0display: ' '
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0at: aPoint=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0from: 0=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0to: 0=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0during: workBlock
+>=20
+> UIManagerTest>>testInformUserDuring {tests} =C2=B7 ct 5/25/2022 22:37
+> + testInformUserDuring
+> +=20
+> + =C2=A0=C2=A0=C2=A0=C2=A0self assert: 42 equals:
+> + =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0(Project uiManager inform=
+User: 'test' during: [6 * 7]).
+>=20
+> ---
+> Sent from Squeak Inbox Talk
+> ["informUserDuringResult.2.cs"]
+
+--===============5154166973294721113==--
+
+
+From Christoph.Thiede@student.hpi.uni-potsdam.de Fri Nov  8 02:01:42 2024
+From: "Thiede, Christoph" <Christoph.Thiede@student.hpi.uni-potsdam.de>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: The Trunk: CommandLine-ct.26.mcz
+Date: Fri, 08 Nov 2024 02:01:35 +0000
+Message-ID: <DU0PR09MB637156BB9C5C15253439A64BBD5D2@DU0PR09MB6371.eurprd09.prod.outlook.com>
+In-Reply-To: <20241108014954.DB426581A99@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4429434356359565506=="
+
+--===============4429434356359565506==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+By the way, the implementation here and in DummyUIManager>>#displayProgress:a=
+t:from:to:during: possibly bloats memory when aBlock logs long strings. We co=
+uld either use a WeakValueAssociation or just a regular empty [:string | ] bl=
+ock instead.
+
+Best,
+Christoph
+________________________________
+Von: commits(a)source.squeak.org <commits(a)source.squeak.org>
+Gesendet: Freitag, 8. November 2024 02:49 Uhr
+An: squeak-dev(a)lists.squeakfoundation.org <squeak-dev(a)lists.squeakfoundat=
+ion.org>; packages(a)lists.squeakfoundation.org <packages(a)lists.squeakfound=
+ation.org>
+Betreff: [squeak-dev] The Trunk: CommandLine-ct.26.mcz
+
+Christoph Thiede uploaded a new version of CommandLine to project The Trunk:
+http://source.squeak.org/trunk/CommandLine-ct.26.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: CommandLine-ct.26
+Author: ct
+Time: 8 November 2024, 2:49:51.469492 am
+UUID: b3ed8d22-e003-4c91-be6a-48611ee4f286
+Ancestors: CommandLine-mt.25
+
+Complements ToolBuilder-MVC-ct.73 (return result of aBlock and provide option=
+al access to bar).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against CommandLine-mt.25 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: DummyUIManager>>informUserDuring: (in category 'ui requests')=
+ -----
+  informUserDuring: aBlock
++        ^ aBlock value: Association new!
+-        aBlock value: Association new.!
+
+Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.org
+
+
+
+--===============4429434356359565506==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGh0bWw+CjxoZWFkPgo8bWV0YSBodHRwLWVxdWl2PSJDb250ZW50LVR5cGUiIGNvbnRlbnQ9InRl
+eHQvaHRtbDsgY2hhcnNldD11cy1hc2NpaSI+CjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyIgc3R5bGU9
+ImRpc3BsYXk6bm9uZTsiPiBQIHttYXJnaW4tdG9wOjA7bWFyZ2luLWJvdHRvbTowO30gPC9zdHls
+ZT4KPC9oZWFkPgo8Ym9keSBkaXI9Imx0ciI+CjxkaXYgY2xhc3M9ImVsZW1lbnRUb1Byb29mIiBz
+dHlsZT0iZm9udC1mYW1pbHk6IEFwdG9zLCBBcHRvc19FbWJlZGRlZEZvbnQsIEFwdG9zX01TRm9u
+dFNlcnZpY2UsIENhbGlicmksIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB0
+OyBjb2xvcjogcmdiKDAsIDAsIDApOyI+CkJ5IHRoZSB3YXksIHRoZSBpbXBsZW1lbnRhdGlvbiBo
+ZXJlIGFuZCBpbiBEdW1teVVJTWFuYWdlciZndDsmZ3Q7I2Rpc3BsYXlQcm9ncmVzczphdDpmcm9t
+OnRvOmR1cmluZzogcG9zc2libHkgYmxvYXRzIG1lbW9yeSB3aGVuIGFCbG9jayBsb2dzIGxvbmcg
+c3RyaW5ncy4gV2UgY291bGQgZWl0aGVyIHVzZSBhIFdlYWtWYWx1ZUFzc29jaWF0aW9uIG9yIGp1
+c3QgYSByZWd1bGFyIGVtcHR5IFs6c3RyaW5nIHwgXSBibG9jayBpbnN0ZWFkLjwvZGl2Pgo8ZGl2
+IGNsYXNzPSJlbGVtZW50VG9Qcm9vZiIgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcHRvcywgQXB0b3Nf
+RW1iZWRkZWRGb250LCBBcHRvc19NU0ZvbnRTZXJ2aWNlLCBDYWxpYnJpLCBIZWx2ZXRpY2EsIHNh
+bnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsiPgo8YnI+Cjwv
+ZGl2Pgo8ZGl2IGNsYXNzPSJlbGVtZW50VG9Qcm9vZiIgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcHRv
+cywgQXB0b3NfRW1iZWRkZWRGb250LCBBcHRvc19NU0ZvbnRTZXJ2aWNlLCBDYWxpYnJpLCBIZWx2
+ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsi
+PgpCZXN0LDwvZGl2Pgo8ZGl2IGNsYXNzPSJlbGVtZW50VG9Qcm9vZiIgc3R5bGU9ImZvbnQtZmFt
+aWx5OiBBcHRvcywgQXB0b3NfRW1iZWRkZWRGb250LCBBcHRvc19NU0ZvbnRTZXJ2aWNlLCBDYWxp
+YnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJnYigw
+LCAwLCAwKTsiPgpDaHJpc3RvcGg8L2Rpdj4KPGRpdiBpZD0iYXBwZW5kb25zZW5kIj48L2Rpdj4K
+PGhyIHN0eWxlPSJkaXNwbGF5OmlubGluZS1ibG9jazt3aWR0aDo5OCUiIHRhYmluZGV4PSItMSI+
+CjxkaXYgaWQ9ImRpdlJwbHlGd2RNc2ciIGRpcj0ibHRyIj48Zm9udCBmYWNlPSJDYWxpYnJpLCBz
+YW5zLXNlcmlmIiBzdHlsZT0iZm9udC1zaXplOjExcHQiIGNvbG9yPSIjMDAwMDAwIj48Yj5Wb246
+PC9iPiBjb21taXRzQHNvdXJjZS5zcXVlYWsub3JnICZsdDtjb21taXRzQHNvdXJjZS5zcXVlYWsu
+b3JnJmd0Ozxicj4KPGI+R2VzZW5kZXQ6PC9iPiBGcmVpdGFnLCA4LiBOb3ZlbWJlciAyMDI0IDAy
+OjQ5IFVocjxicj4KPGI+QW46PC9iPiBzcXVlYWstZGV2QGxpc3RzLnNxdWVha2ZvdW5kYXRpb24u
+b3JnICZsdDtzcXVlYWstZGV2QGxpc3RzLnNxdWVha2ZvdW5kYXRpb24ub3JnJmd0OzsgcGFja2Fn
+ZXNAbGlzdHMuc3F1ZWFrZm91bmRhdGlvbi5vcmcgJmx0O3BhY2thZ2VzQGxpc3RzLnNxdWVha2Zv
+dW5kYXRpb24ub3JnJmd0Ozxicj4KPGI+QmV0cmVmZjo8L2I+IFtzcXVlYWstZGV2XSBUaGUgVHJ1
+bms6IENvbW1hbmRMaW5lLWN0LjI2Lm1jejwvZm9udD4KPGRpdj4mbmJzcDs8L2Rpdj4KPC9kaXY+
+CjxkaXYgY2xhc3M9IkJvZHlGcmFnbWVudCI+PGZvbnQgc2l6ZT0iMiI+PHNwYW4gc3R5bGU9ImZv
+bnQtc2l6ZToxMXB0OyI+CjxkaXYgY2xhc3M9IlBsYWluVGV4dCI+Q2hyaXN0b3BoIFRoaWVkZSB1
+cGxvYWRlZCBhIG5ldyB2ZXJzaW9uIG9mIENvbW1hbmRMaW5lIHRvIHByb2plY3QgVGhlIFRydW5r
+Ojxicj4KPGEgaHJlZj0iaHR0cDovL3NvdXJjZS5zcXVlYWsub3JnL3RydW5rL0NvbW1hbmRMaW5l
+LWN0LjI2Lm1jeiI+aHR0cDovL3NvdXJjZS5zcXVlYWsub3JnL3RydW5rL0NvbW1hbmRMaW5lLWN0
+LjI2Lm1jejwvYT48YnI+Cjxicj4KPT09PT09PT09PT09PT09PT09PT0gU3VtbWFyeSA9PT09PT09
+PT09PT09PT09PT09PTxicj4KPGJyPgpOYW1lOiBDb21tYW5kTGluZS1jdC4yNjxicj4KQXV0aG9y
+OiBjdDxicj4KVGltZTogOCBOb3ZlbWJlciAyMDI0LCAyOjQ5OjUxLjQ2OTQ5MiBhbTxicj4KVVVJ
+RDogYjNlZDhkMjItZTAwMy00YzkxLWJlNmEtNDg2MTFlZTRmMjg2PGJyPgpBbmNlc3RvcnM6IENv
+bW1hbmRMaW5lLW10LjI1PGJyPgo8YnI+CkNvbXBsZW1lbnRzIFRvb2xCdWlsZGVyLU1WQy1jdC43
+MyAocmV0dXJuIHJlc3VsdCBvZiBhQmxvY2sgYW5kIHByb3ZpZGUgb3B0aW9uYWwgYWNjZXNzIHRv
+IGJhcikuPGJyPgo8YnI+Cj09PT09PT09PT09PT09PSBEaWZmIGFnYWluc3QgQ29tbWFuZExpbmUt
+bXQuMjUgPT09PT09PT09PT09PT09PGJyPgo8YnI+Ckl0ZW0gd2FzIGNoYW5nZWQ6PGJyPgombmJz
+cDsgLS0tLS0gTWV0aG9kOiBEdW1teVVJTWFuYWdlciZndDsmZ3Q7aW5mb3JtVXNlckR1cmluZzog
+KGluIGNhdGVnb3J5ICd1aSByZXF1ZXN0cycpIC0tLS0tPGJyPgombmJzcDsgaW5mb3JtVXNlckR1
+cmluZzogYUJsb2NrPGJyPgorJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IF4gYUJsb2NrIHZhbHVlOiBBc3NvY2lhdGlvbiBuZXchPGJyPgotJm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IGFCbG9jayB2YWx1ZTogQXNzb2NpYXRpb24gbmV3
+LiE8YnI+Cjxicj4KU3F1ZWFrLWRldiBtYWlsaW5nIGxpc3QgLS0gc3F1ZWFrLWRldkBsaXN0cy5z
+cXVlYWtmb3VuZGF0aW9uLm9yZzxicj4KVG8gdW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byBz
+cXVlYWstZGV2LWxlYXZlQGxpc3RzLnNxdWVha2ZvdW5kYXRpb24ub3JnPGJyPgo8L2Rpdj4KPC9z
+cGFuPjwvZm9udD48L2Rpdj4KPC9ib2R5Pgo8L2h0bWw+Cg==
+
+--===============4429434356359565506==--
+
+
+From eliot.miranda@gmail.com Fri Nov  8 02:57:55 2024
+From: Eliot Miranda <eliot.miranda@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: The Trunk: Tools-ct.1281.mcz
+Date: Thu, 07 Nov 2024 18:57:32 -0800
+Message-ID: <3FB48148-B516-498D-BC21-B63380C7A35F@gmail.com>
+In-Reply-To: <20241108012559.253505805E1@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8467252067703624183=="
+
+--===============8467252067703624183==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Christoph,
+
+    mention of inspecting proxies intrigues me. Are you working on remote too=
+ls per chance? If so, please say more. If not, please say more :-)
+
+_,,,^..^,,,_ (phone)
+
+> On Nov 7, 2024, at 5:26=E2=80=AFPM, commits(a)source.squeak.org wrote:
+>=20
+> =EF=BB=BFChristoph Thiede uploaded a new version of Tools to project The Tr=
+unk:
+> http://source.squeak.org/trunk/Tools-ct.1281.mcz
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Name: Tools-ct.1281
+> Author: ct
+> Time: 8 November 2024, 2:25:39.907801 am
+> UUID: 34d92e77-9440-4eb2-9a64-431cb670c975
+> Ancestors: Tools-eem.1280
+>=20
+> Documents disadvantage of Object>>inspect vs ToolSet>>inspect:.
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1280 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Item was changed:
+>  ----- Method: Object>>inspect (in category '*Tools-Inspector') -----
+>  inspect
+> +    "Create and schedule an inspector in which the user can examine the re=
+ceiver's variables.
+> +   =20
+> +    NB: In a generic tooling context, consider always using 'ToolSet inspe=
+ct: anObject' instead. The difference is that 'anObject inspect' will possibl=
+y send a message to a transparent proxy object and inspect the wrong object, =
+while 'ToolSet inspect: anObject' will bring up an inspector on the proxy its=
+elf without removing the message forwarding layer. Example:
+> +        (ObjectViewer on: World evaluate: [Transcript showln: 'changed'] w=
+heneverChangeIn: [World submorphs]) inspect.  '<-- Changes won't be logged'
+> +        ToolSet inspect: (ObjectViewer on: World evaluate: [Transcript sho=
+wln: 'changed'] wheneverChangeIn: [World submorphs]).  '<-- Changes will be l=
+ogged'
+> +    "
+> -    "Create and schedule an Inspector in which the user can examine the re=
+ceiver's variables."
+>      ToolSet inspect: self!
+>=20
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.o=
+rg
+
+--===============8467252067703624183==--
+
+
+From christoph.thiede@student.hpi.uni-potsdam.de Fri Nov  8 04:48:40 2024
+From: christoph.thiede@student.hpi.uni-potsdam.de
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: The Trunk: Tools-ct.1281.mcz
+Date: Fri, 08 Nov 2024 05:10:47 +0100
+Message-ID:
+ <e3255ea4-ac5b-4b67-9bd3-b6c6a6f884fb@MX2018-DAG1.hpi.uni-potsdam.de>
+In-Reply-To: <3FB48148-B516-498D-BC21-B63380C7A35F@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6870451365999883414=="
+
+--===============6870451365999883414==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Eliot,
+
+great question! I can say more indeed. :-) I cannot remember in which particu=
+lar situation I noticed this issue, but in general I like to use proxies for =
+a number of reasons:
+
+(1) ObjectViewer is a handy tool for setting object-oriented breakpoints once=
+ in a while (until it causes a loop in the debugger and locks me out my proje=
+ct -,-)
+
+(2) In fact I have worked on a tiny remote object server earlier this year: h=
+ttps://github.com/LinqLover/yaros The goal was to outsource some logic from a=
+ SqueakJS image to another OSVM image without separating the object space, bu=
+t the experiment failed because the network overhead was too large. Maybe I'l=
+l try to bring WebSockets to Squeak in the future to speed this up, but I exp=
+ect that naive message sending over the network boundary without optimizing t=
+he affinity of objects will render this approach impractical for many workloa=
+ds even then. You can find some examples here: https://github.com/LinqLover/y=
+aros/blob/733b6247eb5fe65088523ff42fc602df30f720cf/smalltalk/Yaros.package/Ya=
+rosServer.class/class/example.st Another challenge was missing support for pr=
+oxies in primitive methods, so adding proxy resolution support to essential p=
+rimitive fallback code is still on my list. You can find one example of how I=
+ would envision to patch many primitive methods in the trunk here: https://gi=
+thub.com/LinqLover/yaros/blob/733b6247eb5fe65088523ff42fc602df30f720cf/smallt=
+alk/Yaros.package/Object.extension/instance/perform.withArguments..st It shou=
+ld actually be pretty uncomplicated if you think the approach makes sense.
+
+(3) The TraceDebugger uses ProtoObject subinstances to model snapshots of ear=
+lier object versions from a program trace without rematerializing them, allow=
+ing for space- and time-efficient recording and navigating between different =
+points in time (the actual state changes are stored in a dictionary of sparse=
+ arrays instead and looked up from there by the proxies, see https://dl.acm.o=
+rg/doi/fullHtml/10.1145/3594671.3594678#fig4). All displays and interactions =
+that you perform with historic object versions in the inspectors of a TraceDe=
+bugger go transparently through these proxies, allowing it to fully reuse the=
+ existing inspectors implementation. In addition, to allow querying state cha=
+nges over time in the history explorer, I modeled *object traces* through TDB=
+RangeProxy objects that represent an object over a slice of time and *fray ou=
+t* into multiple proxies when a message send would result in multiple non-ide=
+ntical objects over the viewed time range (this is detected through a kind of=
+ symbolic execution that imitates SIMD instructions using a custom Simulation=
+Studio Simulator). You can find some examples of how this can be useful for p=
+rogram exploration in the paper linked above.
+
+Sorry for the wall of text, but if this is interesting to you, I could make i=
+t even longer. :-)
+
+Best,
+Christoph
+
+---
+Sent from Squeak Inbox Talk
+
+On 2024-11-07T18:57:32-08:00, eliot.miranda(a)gmail.com wrote:
+
+> Hi Christoph,
+>=20
+>     mention of inspecting proxies intrigues me. Are you working on remote t=
+ools per chance? If so, please say more. If not, please say more :-)
+>=20
+> _,,,^..^,,,_ (phone)
+>=20
+> > On Nov 7, 2024, at 5:26=E2=80=AFPM, commits(a)source.squeak.org wrote:
+> >=20
+> > Christoph Thiede uploaded a new version of Tools to project The Trunk:
+> > http://source.squeak.org/trunk/Tools-ct.1281.mcz
+> >=20
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >=20
+> > Name: Tools-ct.1281
+> > Author: ct
+> > Time: 8 November 2024, 2:25:39.907801 am
+> > UUID: 34d92e77-9440-4eb2-9a64-431cb670c975
+> > Ancestors: Tools-eem.1280
+> >=20
+> > Documents disadvantage of Object>>inspect vs ToolSet>>inspect:.
+> >=20
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1280=
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >=20
+> > Item was changed:
+> >  ----- Method: Object>>inspect (in category '*Tools-Inspector') -----
+> >  inspect
+> > +    "Create and schedule an inspector in which the user can examine the =
+receiver's variables.
+> > +   =20
+> > +    NB: In a generic tooling context, consider always using 'ToolSet ins=
+pect: anObject' instead. The difference is that 'anObject inspect' will possi=
+bly send a message to a transparent proxy object and inspect the wrong object=
+, while 'ToolSet inspect: anObject' will bring up an inspector on the proxy i=
+tself without removing the message forwarding layer. Example:
+> > +        (ObjectViewer on: World evaluate: [Transcript showln: 'changed']=
+ wheneverChangeIn: [World submorphs]) inspect.  '<-- Changes won't be logged'
+> > +        ToolSet inspect: (ObjectViewer on: World evaluate: [Transcript s=
+howln: 'changed'] wheneverChangeIn: [World submorphs]).  '<-- Changes will be=
+ logged'
+> > +    "
+> > -    "Create and schedule an Inspector in which the user can examine the =
+receiver's variables."
+> >      ToolSet inspect: self!
+> >=20
+> > Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> > To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation=
+.org
+
+--===============6870451365999883414==--
+
+
+From drurowin@gmail.com Fri Nov  8 04:57:18 2024
+From: Lauren P <drurowin@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Thu, 07 Nov 2024 21:56:58 -0700
+Message-ID:
+ <CANAQNuzrSwGXxcdjpC=qu8yxcwU=QsPXLTY=xxPtKRhqahvBug@mail.gmail.com>
+In-Reply-To: <B5A4B9A3-7614-4DBA-80D3-E89CC5296F0F@rowledge.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4790380975638906063=="
+
+--===============4790380975638906063==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+I haven't used 'save as new version' really at all. It's a super easy way
+to bulk roll back a ton of changes, but I always forget about it until it's
+time to make a huge undo. "Oh, I should have pressed 'save as new
+version'... Oh well..."
+
+I saw that feature on Vax because of the Common Lisp documentation and was
+immediately jealous. Why would you ever remove something like that.
+
+On Thu, Nov 7, 2024, 18:26 Tim Rowledge <tim(a)rowledge.org> wrote:
+
+> That 'save as new version' is also well worth remembering, particularly
+> when you are doing things you suspect might blow up badly. It's almost like
+> the ancient and very useful behaviour of the Vax OS where any save added a
+> version number and kept older copies automagically.
+>
+> > On 2024-11-07, at 10:10 AM, Lauren Pullen <drurowin(a)gmail.com> wrote:
+> >
+> > Hi all,
+> >
+> > Thanks for all the great tips for recovering from an e-brick.  I'm happy
+> > to see there are a couple ways to interact with both the VM and the
+> > image from the outside.
+> >
+> > I take frequent backups of my whole computer, so my brick recovery
+> > process involved fetching a copy from the freezer and 'Recover Changes',
+> > of which there weren't that many.
+> >
+> > I'm working on a direct manipulation level editor; this experience has
+> > convinced me to make it so I can get a reference to the game world from
+> > DoItFirst to save the object file in case a recovery situation comes up
+> > while level editing.
+> >
+> > On 11/4/24 20:24, lewis(a)mail.msen.com wrote:
+> >> You may still be able to recover your broken image.
+> >>
+> >> Squeak provides a mechanism for inserting code or debugging very early
+> in the image startup processing, and you may be able to use this to fix
+> your broken image.
+> >>
+> >> The implemention is in class DoItFirst, which is placed in the image
+> startup list to let to insert things into the startup processing, including
+> opening a debugger at the earliest possible time (see the DoItFirst class
+> comment).
+> >>
+> >> For example, if you are on a unix-like system and your VM executable is
+> "squeakvm", and your broken image is "squeak.image", then you might do this:
+> >>
+> >> $ squeakvm squeak.image --help
+> >>
+> >> Which will display this help message on your console output:
+> >>
+> >>  DoItFirst image arguments:
+> >>      --doit argumentlist "evaluate each argument as a doIt expression"
+> >>      --evaluate arg "evaluate arg, print result then exit"
+> >>      --file filename "evaluate contents of filename, print result then
+> exit"
+> >>      --filein filelist "file in each file named in fileList"
+> >>      --cwd path "set FileDirectory defaultDirectory to path prior to
+> evaluating other options"
+> >>      --debug "enter a debugger as soon as possible in the startUp
+> processing"
+> >>      --help "print this message"
+> >>  some arguments have single character synonyms, -f is a synonym for
+> --file, -d for --doit
+> >>  single '-' may be used instead of '--', -help is interpreted as --help
+> >>
+> >> This gives a summary of the available command line options. As a
+> starting point, you might want to see if you can get into a debugger before
+> something bad happens, so you might (for example) do this:
+> >>
+> >> $ squeakvm squeak.image --debug
+> >>
+> >> If that does not work, but if you have an good idea of the problem that
+> you need to fix, then you may be able to use the --doit command line option
+> to pass a Smalltalk doIt expression to be evaluated before the bad things
+> happen.
+> >>
+> >> See also Eliot's explanation of how to directly signal the semaphore
+> from a debugger on the VM. I'm not sure what is the best approach but this
+> should give you a few options.
+> >>
+> >> HTH,
+> >> Dave
+> >>
+> >>
+> >>
+> >> ---
+> >> Sent from Squeak Inbox Talk
+> >>
+> >> On 2024-11-03T12:44:09-07:00, drurowin(a)gmail.com wrote:
+> >>
+> >>> Hi List,
+> >>>
+> >>> I was trying to draw something in four background threads and resume
+> the
+> >>> UI thread with a chain of four Semaphore instances, but the background
+> >>> thread had an error.  No problem.  Fix the error, close the debugger,
+> >>> save, resume drawing.
+> >>>
+> >>> Long story short, something in the image file is waiting for a
+> semaphore
+> >>> that will never signal, so opening the image does absolutely nothing
+> and
+> >>> it is now a 157 MB e-brick.
+> >>>
+> >>> Now, if you'll excuse me, I need to grab a copy of my game.image out of
+> >>> the daily system snapshot.
+> >>>
+> >>> The moral of this story is to make backups.  Or maybe utilize 'save as
+> >>> new version'.  Or both.
+> >> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> >> To unsubscribe send an email to
+> squeak-dev-leave(a)lists.squeakfoundation.org
+> >>
+> >
+> > Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> > To unsubscribe send an email to
+> squeak-dev-leave(a)lists.squeakfoundation.org
+>
+>
+> tim
+> --
+> tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+> Useful Latin Phrases:- Romani quidem artem amatoriam invenerunt. = You
+> know, the Romans invented the art of love.
+>
+>
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to
+> squeak-dev-leave(a)lists.squeakfoundation.org
+>
+
+
+
+--===============4790380975638906063==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGRpdiBkaXI9ImF1dG8iPjxkaXY+SSBoYXZlbiYjMzk7dCB1c2VkICYjMzk7c2F2ZSBhcyBuZXcg
+dmVyc2lvbiYjMzk7IHJlYWxseSBhdCBhbGwuIEl0JiMzOTtzIGEgc3VwZXIgZWFzeSB3YXkgdG8g
+YnVsayByb2xsIGJhY2sgYSB0b24gb2YgY2hhbmdlcywgYnV0IEkgYWx3YXlzIGZvcmdldCBhYm91
+dCBpdCB1bnRpbCBpdCYjMzk7cyB0aW1lIHRvIG1ha2UgYSBodWdlIHVuZG8uICZxdW90O09oLCBJ
+IHNob3VsZCBoYXZlIHByZXNzZWQgJiMzOTtzYXZlIGFzIG5ldyB2ZXJzaW9uJiMzOTsuLi4gT2gg
+d2VsbC4uLiZxdW90OzwvZGl2PjxkaXYgZGlyPSJhdXRvIj48YnI+PC9kaXY+PGRpdiBkaXI9ImF1
+dG8iPkkgc2F3IHRoYXQgZmVhdHVyZSBvbiBWYXggYmVjYXVzZSBvZiB0aGUgQ29tbW9uIExpc3Ag
+ZG9jdW1lbnRhdGlvbiBhbmQgd2FzIGltbWVkaWF0ZWx5IGplYWxvdXMuIFdoeSB3b3VsZCB5b3Ug
+ZXZlciByZW1vdmUgc29tZXRoaW5nIGxpa2UgdGhhdC48L2Rpdj48ZGl2IGRpcj0iYXV0byI+PGJy
+PjxkaXYgY2xhc3M9ImdtYWlsX3F1b3RlIiBkaXI9ImF1dG8iPjxkaXYgZGlyPSJsdHIiIGNsYXNz
+PSJnbWFpbF9hdHRyIj5PbiBUaHUsIE5vdiA3LCAyMDI0LCAxODoyNiBUaW0gUm93bGVkZ2UgJmx0
+OzxhIGhyZWY9Im1haWx0bzp0aW1Acm93bGVkZ2Uub3JnIj50aW1Acm93bGVkZ2Uub3JnPC9hPiZn
+dDsgd3JvdGU6PGJyPjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9
+Im1hcmdpbjowcHggMHB4IDBweCAwLjhleDtib3JkZXItbGVmdDoxcHggc29saWQgcmdiKDIwNCwy
+MDQsMjA0KTtwYWRkaW5nLWxlZnQ6MWV4Ij5UaGF0ICYjMzk7c2F2ZSBhcyBuZXcgdmVyc2lvbiYj
+Mzk7IGlzIGFsc28gd2VsbCB3b3J0aCByZW1lbWJlcmluZywgcGFydGljdWxhcmx5IHdoZW4geW91
+IGFyZSBkb2luZyB0aGluZ3MgeW91IHN1c3BlY3QgbWlnaHQgYmxvdyB1cCBiYWRseS4gSXQmIzM5
+O3MgYWxtb3N0IGxpa2UgdGhlIGFuY2llbnQgYW5kIHZlcnkgdXNlZnVsIGJlaGF2aW91ciBvZiB0
+aGUgVmF4IE9TIHdoZXJlIGFueSBzYXZlIGFkZGVkIGEgdmVyc2lvbiBudW1iZXIgYW5kIGtlcHQg
+b2xkZXIgY29waWVzIGF1dG9tYWdpY2FsbHkuPGJyPgo8YnI+CiZndDsgT24gMjAyNC0xMS0wNywg
+YXQgMTA6MTAgQU0sIExhdXJlbiBQdWxsZW4gJmx0OzxhIGhyZWY9Im1haWx0bzpkcnVyb3dpbkBn
+bWFpbC5jb20iIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vcmVmZXJyZXIiPmRydXJvd2luQGdtYWls
+LmNvbTwvYT4mZ3Q7IHdyb3RlOjxicj4KJmd0OyA8YnI+CiZndDsgSGkgYWxsLDxicj4KJmd0OyA8
+YnI+CiZndDsgVGhhbmtzIGZvciBhbGwgdGhlIGdyZWF0IHRpcHMgZm9yIHJlY292ZXJpbmcgZnJv
+bSBhbiBlLWJyaWNrLsKgIEkmIzM5O20gaGFwcHk8YnI+CiZndDsgdG8gc2VlIHRoZXJlIGFyZSBh
+IGNvdXBsZSB3YXlzIHRvIGludGVyYWN0IHdpdGggYm90aCB0aGUgVk0gYW5kIHRoZTxicj4KJmd0
+OyBpbWFnZSBmcm9tIHRoZSBvdXRzaWRlLjxicj4KJmd0OyA8YnI+CiZndDsgSSB0YWtlIGZyZXF1
+ZW50IGJhY2t1cHMgb2YgbXkgd2hvbGUgY29tcHV0ZXIsIHNvIG15IGJyaWNrIHJlY292ZXJ5PGJy
+PgomZ3Q7IHByb2Nlc3MgaW52b2x2ZWQgZmV0Y2hpbmcgYSBjb3B5IGZyb20gdGhlIGZyZWV6ZXIg
+YW5kICYjMzk7UmVjb3ZlciBDaGFuZ2VzJiMzOTssPGJyPgomZ3Q7IG9mIHdoaWNoIHRoZXJlIHdl
+cmVuJiMzOTt0IHRoYXQgbWFueS48YnI+CiZndDsgPGJyPgomZ3Q7IEkmIzM5O20gd29ya2luZyBv
+biBhIGRpcmVjdCBtYW5pcHVsYXRpb24gbGV2ZWwgZWRpdG9yOyB0aGlzIGV4cGVyaWVuY2UgaGFz
+PGJyPgomZ3Q7IGNvbnZpbmNlZCBtZSB0byBtYWtlIGl0IHNvIEkgY2FuIGdldCBhIHJlZmVyZW5j
+ZSB0byB0aGUgZ2FtZSB3b3JsZCBmcm9tPGJyPgomZ3Q7IERvSXRGaXJzdCB0byBzYXZlIHRoZSBv
+YmplY3QgZmlsZSBpbiBjYXNlIGEgcmVjb3Zlcnkgc2l0dWF0aW9uIGNvbWVzIHVwPGJyPgomZ3Q7
+IHdoaWxlIGxldmVsIGVkaXRpbmcuPGJyPgomZ3Q7IDxicj4KJmd0OyBPbiAxMS80LzI0IDIwOjI0
+LCA8YSBocmVmPSJtYWlsdG86bGV3aXNAbWFpbC5tc2VuLmNvbSIgdGFyZ2V0PSJfYmxhbmsiIHJl
+bD0ibm9yZWZlcnJlciI+bGV3aXNAbWFpbC5tc2VuLmNvbTwvYT4gd3JvdGU6PGJyPgomZ3Q7Jmd0
+OyBZb3UgbWF5IHN0aWxsIGJlIGFibGUgdG8gcmVjb3ZlciB5b3VyIGJyb2tlbiBpbWFnZS48YnI+
+CiZndDsmZ3Q7IDxicj4KJmd0OyZndDsgU3F1ZWFrIHByb3ZpZGVzIGEgbWVjaGFuaXNtIGZvciBp
+bnNlcnRpbmcgY29kZSBvciBkZWJ1Z2dpbmcgdmVyeSBlYXJseSBpbiB0aGUgaW1hZ2Ugc3RhcnR1
+cCBwcm9jZXNzaW5nLCBhbmQgeW91IG1heSBiZSBhYmxlIHRvIHVzZSB0aGlzIHRvIGZpeCB5b3Vy
+IGJyb2tlbiBpbWFnZS48YnI+CiZndDsmZ3Q7IDxicj4KJmd0OyZndDsgVGhlIGltcGxlbWVudGlv
+biBpcyBpbiBjbGFzcyBEb0l0Rmlyc3QsIHdoaWNoIGlzIHBsYWNlZCBpbiB0aGUgaW1hZ2Ugc3Rh
+cnR1cCBsaXN0IHRvIGxldCB0byBpbnNlcnQgdGhpbmdzIGludG8gdGhlIHN0YXJ0dXAgcHJvY2Vz
+c2luZywgaW5jbHVkaW5nIG9wZW5pbmcgYSBkZWJ1Z2dlciBhdCB0aGUgZWFybGllc3QgcG9zc2li
+bGUgdGltZSAoc2VlIHRoZSBEb0l0Rmlyc3QgY2xhc3MgY29tbWVudCkuPGJyPgomZ3Q7Jmd0OyA8
+YnI+CiZndDsmZ3Q7IEZvciBleGFtcGxlLCBpZiB5b3UgYXJlIG9uIGEgdW5peC1saWtlIHN5c3Rl
+bSBhbmQgeW91ciBWTSBleGVjdXRhYmxlIGlzICZxdW90O3NxdWVha3ZtJnF1b3Q7LCBhbmQgeW91
+ciBicm9rZW4gaW1hZ2UgaXMgJnF1b3Q7c3F1ZWFrLmltYWdlJnF1b3Q7LCB0aGVuIHlvdSBtaWdo
+dCBkbyB0aGlzOjxicj4KJmd0OyZndDsgPGJyPgomZ3Q7Jmd0OyAkIHNxdWVha3ZtIHNxdWVhay5p
+bWFnZSAtLWhlbHA8YnI+CiZndDsmZ3Q7IDxicj4KJmd0OyZndDsgV2hpY2ggd2lsbCBkaXNwbGF5
+IHRoaXMgaGVscCBtZXNzYWdlIG9uIHlvdXIgY29uc29sZSBvdXRwdXQ6PGJyPgomZ3Q7Jmd0OyA8
+YnI+CiZndDsmZ3Q7wqAgRG9JdEZpcnN0IGltYWdlIGFyZ3VtZW50czo8YnI+CiZndDsmZ3Q7wqAg
+wqAgwqAgLS1kb2l0IGFyZ3VtZW50bGlzdCAmcXVvdDtldmFsdWF0ZSBlYWNoIGFyZ3VtZW50IGFz
+IGEgZG9JdCBleHByZXNzaW9uJnF1b3Q7PGJyPgomZ3Q7Jmd0O8KgIMKgIMKgIC0tZXZhbHVhdGUg
+YXJnICZxdW90O2V2YWx1YXRlIGFyZywgcHJpbnQgcmVzdWx0IHRoZW4gZXhpdCZxdW90Ozxicj4K
+Jmd0OyZndDvCoCDCoCDCoCAtLWZpbGUgZmlsZW5hbWUgJnF1b3Q7ZXZhbHVhdGUgY29udGVudHMg
+b2YgZmlsZW5hbWUsIHByaW50IHJlc3VsdCB0aGVuIGV4aXQmcXVvdDs8YnI+CiZndDsmZ3Q7wqAg
+wqAgwqAgLS1maWxlaW4gZmlsZWxpc3QgJnF1b3Q7ZmlsZSBpbiBlYWNoIGZpbGUgbmFtZWQgaW4g
+ZmlsZUxpc3QmcXVvdDs8YnI+CiZndDsmZ3Q7wqAgwqAgwqAgLS1jd2QgcGF0aCAmcXVvdDtzZXQg
+RmlsZURpcmVjdG9yeSBkZWZhdWx0RGlyZWN0b3J5IHRvIHBhdGggcHJpb3IgdG8gZXZhbHVhdGlu
+ZyBvdGhlciBvcHRpb25zJnF1b3Q7PGJyPgomZ3Q7Jmd0O8KgIMKgIMKgIC0tZGVidWcgJnF1b3Q7
+ZW50ZXIgYSBkZWJ1Z2dlciBhcyBzb29uIGFzIHBvc3NpYmxlIGluIHRoZSBzdGFydFVwIHByb2Nl
+c3NpbmcmcXVvdDs8YnI+CiZndDsmZ3Q7wqAgwqAgwqAgLS1oZWxwICZxdW90O3ByaW50IHRoaXMg
+bWVzc2FnZSZxdW90Ozxicj4KJmd0OyZndDvCoCBzb21lIGFyZ3VtZW50cyBoYXZlIHNpbmdsZSBj
+aGFyYWN0ZXIgc3lub255bXMsIC1mIGlzIGEgc3lub255bSBmb3IgLS1maWxlLCAtZCBmb3IgLS1k
+b2l0PGJyPgomZ3Q7Jmd0O8KgIHNpbmdsZSAmIzM5Oy0mIzM5OyBtYXkgYmUgdXNlZCBpbnN0ZWFk
+IG9mICYjMzk7LS0mIzM5OywgLWhlbHAgaXMgaW50ZXJwcmV0ZWQgYXMgLS1oZWxwPGJyPgomZ3Q7
+Jmd0OyA8YnI+CiZndDsmZ3Q7IFRoaXMgZ2l2ZXMgYSBzdW1tYXJ5IG9mIHRoZSBhdmFpbGFibGUg
+Y29tbWFuZCBsaW5lIG9wdGlvbnMuIEFzIGEgc3RhcnRpbmcgcG9pbnQsIHlvdSBtaWdodCB3YW50
+IHRvIHNlZSBpZiB5b3UgY2FuIGdldCBpbnRvIGEgZGVidWdnZXIgYmVmb3JlIHNvbWV0aGluZyBi
+YWQgaGFwcGVucywgc28geW91IG1pZ2h0IChmb3IgZXhhbXBsZSkgZG8gdGhpczo8YnI+CiZndDsm
+Z3Q7IDxicj4KJmd0OyZndDsgJCBzcXVlYWt2bSBzcXVlYWsuaW1hZ2UgLS1kZWJ1Zzxicj4KJmd0
+OyZndDsgPGJyPgomZ3Q7Jmd0OyBJZiB0aGF0IGRvZXMgbm90IHdvcmssIGJ1dCBpZiB5b3UgaGF2
+ZSBhbiBnb29kIGlkZWEgb2YgdGhlIHByb2JsZW0gdGhhdCB5b3UgbmVlZCB0byBmaXgsIHRoZW4g
+eW91IG1heSBiZSBhYmxlIHRvIHVzZSB0aGUgLS1kb2l0IGNvbW1hbmQgbGluZSBvcHRpb24gdG8g
+cGFzcyBhIFNtYWxsdGFsayBkb0l0IGV4cHJlc3Npb24gdG8gYmUgZXZhbHVhdGVkIGJlZm9yZSB0
+aGUgYmFkIHRoaW5ncyBoYXBwZW4uPGJyPgomZ3Q7Jmd0OyA8YnI+CiZndDsmZ3Q7IFNlZSBhbHNv
+IEVsaW90JiMzOTtzIGV4cGxhbmF0aW9uIG9mIGhvdyB0byBkaXJlY3RseSBzaWduYWwgdGhlIHNl
+bWFwaG9yZSBmcm9tIGEgZGVidWdnZXIgb24gdGhlIFZNLiBJJiMzOTttIG5vdCBzdXJlIHdoYXQg
+aXMgdGhlIGJlc3QgYXBwcm9hY2ggYnV0IHRoaXMgc2hvdWxkIGdpdmUgeW91IGEgZmV3IG9wdGlv
+bnMuPGJyPgomZ3Q7Jmd0OyA8YnI+CiZndDsmZ3Q7IEhUSCw8YnI+CiZndDsmZ3Q7IERhdmU8YnI+
+CiZndDsmZ3Q7IDxicj4KJmd0OyZndDsgPGJyPgomZ3Q7Jmd0OyA8YnI+CiZndDsmZ3Q7IC0tLTxi
+cj4KJmd0OyZndDsgU2VudCBmcm9tIFNxdWVhayBJbmJveCBUYWxrPGJyPgomZ3Q7Jmd0OyA8YnI+
+CiZndDsmZ3Q7IE9uIDIwMjQtMTEtMDNUMTI6NDQ6MDktMDc6MDAsIDxhIGhyZWY9Im1haWx0bzpk
+cnVyb3dpbkBnbWFpbC5jb20iIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vcmVmZXJyZXIiPmRydXJv
+d2luQGdtYWlsLmNvbTwvYT4gd3JvdGU6PGJyPgomZ3Q7Jmd0OyA8YnI+CiZndDsmZ3Q7Jmd0OyBI
+aSBMaXN0LDxicj4KJmd0OyZndDsmZ3Q7IDxicj4KJmd0OyZndDsmZ3Q7IEkgd2FzIHRyeWluZyB0
+byBkcmF3IHNvbWV0aGluZyBpbiBmb3VyIGJhY2tncm91bmQgdGhyZWFkcyBhbmQgcmVzdW1lIHRo
+ZTxicj4KJmd0OyZndDsmZ3Q7IFVJIHRocmVhZCB3aXRoIGEgY2hhaW4gb2YgZm91ciBTZW1hcGhv
+cmUgaW5zdGFuY2VzLCBidXQgdGhlIGJhY2tncm91bmQ8YnI+CiZndDsmZ3Q7Jmd0OyB0aHJlYWQg
+aGFkIGFuIGVycm9yLsKgIE5vIHByb2JsZW0uwqAgRml4IHRoZSBlcnJvciwgY2xvc2UgdGhlIGRl
+YnVnZ2VyLDxicj4KJmd0OyZndDsmZ3Q7IHNhdmUsIHJlc3VtZSBkcmF3aW5nLjxicj4KJmd0OyZn
+dDsmZ3Q7IDxicj4KJmd0OyZndDsmZ3Q7IExvbmcgc3Rvcnkgc2hvcnQsIHNvbWV0aGluZyBpbiB0
+aGUgaW1hZ2UgZmlsZSBpcyB3YWl0aW5nIGZvciBhIHNlbWFwaG9yZTxicj4KJmd0OyZndDsmZ3Q7
+IHRoYXQgd2lsbCBuZXZlciBzaWduYWwsIHNvIG9wZW5pbmcgdGhlIGltYWdlIGRvZXMgYWJzb2x1
+dGVseSBub3RoaW5nIGFuZDxicj4KJmd0OyZndDsmZ3Q7IGl0IGlzIG5vdyBhIDE1NyBNQiBlLWJy
+aWNrLjxicj4KJmd0OyZndDsmZ3Q7IDxicj4KJmd0OyZndDsmZ3Q7IE5vdywgaWYgeW91JiMzOTts
+bCBleGN1c2UgbWUsIEkgbmVlZCB0byBncmFiIGEgY29weSBvZiBteSBnYW1lLmltYWdlIG91dCBv
+Zjxicj4KJmd0OyZndDsmZ3Q7IHRoZSBkYWlseSBzeXN0ZW0gc25hcHNob3QuPGJyPgomZ3Q7Jmd0
+OyZndDsgPGJyPgomZ3Q7Jmd0OyZndDsgVGhlIG1vcmFsIG9mIHRoaXMgc3RvcnkgaXMgdG8gbWFr
+ZSBiYWNrdXBzLsKgIE9yIG1heWJlIHV0aWxpemUgJiMzOTtzYXZlIGFzPGJyPgomZ3Q7Jmd0OyZn
+dDsgbmV3IHZlcnNpb24mIzM5Oy7CoCBPciBib3RoLjxicj4KJmd0OyZndDsgU3F1ZWFrLWRldiBt
+YWlsaW5nIGxpc3QgLS0gPGEgaHJlZj0ibWFpbHRvOnNxdWVhay1kZXZAbGlzdHMuc3F1ZWFrZm91
+bmRhdGlvbi5vcmciIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vcmVmZXJyZXIiPnNxdWVhay1kZXZA
+bGlzdHMuc3F1ZWFrZm91bmRhdGlvbi5vcmc8L2E+PGJyPgomZ3Q7Jmd0OyBUbyB1bnN1YnNjcmli
+ZSBzZW5kIGFuIGVtYWlsIHRvIDxhIGhyZWY9Im1haWx0bzpzcXVlYWstZGV2LWxlYXZlQGxpc3Rz
+LnNxdWVha2ZvdW5kYXRpb24ub3JnIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub3JlZmVycmVyIj5z
+cXVlYWstZGV2LWxlYXZlQGxpc3RzLnNxdWVha2ZvdW5kYXRpb24ub3JnPC9hPjxicj4KJmd0OyZn
+dDsgPGJyPgomZ3Q7IDxicj4KJmd0OyBTcXVlYWstZGV2IG1haWxpbmcgbGlzdCAtLSA8YSBocmVm
+PSJtYWlsdG86c3F1ZWFrLWRldkBsaXN0cy5zcXVlYWtmb3VuZGF0aW9uLm9yZyIgdGFyZ2V0PSJf
+YmxhbmsiIHJlbD0ibm9yZWZlcnJlciI+c3F1ZWFrLWRldkBsaXN0cy5zcXVlYWtmb3VuZGF0aW9u
+Lm9yZzwvYT48YnI+CiZndDsgVG8gdW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byA8YSBocmVm
+PSJtYWlsdG86c3F1ZWFrLWRldi1sZWF2ZUBsaXN0cy5zcXVlYWtmb3VuZGF0aW9uLm9yZyIgdGFy
+Z2V0PSJfYmxhbmsiIHJlbD0ibm9yZWZlcnJlciI+c3F1ZWFrLWRldi1sZWF2ZUBsaXN0cy5zcXVl
+YWtmb3VuZGF0aW9uLm9yZzwvYT48YnI+Cjxicj4KPGJyPgp0aW08YnI+Ci0tPGJyPgp0aW0gUm93
+bGVkZ2U7IDxhIGhyZWY9Im1haWx0bzp0aW1Acm93bGVkZ2Uub3JnIiB0YXJnZXQ9Il9ibGFuayIg
+cmVsPSJub3JlZmVycmVyIj50aW1Acm93bGVkZ2Uub3JnPC9hPjsgPGEgaHJlZj0iaHR0cDovL3d3
+dy5yb3dsZWRnZS5vcmcvdGltIiByZWw9Im5vcmVmZXJyZXIgbm9yZWZlcnJlciIgdGFyZ2V0PSJf
+YmxhbmsiPmh0dHA6Ly93d3cucm93bGVkZ2Uub3JnL3RpbTwvYT48YnI+ClVzZWZ1bCBMYXRpbiBQ
+aHJhc2VzOi0gUm9tYW5pIHF1aWRlbSBhcnRlbSBhbWF0b3JpYW0gaW52ZW5lcnVudC4gPSBZb3Ug
+a25vdywgdGhlIFJvbWFucyBpbnZlbnRlZCB0aGUgYXJ0IG9mIGxvdmUuPGJyPgo8YnI+Cjxicj4K
+U3F1ZWFrLWRldiBtYWlsaW5nIGxpc3QgLS0gPGEgaHJlZj0ibWFpbHRvOnNxdWVhay1kZXZAbGlz
+dHMuc3F1ZWFrZm91bmRhdGlvbi5vcmciIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vcmVmZXJyZXIi
+PnNxdWVhay1kZXZAbGlzdHMuc3F1ZWFrZm91bmRhdGlvbi5vcmc8L2E+PGJyPgpUbyB1bnN1YnNj
+cmliZSBzZW5kIGFuIGVtYWlsIHRvIDxhIGhyZWY9Im1haWx0bzpzcXVlYWstZGV2LWxlYXZlQGxp
+c3RzLnNxdWVha2ZvdW5kYXRpb24ub3JnIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub3JlZmVycmVy
+Ij5zcXVlYWstZGV2LWxlYXZlQGxpc3RzLnNxdWVha2ZvdW5kYXRpb24ub3JnPC9hPjxicj4KPC9i
+bG9ja3F1b3RlPjwvZGl2PjwvZGl2PjwvZGl2Pgo=
+
+--===============4790380975638906063==--
+
+
+From lecteur@zogotounga.net Fri Nov  8 11:01:53 2024
+From: =?utf-8?q?St=C3=A9phane?= Rollandin <lecteur@zogotounga.net>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Fri, 08 Nov 2024 12:01:42 +0100
+Message-ID: <a3f2278c-9546-4525-8ec5-1940b1605b20@zogotounga.net>
+In-Reply-To:
+ <CANAQNuzrSwGXxcdjpC=qu8yxcwU=QsPXLTY=xxPtKRhqahvBug@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6043437526771448667=="
+
+--===============6043437526771448667==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+> I haven't used 'save as new version' really at all. 
+
+I change the version number everytime I feel my working image represents 
+a meaningful step in the development, or before I engage in a complex 
+and risky refactoring. My current version number, for example, is 235.
+
+It is very useful when a cryptic bug arises from the depths, because I 
+can go back and see what was the last version where things worked. I 
+then look at the diff (browsing the recent submissions in the first 
+version that breaks) to find the culprit.
+
+BTW I did increase the number of entries in recent submissions (to 200) 
+so that I have a long-distance view of the changes.
+
+Stef
+
+--===============6043437526771448667==--
+
+
+From notifications@github.com Sat Nov  9 18:11:55 2024
+From: tuLithu <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] [squeak-smalltalk/squeak-object-memory] Etoys mode issue
+ (Issue #126)
+Date: Sat, 09 Nov 2024 10:11:46 -0800
+Message-ID: <squeak-smalltalk/squeak-object-memory/issues/126@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5830263131388007063=="
+
+--===============5830263131388007063==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+I put Squeak in Etoys mode, saved and exited. When I tried to start again, I =
+got the error message, "Aborting!!! Color depth 0 not supported." I'm using S=
+queak 6.
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-object-memory/issues/126
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-object-memory/issues/126(a)github.com>
+
+
+
+--===============5830263131388007063==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPkkgcHV0IFNxdWVhayBpbiBFdG95cyBtb2RlLCBzYXZlZCBh
+bmQgZXhpdGVkLiBXaGVuIEkgdHJpZWQgdG8gc3RhcnQgYWdhaW4sIEkgZ290IHRoZSBlcnJvciBt
+ZXNzYWdlLCAiQWJvcnRpbmchISEgQ29sb3IgZGVwdGggMCBub3Qgc3VwcG9ydGVkLiIgSSdtIHVz
+aW5nIFNxdWVhayA2LjwvcD4KCjxwIHN0eWxlPSJmb250LXNpemU6c21hbGw7LXdlYmtpdC10ZXh0
+LXNpemUtYWRqdXN0Om5vbmU7Y29sb3I6IzY2NjsiPiZtZGFzaDs8YnIgLz5SZXBseSB0byB0aGlz
+IGVtYWlsIGRpcmVjdGx5LCA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxs
+dGFsay9zcXVlYWstb2JqZWN0LW1lbW9yeS9pc3N1ZXMvMTI2Ij52aWV3IGl0IG9uIEdpdEh1Yjwv
+YT4sIG9yIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9ub3RpZmljYXRpb25zL3Vuc3Vic2Ny
+aWJlLWF1dGgvQkZZQUs2TVFaR1hVRlNTR1VVR0Q0S0xaN1pGNkZBVkNORlNNNkFBQUFBQlJQTERH
+VE9WSEkyRFNNVlFXSVgzTE1WNDNBU0xUT04yV0tPWlNHWTJETU1aWUdRMkRFTUkiPnVuc3Vic2Ny
+aWJlPC9hPi48YnIgLz5Zb3UgYXJlIHJlY2VpdmluZyB0aGlzIGJlY2F1c2UgeW91IGFyZSBzdWJz
+Y3JpYmVkIHRvIHRoaXMgdGhyZWFkLjxpbWcgc3JjPSJodHRwczovL2dpdGh1Yi5jb20vbm90aWZp
+Y2F0aW9ucy9iZWFjb24vQkZZQUs2TEdQQk9RQVdMQ1pMM1BHUERaN1pGNkZBNUNORlNNNkFBQUFB
+QlJQTERHVE9XR0czM05OVlNXNDVDN09SNFhBWk5GSkZaWEc1TEZWSlJXNjNMTk1WWEhJWDNKTVRI
+SjNQRTdFVS5naWYiIGhlaWdodD0iMSIgd2lkdGg9IjEiIGFsdD0iIiAvPjxzcGFuIHN0eWxlPSJj
+b2xvcjogdHJhbnNwYXJlbnQ7IGZvbnQtc2l6ZTogMDsgZGlzcGxheTogbm9uZTsgdmlzaWJpbGl0
+eTogaGlkZGVuOyBvdmVyZmxvdzogaGlkZGVuOyBvcGFjaXR5OiAwOyB3aWR0aDogMDsgaGVpZ2h0
+OiAwOyBtYXgtd2lkdGg6IDA7IG1heC1oZWlnaHQ6IDA7IG1zby1oaWRlOiBhbGwiPk1lc3NhZ2Ug
+SUQ6IDxzcGFuPiZsdDtzcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vl
+cy8xMjY8L3NwYW4+PHNwYW4+QDwvc3Bhbj48c3Bhbj5naXRodWI8L3NwYW4+PHNwYW4+Ljwvc3Bh
+bj48c3Bhbj5jb20mZ3Q7PC9zcGFuPjwvc3Bhbj48L3A+CjxzY3JpcHQgdHlwZT0iYXBwbGljYXRp
+b24vbGQranNvbiI+Wwp7CiJAY29udGV4dCI6ICJodHRwOi8vc2NoZW1hLm9yZyIsCiJAdHlwZSI6
+ICJFbWFpbE1lc3NhZ2UiLAoicG90ZW50aWFsQWN0aW9uIjogewoiQHR5cGUiOiAiVmlld0FjdGlv
+biIsCiJ0YXJnZXQiOiAiaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFr
+LW9iamVjdC1tZW1vcnkvaXNzdWVzLzEyNiIsCiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3Nx
+dWVhay1zbWFsbHRhbGsvc3F1ZWFrLW9iamVjdC1tZW1vcnkvaXNzdWVzLzEyNiIsCiJuYW1lIjog
+IlZpZXcgSXNzdWUiCn0sCiJkZXNjcmlwdGlvbiI6ICJWaWV3IHRoaXMgSXNzdWUgb24gR2l0SHVi
+IiwKInB1Ymxpc2hlciI6IHsKIkB0eXBlIjogIk9yZ2FuaXphdGlvbiIsCiJuYW1lIjogIkdpdEh1
+YiIsCiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tIgp9Cn0KXTwvc2NyaXB0Pg==
+
+--===============5830263131388007063==--
+
+
+From notifications@github.com Sat Nov  9 18:12:17 2024
+From: tuLithu <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [squeak-smalltalk/squeak-object-memory] Etoys mode
+ issue (Issue #126)
+Date: Sat, 09 Nov 2024 10:12:09 -0800
+Message-ID: <squeak-smalltalk/squeak-object-memory/issue/126/issue_event/15239138749@github.com>
+In-Reply-To: <squeak-smalltalk/squeak-object-memory/issues/126@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8821116890890822653=="
+
+--===============8821116890890822653==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Closed #126 as completed.
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-object-memory/issues/126#event-152=
+39138749
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-object-memory/issue/126/issue_event/1523=
+9138749(a)github.com>
+
+
+
+--===============8821116890890822653==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPkNsb3NlZCA8YSBjbGFzcz0iaXNzdWUtbGluayBqcy1pc3N1
+ZS1saW5rIiBkYXRhLWVycm9yLXRleHQ9IkZhaWxlZCB0byBsb2FkIHRpdGxlIiBkYXRhLWlkPSIy
+NjQ2Mzg0NDIxIiBkYXRhLXBlcm1pc3Npb24tdGV4dD0iVGl0bGUgaXMgcHJpdmF0ZSIgZGF0YS11
+cmw9Imh0dHBzOi8vZ2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVt
+b3J5L2lzc3Vlcy8xMjYiIGRhdGEtaG92ZXJjYXJkLXR5cGU9Imlzc3VlIiBkYXRhLWhvdmVyY2Fy
+ZC11cmw9Ii9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vlcy8xMjYv
+aG92ZXJjYXJkIiBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9zcXVl
+YWstb2JqZWN0LW1lbW9yeS9pc3N1ZXMvMTI2Ij4jMTI2PC9hPiBhcyBjb21wbGV0ZWQuPC9wPgoK
+PHAgc3R5bGU9ImZvbnQtc2l6ZTpzbWFsbDstd2Via2l0LXRleHQtc2l6ZS1hZGp1c3Q6bm9uZTtj
+b2xvcjojNjY2OyI+Jm1kYXNoOzxiciAvPlJlcGx5IHRvIHRoaXMgZW1haWwgZGlyZWN0bHksIDxh
+IGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3Qt
+bWVtb3J5L2lzc3Vlcy8xMjYjZXZlbnQtMTUyMzkxMzg3NDkiPnZpZXcgaXQgb24gR2l0SHViPC9h
+Piwgb3IgPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL25vdGlmaWNhdGlvbnMvdW5zdWJzY3Jp
+YmUtYXV0aC9CRllBSzZKRUtDQ0tUM1BTU1JZT1dZTFo3WkY3VEFWQ05GU002QUFBQUFCUlBMREdU
+T1ZISTJEU01WUVdJWDNMTVY0NVVBQkNKRlpYRzVMRklWM0dLM1RVSlpYWEkyTEdORlJXQzVESk41
+WERXTUpWR0laVFNNSlRIQTNUSU9JIj51bnN1YnNjcmliZTwvYT4uPGJyIC8+WW91IGFyZSByZWNl
+aXZpbmcgdGhpcyBiZWNhdXNlIHlvdSBhcmUgc3Vic2NyaWJlZCB0byB0aGlzIHRocmVhZC48aW1n
+IHNyYz0iaHR0cHM6Ly9naXRodWIuY29tL25vdGlmaWNhdGlvbnMvYmVhY29uL0JGWUFLNkxEVEc3
+NEdTVEVOSkVTWkZMWjdaRjdUQTVDTkZTTTZBQUFBQUJSUExER1RPV0dHMzNOTlZTVzQ1QzdPUjRY
+QVpOV0pGWlhHNUxGSVYzR0szVFVKWlhYSTJMR05GUldDNURKTjVYS1VZM1BOVldXSzNUVUw1VVdK
+VFlBQUFBQUhEQ1NaVzZRLmdpZiIgaGVpZ2h0PSIxIiB3aWR0aD0iMSIgYWx0PSIiIC8+PHNwYW4g
+c3R5bGU9ImNvbG9yOiB0cmFuc3BhcmVudDsgZm9udC1zaXplOiAwOyBkaXNwbGF5OiBub25lOyB2
+aXNpYmlsaXR5OiBoaWRkZW47IG92ZXJmbG93OiBoaWRkZW47IG9wYWNpdHk6IDA7IHdpZHRoOiAw
+OyBoZWlnaHQ6IDA7IG1heC13aWR0aDogMDsgbWF4LWhlaWdodDogMDsgbXNvLWhpZGU6IGFsbCI+
+TWVzc2FnZSBJRDogPHNwYW4+Jmx0O3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFrLW9iamVjdC1tZW1v
+cnkvaXNzdWUvMTI2L2lzc3VlX2V2ZW50LzE1MjM5MTM4NzQ5PC9zcGFuPjxzcGFuPkA8L3NwYW4+
+PHNwYW4+Z2l0aHViPC9zcGFuPjxzcGFuPi48L3NwYW4+PHNwYW4+Y29tJmd0Ozwvc3Bhbj48L3Nw
+YW4+PC9wPgo8c2NyaXB0IHR5cGU9ImFwcGxpY2F0aW9uL2xkK2pzb24iPlsKewoiQGNvbnRleHQi
+OiAiaHR0cDovL3NjaGVtYS5vcmciLAoiQHR5cGUiOiAiRW1haWxNZXNzYWdlIiwKInBvdGVudGlh
+bEFjdGlvbiI6IHsKIkB0eXBlIjogIlZpZXdBY3Rpb24iLAoidGFyZ2V0IjogImh0dHBzOi8vZ2l0
+aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vlcy8xMjYj
+ZXZlbnQtMTUyMzkxMzg3NDkiLAoidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbS9zcXVlYWstc21h
+bGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vlcy8xMjYjZXZlbnQtMTUyMzkxMzg3NDki
+LAoibmFtZSI6ICJWaWV3IElzc3VlIgp9LAoiZGVzY3JpcHRpb24iOiAiVmlldyB0aGlzIElzc3Vl
+IG9uIEdpdEh1YiIsCiJwdWJsaXNoZXIiOiB7CiJAdHlwZSI6ICJPcmdhbml6YXRpb24iLAoibmFt
+ZSI6ICJHaXRIdWIiLAoidXJsIjogImh0dHBzOi8vZ2l0aHViLmNvbSIKfQp9Cl08L3NjcmlwdD4=
+
+--===============8821116890890822653==--
+
+
+From notifications@github.com Sat Nov  9 18:12:43 2024
+From: tuLithu <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [squeak-smalltalk/squeak-object-memory] Etoys mode
+ issue (Issue #126)
+Date: Sat, 09 Nov 2024 10:12:33 -0800
+Message-ID: <squeak-smalltalk/squeak-object-memory/issue/126/issue_event/15239139535@github.com>
+In-Reply-To: <squeak-smalltalk/squeak-object-memory/issues/126@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============9210895903237646551=="
+
+--===============9210895903237646551==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Closed #126 as not planned.
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-object-memory/issues/126#event-152=
+39139535
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-object-memory/issue/126/issue_event/1523=
+9139535(a)github.com>
+
+
+
+--===============9210895903237646551==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPkNsb3NlZCA8YSBjbGFzcz0iaXNzdWUtbGluayBqcy1pc3N1
+ZS1saW5rIiBkYXRhLWVycm9yLXRleHQ9IkZhaWxlZCB0byBsb2FkIHRpdGxlIiBkYXRhLWlkPSIy
+NjQ2Mzg0NDIxIiBkYXRhLXBlcm1pc3Npb24tdGV4dD0iVGl0bGUgaXMgcHJpdmF0ZSIgZGF0YS11
+cmw9Imh0dHBzOi8vZ2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVt
+b3J5L2lzc3Vlcy8xMjYiIGRhdGEtaG92ZXJjYXJkLXR5cGU9Imlzc3VlIiBkYXRhLWhvdmVyY2Fy
+ZC11cmw9Ii9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vlcy8xMjYv
+aG92ZXJjYXJkIiBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9zcXVl
+YWstb2JqZWN0LW1lbW9yeS9pc3N1ZXMvMTI2Ij4jMTI2PC9hPiBhcyBub3QgcGxhbm5lZC48L3A+
+Cgo8cCBzdHlsZT0iZm9udC1zaXplOnNtYWxsOy13ZWJraXQtdGV4dC1zaXplLWFkanVzdDpub25l
+O2NvbG9yOiM2NjY7Ij4mbWRhc2g7PGJyIC8+UmVwbHkgdG8gdGhpcyBlbWFpbCBkaXJlY3RseSwg
+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFrLW9iamVj
+dC1tZW1vcnkvaXNzdWVzLzEyNiNldmVudC0xNTIzOTEzOTUzNSI+dmlldyBpdCBvbiBHaXRIdWI8
+L2E+LCBvciA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vbm90aWZpY2F0aW9ucy91bnN1YnNj
+cmliZS1hdXRoL0JGWUFLNklKM0ZIUVZWSVZWNUY2VlozWjdaR0JEQVZDTkZTTTZBQUFBQUJSUExE
+R1RPVkhJMkRTTVZRV0lYM0xNVjQ1VUFCQ0pGWlhHNUxGSVYzR0szVFVKWlhYSTJMR05GUldDNURK
+TjVYRFdNSlZHSVpUU01KVEhFMlRHTkkiPnVuc3Vic2NyaWJlPC9hPi48YnIgLz5Zb3UgYXJlIHJl
+Y2VpdmluZyB0aGlzIGJlY2F1c2UgeW91IGFyZSBzdWJzY3JpYmVkIHRvIHRoaXMgdGhyZWFkLjxp
+bWcgc3JjPSJodHRwczovL2dpdGh1Yi5jb20vbm90aWZpY2F0aW9ucy9iZWFjb24vQkZZQUs2S0FM
+TlBMNjZVUzY2RDc0RjNaN1pHQkRBNUNORlNNNkFBQUFBQlJQTERHVE9XR0czM05OVlNXNDVDN09S
+NFhBWk5XSkZaWEc1TEZJVjNHSzNUVUpaWFhJMkxHTkZSV0M1REpONVhLVVkzUE5WV1dLM1RVTDVV
+V0pUWUFBQUFBSERDUzJESFEuZ2lmIiBoZWlnaHQ9IjEiIHdpZHRoPSIxIiBhbHQ9IiIgLz48c3Bh
+biBzdHlsZT0iY29sb3I6IHRyYW5zcGFyZW50OyBmb250LXNpemU6IDA7IGRpc3BsYXk6IG5vbmU7
+IHZpc2liaWxpdHk6IGhpZGRlbjsgb3ZlcmZsb3c6IGhpZGRlbjsgb3BhY2l0eTogMDsgd2lkdGg6
+IDA7IGhlaWdodDogMDsgbWF4LXdpZHRoOiAwOyBtYXgtaGVpZ2h0OiAwOyBtc28taGlkZTogYWxs
+Ij5NZXNzYWdlIElEOiA8c3Bhbj4mbHQ7c3F1ZWFrLXNtYWxsdGFsay9zcXVlYWstb2JqZWN0LW1l
+bW9yeS9pc3N1ZS8xMjYvaXNzdWVfZXZlbnQvMTUyMzkxMzk1MzU8L3NwYW4+PHNwYW4+QDwvc3Bh
+bj48c3Bhbj5naXRodWI8L3NwYW4+PHNwYW4+Ljwvc3Bhbj48c3Bhbj5jb20mZ3Q7PC9zcGFuPjwv
+c3Bhbj48L3A+CjxzY3JpcHQgdHlwZT0iYXBwbGljYXRpb24vbGQranNvbiI+Wwp7CiJAY29udGV4
+dCI6ICJodHRwOi8vc2NoZW1hLm9yZyIsCiJAdHlwZSI6ICJFbWFpbE1lc3NhZ2UiLAoicG90ZW50
+aWFsQWN0aW9uIjogewoiQHR5cGUiOiAiVmlld0FjdGlvbiIsCiJ0YXJnZXQiOiAiaHR0cHM6Ly9n
+aXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFrLW9iamVjdC1tZW1vcnkvaXNzdWVzLzEy
+NiNldmVudC0xNTIzOTEzOTUzNSIsCiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1z
+bWFsbHRhbGsvc3F1ZWFrLW9iamVjdC1tZW1vcnkvaXNzdWVzLzEyNiNldmVudC0xNTIzOTEzOTUz
+NSIsCiJuYW1lIjogIlZpZXcgSXNzdWUiCn0sCiJkZXNjcmlwdGlvbiI6ICJWaWV3IHRoaXMgSXNz
+dWUgb24gR2l0SHViIiwKInB1Ymxpc2hlciI6IHsKIkB0eXBlIjogIk9yZ2FuaXphdGlvbiIsCiJu
+YW1lIjogIkdpdEh1YiIsCiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tIgp9Cn0KXTwvc2NyaXB0
+Pg==
+
+--===============9210895903237646551==--
+
+
+From notifications@github.com Sat Nov  9 18:15:18 2024
+From: tuLithu <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject:
+ [squeak-dev] [squeak-smalltalk/squeak-object-memory] Etoys mode (Issue #127)
+Date: Sat, 09 Nov 2024 10:15:10 -0800
+Message-ID: <squeak-smalltalk/squeak-object-memory/issues/127@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6311367135096443060=="
+
+--===============6311367135096443060==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+I put Squeak in Etoys mode, saved and exited. When I tried to start again, I =
+got the error message, "Aborting!!! Color depth 0 not supported." I'm using S=
+queak 6.
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-object-memory/issues/127
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-object-memory/issues/127(a)github.com>
+
+
+
+--===============6311367135096443060==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPkkgcHV0IFNxdWVhayBpbiBFdG95cyBtb2RlLCBzYXZlZCBh
+bmQgZXhpdGVkLiBXaGVuIEkgdHJpZWQgdG8gc3RhcnQgYWdhaW4sIEkgZ290IHRoZSBlcnJvciBt
+ZXNzYWdlLCAiQWJvcnRpbmchISEgQ29sb3IgZGVwdGggMCBub3Qgc3VwcG9ydGVkLiIgSSdtIHVz
+aW5nIFNxdWVhayA2LjwvcD4KCjxwIHN0eWxlPSJmb250LXNpemU6c21hbGw7LXdlYmtpdC10ZXh0
+LXNpemUtYWRqdXN0Om5vbmU7Y29sb3I6IzY2NjsiPiZtZGFzaDs8YnIgLz5SZXBseSB0byB0aGlz
+IGVtYWlsIGRpcmVjdGx5LCA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxs
+dGFsay9zcXVlYWstb2JqZWN0LW1lbW9yeS9pc3N1ZXMvMTI3Ij52aWV3IGl0IG9uIEdpdEh1Yjwv
+YT4sIG9yIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9ub3RpZmljYXRpb25zL3Vuc3Vic2Ny
+aWJlLWF1dGgvQkZZQUs2TjJVVFVEQTdXNEVEN1pETkxaN1pHSzVBVkNORlNNNkFBQUFBQlJQTEdD
+WldWSEkyRFNNVlFXSVgzTE1WNDNBU0xUT04yV0tPWlNHWTJETU1aWUdVM1RNTVEiPnVuc3Vic2Ny
+aWJlPC9hPi48YnIgLz5Zb3UgYXJlIHJlY2VpdmluZyB0aGlzIGJlY2F1c2UgeW91IGFyZSBzdWJz
+Y3JpYmVkIHRvIHRoaXMgdGhyZWFkLjxpbWcgc3JjPSJodHRwczovL2dpdGh1Yi5jb20vbm90aWZp
+Y2F0aW9ucy9iZWFjb24vQkZZQUs2STZGRDRDMlhBQlZEQlU3UURaN1pHSzVBNUNORlNNNkFBQUFB
+QlJQTEdDWldXR0czM05OVlNXNDVDN09SNFhBWk5GSkZaWEc1TEZWSlJXNjNMTk1WWEhJWDNKTVRI
+SjNQRkVNSS5naWYiIGhlaWdodD0iMSIgd2lkdGg9IjEiIGFsdD0iIiAvPjxzcGFuIHN0eWxlPSJj
+b2xvcjogdHJhbnNwYXJlbnQ7IGZvbnQtc2l6ZTogMDsgZGlzcGxheTogbm9uZTsgdmlzaWJpbGl0
+eTogaGlkZGVuOyBvdmVyZmxvdzogaGlkZGVuOyBvcGFjaXR5OiAwOyB3aWR0aDogMDsgaGVpZ2h0
+OiAwOyBtYXgtd2lkdGg6IDA7IG1heC1oZWlnaHQ6IDA7IG1zby1oaWRlOiBhbGwiPk1lc3NhZ2Ug
+SUQ6IDxzcGFuPiZsdDtzcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vl
+cy8xMjc8L3NwYW4+PHNwYW4+QDwvc3Bhbj48c3Bhbj5naXRodWI8L3NwYW4+PHNwYW4+Ljwvc3Bh
+bj48c3Bhbj5jb20mZ3Q7PC9zcGFuPjwvc3Bhbj48L3A+CjxzY3JpcHQgdHlwZT0iYXBwbGljYXRp
+b24vbGQranNvbiI+Wwp7CiJAY29udGV4dCI6ICJodHRwOi8vc2NoZW1hLm9yZyIsCiJAdHlwZSI6
+ICJFbWFpbE1lc3NhZ2UiLAoicG90ZW50aWFsQWN0aW9uIjogewoiQHR5cGUiOiAiVmlld0FjdGlv
+biIsCiJ0YXJnZXQiOiAiaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFr
+LW9iamVjdC1tZW1vcnkvaXNzdWVzLzEyNyIsCiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3Nx
+dWVhay1zbWFsbHRhbGsvc3F1ZWFrLW9iamVjdC1tZW1vcnkvaXNzdWVzLzEyNyIsCiJuYW1lIjog
+IlZpZXcgSXNzdWUiCn0sCiJkZXNjcmlwdGlvbiI6ICJWaWV3IHRoaXMgSXNzdWUgb24gR2l0SHVi
+IiwKInB1Ymxpc2hlciI6IHsKIkB0eXBlIjogIk9yZ2FuaXphdGlvbiIsCiJuYW1lIjogIkdpdEh1
+YiIsCiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tIgp9Cn0KXTwvc2NyaXB0Pg==
+
+--===============6311367135096443060==--
+
+
+From commits@source.squeak.org Tue Nov 12 12:56:59 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Inbox: Monticello-mad.784.mcz
+Date: Tue, 12 Nov 2024 12:56:53 +0000
+Message-ID: <20241112125655.CEF5758014F@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1868089811208488240=="
+
+--===============1868089811208488240==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+A new version of Monticello was added to project The Inbox:
+http://source.squeak.org/inbox/Monticello-mad.784.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Monticello-mad.784
+Author: mad
+Time: 12 November 2024, 1:54:39.335587 pm
+UUID: d23eff38-99f7-4bb5-ab36-1984eba71d82
+Ancestors: Monticello-mt.783
+
+Fixes loading of class (and trait) definitions which have no comments.
+Before, the comment was not stored in the class if it was missing in the defi=
+nition. This is problematic when the class in the image still has a comment, =
+because then the snapshot is not fully restored (and diffing still finds the =
+deletion of the comment). With this patch, the class comment is always stored.
+
+A small script to reproduce the behavior:
+
+	| snapshot |
+	(Smalltalk classNamed: #Dummy) ifNotNil: #removeFromSystem.=20
+	Object subclass: #Dummy
+		instanceVariableNames: ''
+		classVariableNames: ''
+		poolDictionaries: ''
+		category: 'Dummy'.
+	snapshot :=3D (MCPackage named: 'Dummy') snapshot.
+	(Smalltalk classNamed: #Dummy) classComment: 'Hello!'.
+	snapshot install.
+	(Smalltalk classNamed: #Dummy) comment.=20
+
+Before this patch, the last line evaluated to 'Hello!' asText, because the co=
+mment was not deleted by the previous line. With this patch, the line evaluat=
+es to the class comment template for Dummy (begins with 'A Dummy is xxxxxxxxx=
+.').
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Monticello-mt.782 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: MCClassDefinition>>load (in category 'installing') -----
+  load
+  	 self createClass ifNotNil:
+  		[:class |
+  		class class instanceVariableNames: self classInstanceVariablesString.
++ 		class classComment: comment stamp: commentStamp]!
+- 		self hasComment ifTrue: [class classComment: comment stamp: commentStamp]=
+]!
+
+Item was changed:
+  ----- Method: MCTraitDefinition>>load (in category 'installing') -----
+  load
+  	 self createClass ifNotNil: [:trait |
++ 		trait classComment: comment stamp: commentStamp]!
+- 		self hasComment ifTrue: [trait classComment: comment stamp: commentStamp]=
+]!
+
+Item was changed:
+  ----- Method: MCWorkingCopyBrowser>>flushCachedVersions (in category 'actio=
+ns') -----
+  flushCachedVersions
+  	| beforeBytes afterBytes beforeVersions afterVersions |
+  	Cursor wait showWhile: [
+  		Smalltalk garbageCollect.
+  		beforeBytes :=3D Smalltalk bytesLeft: true.
+  		beforeVersions :=3D MCVersion allSubInstances size.
+  		MCFileBasedRepository flushAllCaches.
+  		afterBytes :=3D Smalltalk bytesLeft: true.
+  		afterVersions :=3D MCVersion allSubInstances size.
+  	].
++ 	^self inform: ('{1} versions flushed\{2} bytes reclaimed' translated withC=
+Rs format: {beforeVersions - afterVersions. beforeBytes - afterBytes})!
+- 	^self inform: ('{1} versions flushed\{2} bytes reclaimed' translated forma=
+t: {beforeVersions - afterVersions. beforeBytes - afterBytes})!
+
+
+--===============1868089811208488240==--
+
+

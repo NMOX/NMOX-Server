@@ -1,0 +1,958 @@
+From scott.gibson@posteo.net Tue Oct  1 11:52:03 2024
+From: Scott Gibson <scott.gibson@posteo.net>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Weekly Squeak news: Happy 28th Birthday to Squeak!
+Date: Tue, 01 Oct 2024 11:51:45 +0000
+Message-ID: <0d8f525e-cc44-4fef-bb67-01ea31daa36f@posteo.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0071051096852050765=="
+
+--===============0071051096852050765==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+The latest Weekly Squeak news article is now available.
+
+This celebration article notes the announcement of Squeak and contains 
+birthday wishes and anecdotes, including those from Alan Kay as well as 
+a few present and past contributors. A big thanks to everyone who has 
+contributed to Squeak over the years, especially those who continue to 
+give their time and effort! There are still so many people enjoying and 
+using Squeak, and every contribution, however seemingly small, benefits 
+many. A big thanks to all!
+
+If you would like to, share your thoughts or wishes in the comments!
+
+https://news.squeak.org/2024/10/01/happy-28th-birthday-to-squeak/
+
+Cheers!
+Scott
+
+--===============0071051096852050765==
+Content-Type: application/pkcs7-signature
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+MIME-Version: 1.0
+
+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
+MAkGA1UEBhMCUEwxITAfBgNVBAoMGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEcMBoGA1UEAwwT
+Q2VydHVtIFNNSU1FIFJTQSBDQTAeFw0yNDA0MzAyMTE0MjZaFw0yNTA0MzAyMTE0MjVaMEoxIDAe
+BgNVBAMMF3Njb3R0LmdpYnNvbkBwb3N0ZW8ubmV0MSYwJAYJKoZIhvcNAQkBFhdzY290dC5naWJz
+b25AcG9zdGVvLm5ldDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANA+gfjphBFe06Ns
+gDCNXlPMU7KcDGdsje9neOrkbjsUz0dDoA65bU79ydRs700oxnSU6z2BywWU/NF1i6PzZtfffjYN
+w3phCBv682jHLujD3GKCuiJtYLiW1MBKtT3rV6JAKzHzYW+cwsF/IOhuEnbC741YtwAf6FgmErkH
+NmagaN+Ya4z489omUlG1bZ4t7ZlKJ/jb4N5slNrgZQQbftJuKgGQUlG53ueYVVGJ3Uf+UdIeVUCb
+XbmE2bWJz4DM6NSXJ5fMMYwgLD6nXYuxQRHo2bQNxCCkehdsvmXRN/InGCGpCVxq1wisw2pWS28y
+GtIRQJlub9pU0NxnJcwMu8+CJdLZ45XIP7C2NGiTi2rLTPlvWdRcf71r6Sdez6pQa6mKUX81oIiF
+IyCmcuvdFQwu/oK27OOG5B45yzqBN4B9w/+K+EajdJX2OdSgnDDd3OCIXcQSXSnNC1PNPOPn3JaR
+G+I4ha8fFSvA4gE5JPXhab/aKyrJrHK1FPNh4mXIfOFLmXsAz8vF0Ahwxx7EsNwC09QiFJBB+E0h
+dVBuzdzXyp6oZsCmPn9FoPS4uAkpOcwQW9m03XNBMeeiHLO/Uzi8tF5POvZGB4KTkJdO4NyE25YV
+O55jjTqvS3mGZGIPKFk7NL+PudPJ+Tr0fblMAivGSjENmpFkbBSAUSITqqspAgMBAAGjggG8MIIB
+uDAMBgNVHRMBAf8EAjAAMEEGA1UdHwQ6MDgwNqA0oDKGMGh0dHA6Ly9jc21pbWVyc2FjYS5jcmwu
+Y2VydHVtLnBsL2NzbWltZXJzYWNhLmNybDCBgwYIKwYBBQUHAQEEdzB1MC4GCCsGAQUFBzABhiJo
+dHRwOi8vY3NtaW1lcnNhY2Eub2NzcC1jZXJ0dW0uY29tMEMGCCsGAQUFBzAChjdodHRwOi8vY3Nt
+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
+OSpMjQAAAAAAAA==
+
+--===============0071051096852050765==--
+
+
+From notifications@github.com Tue Oct  1 20:35:34 2024
+From: MariusDoe <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] [squeak-smalltalk/squeak-filesystem]
+ FSWriteStream>>nextPut: does not truncate a file in memory (Issue #14)
+Date: Tue, 01 Oct 2024 13:35:21 -0700
+Message-ID: <squeak-smalltalk/squeak-filesystem/issues/14@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3239721872101355215=="
+
+--===============3239721872101355215==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+When using an `FSMemoryStore`, after closing a write stream that only called =
+`nextPut:`, the file is not properly truncated. `nextPutAll:` does not have t=
+his behavior.
+```smalltalk
+| fs ref |
+fs :=3D FileSystem memory.
+ref :=3D fs / 'test'.
+ref writeStreamDo: [:s | s nextPutAll: 'abc'].
+ref contents. "'abc'"
+ref writeStreamDo: [:s | s nextPutAll: 'xy'].
+ref contents. "'xy'"
+ref writeStreamDo: [:s | s nextPut: $!].
+ref contents. "'!y'"
+```
+Some investigation:
+- `FSWriteStream>>basicNextPut:` calls `at:put:` on the `FSMemoryHandle`
+- `at:put:` is overridden on `FSMemoryHandle`, to (among other things) do [`s=
+ize :=3D size max: index`](https://github.com/squeak-smalltalk/squeak-filesys=
+tem/blob/74acb4ae27d80f4f030b387fc4b558327a826586/src/FS-Memory.package/FSMem=
+oryHandle.class/instance/at.put..st#L7) (keeping at least the original size)
+- normally (in `FSHandle>>at:put:` and with `basicNextPutAll:`), `at:write:st=
+artingAt:count:` is called, [which, on `FSMemoryHandle`, sets `size` to the i=
+ndex of the byte that was written last](https://github.com/squeak-smalltalk/s=
+queak-filesystem/blob/74acb4ae27d80f4f030b387fc4b558327a826586/src/FS-Memory.=
+package/FSMemoryHandle.class/instance/at.write.startingAt.count..st#L12) (cor=
+rectly truncating the file)
+
+I'm not sure whether `basicNextPut:` is at fault for calling `at:put:` instea=
+d of `at:write:startingAt:count:` or whether `at:put:` should instead set the=
+ size to the `index` - maybe `at:put:` is sometimes used to set bytes in the =
+middle of a file, without wanting a truncation?
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-filesystem/issues/14
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-filesystem/issues/14(a)github.com>
+
+
+
+--===============3239721872101355215==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPldoZW4gdXNpbmcgYW4gPGNvZGUgY2xhc3M9Im5vdHJhbnNs
+YXRlIj5GU01lbW9yeVN0b3JlPC9jb2RlPiwgYWZ0ZXIgY2xvc2luZyBhIHdyaXRlIHN0cmVhbSB0
+aGF0IG9ubHkgY2FsbGVkIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+bmV4dFB1dDo8L2NvZGU+
+LCB0aGUgZmlsZSBpcyBub3QgcHJvcGVybHkgdHJ1bmNhdGVkLiA8Y29kZSBjbGFzcz0ibm90cmFu
+c2xhdGUiPm5leHRQdXRBbGw6PC9jb2RlPiBkb2VzIG5vdCBoYXZlIHRoaXMgYmVoYXZpb3IuPC9w
+Pgo8ZGl2IGNsYXNzPSJoaWdobGlnaHQgaGlnaGxpZ2h0LXNvdXJjZS1zbWFsbHRhbGsiIGRpcj0i
+YXV0byI+PHByZSBjbGFzcz0ibm90cmFuc2xhdGUiPnwgPHNwYW4gY2xhc3M9InBsLWMxIj5mczwv
+c3Bhbj4gPHNwYW4gY2xhc3M9InBsLWMxIj5yZWY8L3NwYW4+IHwKZnMgPHNwYW4gY2xhc3M9InBs
+LWsiPjo9PC9zcGFuPiA8c3BhbiBjbGFzcz0icGwtYzEiPkZpbGVTeXN0ZW08L3NwYW4+IG1lbW9y
+eS4KcmVmIDxzcGFuIGNsYXNzPSJwbC1rIj46PTwvc3Bhbj4gZnMgPHNwYW4gY2xhc3M9InBsLWsi
+Pi88L3NwYW4+IDxzcGFuIGNsYXNzPSJwbC1zIj48c3BhbiBjbGFzcz0icGwtcGRzIj4nPC9zcGFu
+PnRlc3Q8c3BhbiBjbGFzcz0icGwtcGRzIj4nPC9zcGFuPjwvc3Bhbj4uCnJlZiA8c3BhbiBjbGFz
+cz0icGwtYzEiPndyaXRlU3RyZWFtRG86PC9zcGFuPiBbPHNwYW4gY2xhc3M9InBsLWVuIj46czwv
+c3Bhbj4gfCBzIDxzcGFuIGNsYXNzPSJwbC1jMSI+bmV4dFB1dEFsbDo8L3NwYW4+IDxzcGFuIGNs
+YXNzPSJwbC1zIj48c3BhbiBjbGFzcz0icGwtcGRzIj4nPC9zcGFuPmFiYzxzcGFuIGNsYXNzPSJw
+bC1wZHMiPic8L3NwYW4+PC9zcGFuPl0uCnJlZiBjb250ZW50cy4gPHNwYW4gY2xhc3M9InBsLWMi
+PjxzcGFuIGNsYXNzPSJwbC1jIj4iPC9zcGFuPidhYmMnPHNwYW4gY2xhc3M9InBsLWMiPiI8L3Nw
+YW4+PC9zcGFuPgpyZWYgPHNwYW4gY2xhc3M9InBsLWMxIj53cml0ZVN0cmVhbURvOjwvc3Bhbj4g
+WzxzcGFuIGNsYXNzPSJwbC1lbiI+OnM8L3NwYW4+IHwgcyA8c3BhbiBjbGFzcz0icGwtYzEiPm5l
+eHRQdXRBbGw6PC9zcGFuPiA8c3BhbiBjbGFzcz0icGwtcyI+PHNwYW4gY2xhc3M9InBsLXBkcyI+
+Jzwvc3Bhbj54eTxzcGFuIGNsYXNzPSJwbC1wZHMiPic8L3NwYW4+PC9zcGFuPl0uCnJlZiBjb250
+ZW50cy4gPHNwYW4gY2xhc3M9InBsLWMiPjxzcGFuIGNsYXNzPSJwbC1jIj4iPC9zcGFuPid4eSc8
+c3BhbiBjbGFzcz0icGwtYyI+Ijwvc3Bhbj48L3NwYW4+CnJlZiA8c3BhbiBjbGFzcz0icGwtYzEi
+PndyaXRlU3RyZWFtRG86PC9zcGFuPiBbPHNwYW4gY2xhc3M9InBsLWVuIj46czwvc3Bhbj4gfCBz
+IDxzcGFuIGNsYXNzPSJwbC1jMSI+bmV4dFB1dDo8L3NwYW4+ICQhXS4KcmVmIGNvbnRlbnRzLiA8
+c3BhbiBjbGFzcz0icGwtYyI+PHNwYW4gY2xhc3M9InBsLWMiPiI8L3NwYW4+JyF5JzxzcGFuIGNs
+YXNzPSJwbC1jIj4iPC9zcGFuPjwvc3Bhbj48L3ByZT48L2Rpdj4KPHAgZGlyPSJhdXRvIj5Tb21l
+IGludmVzdGlnYXRpb246PC9wPgo8dWwgZGlyPSJhdXRvIj4KPGxpPjxjb2RlIGNsYXNzPSJub3Ry
+YW5zbGF0ZSI+RlNXcml0ZVN0cmVhbSZndDsmZ3Q7YmFzaWNOZXh0UHV0OjwvY29kZT4gY2FsbHMg
+PGNvZGUgY2xhc3M9Im5vdHJhbnNsYXRlIj5hdDpwdXQ6PC9jb2RlPiBvbiB0aGUgPGNvZGUgY2xh
+c3M9Im5vdHJhbnNsYXRlIj5GU01lbW9yeUhhbmRsZTwvY29kZT48L2xpPgo8bGk+PGNvZGUgY2xh
+c3M9Im5vdHJhbnNsYXRlIj5hdDpwdXQ6PC9jb2RlPiBpcyBvdmVycmlkZGVuIG9uIDxjb2RlIGNs
+YXNzPSJub3RyYW5zbGF0ZSI+RlNNZW1vcnlIYW5kbGU8L2NvZGU+LCB0byAoYW1vbmcgb3RoZXIg
+dGhpbmdzKSBkbyA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9z
+cXVlYWstZmlsZXN5c3RlbS9ibG9iLzc0YWNiNGFlMjdkODBmNGYwMzBiMzg3ZmM0YjU1ODMyN2E4
+MjY1ODYvc3JjL0ZTLU1lbW9yeS5wYWNrYWdlL0ZTTWVtb3J5SGFuZGxlLmNsYXNzL2luc3RhbmNl
+L2F0LnB1dC4uc3QjTDciPjxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+c2l6ZSA6PSBzaXplIG1h
+eDogaW5kZXg8L2NvZGU+PC9hPiAoa2VlcGluZyBhdCBsZWFzdCB0aGUgb3JpZ2luYWwgc2l6ZSk8
+L2xpPgo8bGk+bm9ybWFsbHkgKGluIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+RlNIYW5kbGUm
+Z3Q7Jmd0O2F0OnB1dDo8L2NvZGU+IGFuZCB3aXRoIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+
+YmFzaWNOZXh0UHV0QWxsOjwvY29kZT4pLCA8Y29kZSBjbGFzcz0ibm90cmFuc2xhdGUiPmF0Ondy
+aXRlOnN0YXJ0aW5nQXQ6Y291bnQ6PC9jb2RlPiBpcyBjYWxsZWQsIDxhIGhyZWY9Imh0dHBzOi8v
+Z2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1maWxlc3lzdGVtL2Jsb2IvNzRhY2I0
+YWUyN2Q4MGY0ZjAzMGIzODdmYzRiNTU4MzI3YTgyNjU4Ni9zcmMvRlMtTWVtb3J5LnBhY2thZ2Uv
+RlNNZW1vcnlIYW5kbGUuY2xhc3MvaW5zdGFuY2UvYXQud3JpdGUuc3RhcnRpbmdBdC5jb3VudC4u
+c3QjTDEyIj53aGljaCwgb24gPGNvZGUgY2xhc3M9Im5vdHJhbnNsYXRlIj5GU01lbW9yeUhhbmRs
+ZTwvY29kZT4sIHNldHMgPGNvZGUgY2xhc3M9Im5vdHJhbnNsYXRlIj5zaXplPC9jb2RlPiB0byB0
+aGUgaW5kZXggb2YgdGhlIGJ5dGUgdGhhdCB3YXMgd3JpdHRlbiBsYXN0PC9hPiAoY29ycmVjdGx5
+IHRydW5jYXRpbmcgdGhlIGZpbGUpPC9saT4KPC91bD4KPHAgZGlyPSJhdXRvIj5JJ20gbm90IHN1
+cmUgd2hldGhlciA8Y29kZSBjbGFzcz0ibm90cmFuc2xhdGUiPmJhc2ljTmV4dFB1dDo8L2NvZGU+
+IGlzIGF0IGZhdWx0IGZvciBjYWxsaW5nIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+YXQ6cHV0
+OjwvY29kZT4gaW5zdGVhZCBvZiA8Y29kZSBjbGFzcz0ibm90cmFuc2xhdGUiPmF0OndyaXRlOnN0
+YXJ0aW5nQXQ6Y291bnQ6PC9jb2RlPiBvciB3aGV0aGVyIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0
+ZSI+YXQ6cHV0OjwvY29kZT4gc2hvdWxkIGluc3RlYWQgc2V0IHRoZSBzaXplIHRvIHRoZSA8Y29k
+ZSBjbGFzcz0ibm90cmFuc2xhdGUiPmluZGV4PC9jb2RlPiAtIG1heWJlIDxjb2RlIGNsYXNzPSJu
+b3RyYW5zbGF0ZSI+YXQ6cHV0OjwvY29kZT4gaXMgc29tZXRpbWVzIHVzZWQgdG8gc2V0IGJ5dGVz
+IGluIHRoZSBtaWRkbGUgb2YgYSBmaWxlLCB3aXRob3V0IHdhbnRpbmcgYSB0cnVuY2F0aW9uPzwv
+cD4KCjxwIHN0eWxlPSJmb250LXNpemU6c21hbGw7LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0Om5v
+bmU7Y29sb3I6IzY2NjsiPiZtZGFzaDs8YnIgLz5SZXBseSB0byB0aGlzIGVtYWlsIGRpcmVjdGx5
+LCA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9zcXVlYWstZmls
+ZXN5c3RlbS9pc3N1ZXMvMTQiPnZpZXcgaXQgb24gR2l0SHViPC9hPiwgb3IgPGEgaHJlZj0iaHR0
+cHM6Ly9naXRodWIuY29tL25vdGlmaWNhdGlvbnMvdW5zdWJzY3JpYmUtYXV0aC9CRllBSzZQWDdJ
+UFgzVUxPMllYQUtURFpaTUJRVEFWQ05GU002QUFBQUFCUEdMS0RQU1ZISTJEU01WUVdJWDNMTVY0
+M0FTTFRPTjJXS09aU0dVM0RBTUpXR00yRElOWSI+dW5zdWJzY3JpYmU8L2E+LjxiciAvPllvdSBh
+cmUgcmVjZWl2aW5nIHRoaXMgYmVjYXVzZSB5b3UgYXJlIHN1YnNjcmliZWQgdG8gdGhpcyB0aHJl
+YWQuPGltZyBzcmM9Imh0dHBzOi8vZ2l0aHViLmNvbS9ub3RpZmljYXRpb25zL2JlYWNvbi9CRllB
+SzZNVkpPUFNENjZTM1UzRVhaTFpaTUJRVEE1Q05GU002QUFBQUFCUEdMS0RQU1dHRzMzTk5WU1c0
+NUM3T1I0WEFaTkZKRlpYRzVMRlZKUlc2M0xOTVZYSElYM0pNVEhKUkdINk80LmdpZiIgaGVpZ2h0
+PSIxIiB3aWR0aD0iMSIgYWx0PSIiIC8+PHNwYW4gc3R5bGU9ImNvbG9yOiB0cmFuc3BhcmVudDsg
+Zm9udC1zaXplOiAwOyBkaXNwbGF5OiBub25lOyB2aXNpYmlsaXR5OiBoaWRkZW47IG92ZXJmbG93
+OiBoaWRkZW47IG9wYWNpdHk6IDA7IHdpZHRoOiAwOyBoZWlnaHQ6IDA7IG1heC13aWR0aDogMDsg
+bWF4LWhlaWdodDogMDsgbXNvLWhpZGU6IGFsbCI+TWVzc2FnZSBJRDogPHNwYW4+Jmx0O3NxdWVh
+ay1zbWFsbHRhbGsvc3F1ZWFrLWZpbGVzeXN0ZW0vaXNzdWVzLzE0PC9zcGFuPjxzcGFuPkA8L3Nw
+YW4+PHNwYW4+Z2l0aHViPC9zcGFuPjxzcGFuPi48L3NwYW4+PHNwYW4+Y29tJmd0Ozwvc3Bhbj48
+L3NwYW4+PC9wPgo8c2NyaXB0IHR5cGU9ImFwcGxpY2F0aW9uL2xkK2pzb24iPlsKewoiQGNvbnRl
+eHQiOiAiaHR0cDovL3NjaGVtYS5vcmciLAoiQHR5cGUiOiAiRW1haWxNZXNzYWdlIiwKInBvdGVu
+dGlhbEFjdGlvbiI6IHsKIkB0eXBlIjogIlZpZXdBY3Rpb24iLAoidGFyZ2V0IjogImh0dHBzOi8v
+Z2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1maWxlc3lzdGVtL2lzc3Vlcy8xNCIs
+CiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFrLWZpbGVz
+eXN0ZW0vaXNzdWVzLzE0IiwKIm5hbWUiOiAiVmlldyBJc3N1ZSIKfSwKImRlc2NyaXB0aW9uIjog
+IlZpZXcgdGhpcyBJc3N1ZSBvbiBHaXRIdWIiLAoicHVibGlzaGVyIjogewoiQHR5cGUiOiAiT3Jn
+YW5pemF0aW9uIiwKIm5hbWUiOiAiR2l0SHViIiwKInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20i
+Cn0KfQpdPC9zY3JpcHQ+
+
+--===============3239721872101355215==--
+
+
+From tim@rowledge.org Wed Oct  2 18:50:28 2024
+From: Tim Rowledge <tim@rowledge.org>
+To: squeak-dev@lists.squeakfoundation.org
+Subject:
+ [squeak-dev] Re: The Weekly Squeak news: Happy 28th Birthday to Squeak!
+Date: Wed, 02 Oct 2024 11:50:15 -0700
+Message-ID: <7608CD70-F0FC-4F77-9DBD-BF6C6A3F2C16@rowledge.org>
+In-Reply-To: <0d8f525e-cc44-4fef-bb67-01ea31daa36f@posteo.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3936541996144875663=="
+
+--===============3936541996144875663==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+
+
+> On 2024-10-01, at 4:51 AM, Scott Gibson <scott.gibson(a)posteo.net> wrote:
+>=20
+> The latest Weekly Squeak news article is now available.
+>=20
+> This celebration article notes the announcement of Squeak and contains birt=
+hday wishes and anecdotes, including those from Alan Kay as well as a few pre=
+sent and past contributors. A big thanks to everyone who has contributed to S=
+queak over the years, especially those who continue to give their time and ef=
+fort! There are still so many people enjoying and using Squeak, and every con=
+tribution, however seemingly small, benefits many. A big thanks to all!
+>=20
+> If you would like to, share your thoughts or wishes in the comments!
+>=20
+> https://news.squeak.org/2024/10/01/happy-28th-birthday-to-squeak/
+
+Add comments! It's easy! What is your history with Squeak? What have you done=
+, or want to do?
+
+tim
+--
+tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+The enema of my enemy is my friend
+
+
+--===============3936541996144875663==--
+
+
+From notifications@github.com Thu Oct  3 18:52:23 2024
+From: Daryl Richter <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [squeak-smalltalk/squeak-object-memory] Project
+ saving does not work in Squeak 6.0 (Issue #63)
+Date: Thu, 03 Oct 2024 11:52:11 -0700
+Message-ID:
+ <squeak-smalltalk/squeak-object-memory/issues/63/2392102977@github.com>
+In-Reply-To: <squeak-smalltalk/squeak-object-memory/issues/63@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1375167976243268487=="
+
+--===============1375167976243268487==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+well, it's been quite a while and this is still open and I have the same prob=
+lem. Here are the first 2 walkbalks I get before all hell breaks loose and my=
+ image becomes unusable.
+
+Are Projects just not used anymore at all? If so, how? I don't appear to be a=
+ble to create a new one either.
+
+<img width=3D"827" alt=3D"Screenshot 2024-10-03 at 2 46 22=E2=80=AFPM" src=3D=
+"https://github.com/user-attachments/assets/207b3230-6820-40f6-97fa-8c87b66e4=
+f6d">
+
+<img width=3D"823" alt=3D"Screenshot 2024-10-03 at 2 46 43=E2=80=AFPM" src=3D=
+"https://github.com/user-attachments/assets/121ff251-1a49-4dac-b71f-9d97295dc=
+71d">
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-object-memory/issues/63#issuecomme=
+nt-2392102977
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-object-memory/issues/63/2392102977(a)git=
+hub.com>
+
+
+
+--===============1375167976243268487==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPndlbGwsIGl0J3MgYmVlbiBxdWl0ZSBhIHdoaWxlIGFuZCB0
+aGlzIGlzIHN0aWxsIG9wZW4gYW5kIEkgaGF2ZSB0aGUgc2FtZSBwcm9ibGVtLiBIZXJlIGFyZSB0
+aGUgZmlyc3QgMiB3YWxrYmFsa3MgSSBnZXQgYmVmb3JlIGFsbCBoZWxsIGJyZWFrcyBsb29zZSBh
+bmQgbXkgaW1hZ2UgYmVjb21lcyB1bnVzYWJsZS48L3A+CjxwIGRpcj0iYXV0byI+QXJlIFByb2pl
+Y3RzIGp1c3Qgbm90IHVzZWQgYW55bW9yZSBhdCBhbGw/IElmIHNvLCBob3c/IEkgZG9uJ3QgYXBw
+ZWFyIHRvIGJlIGFibGUgdG8gY3JlYXRlIGEgbmV3IG9uZSBlaXRoZXIuPC9wPgo8YSBocmVmPSJo
+dHRwczovL2dpdGh1Yi5jb20vdXNlci1hdHRhY2htZW50cy9hc3NldHMvMjA3YjMyMzAtNjgyMC00
+MGY2LTk3ZmEtOGM4N2I2NmU0ZjZkIj5TY3JlZW5zaG90LjIwMjQtMTAtMDMuYXQuMi40Ni4yMi5Q
+TS5wbmcgKHZpZXcgb24gd2ViKTwvYT4KPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL3VzZXIt
+YXR0YWNobWVudHMvYXNzZXRzLzEyMWZmMjUxLTFhNDktNGRhYy1iNzFmLTlkOTcyOTVkYzcxZCI+
+U2NyZWVuc2hvdC4yMDI0LTEwLTAzLmF0LjIuNDYuNDMuUE0ucG5nICh2aWV3IG9uIHdlYik8L2E+
+Cgo8cCBzdHlsZT0iZm9udC1zaXplOnNtYWxsOy13ZWJraXQtdGV4dC1zaXplLWFkanVzdDpub25l
+O2NvbG9yOiM2NjY7Ij4mbWRhc2g7PGJyIC8+UmVwbHkgdG8gdGhpcyBlbWFpbCBkaXJlY3RseSwg
+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFrLW9iamVj
+dC1tZW1vcnkvaXNzdWVzLzYzI2lzc3VlY29tbWVudC0yMzkyMTAyOTc3Ij52aWV3IGl0IG9uIEdp
+dEh1YjwvYT4sIG9yIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9ub3RpZmljYXRpb25zL3Vu
+c3Vic2NyaWJlLWF1dGgvQkZZQUs2Tk5XR1NCRUdLV1VIWkpTNExaWldHNVhBVkNORlNNNkFBQUFB
+QlBLTU9GNk9WSEkyRFNNVlFXSVgzTE1WNDNPU0xUT04yV0tRM1BOVldXSzNUVUhNWkRHT0pTR0VZ
+REVPSlhHNCI+dW5zdWJzY3JpYmU8L2E+LjxiciAvPllvdSBhcmUgcmVjZWl2aW5nIHRoaXMgYmVj
+YXVzZSB5b3UgYXJlIHN1YnNjcmliZWQgdG8gdGhpcyB0aHJlYWQuPGltZyBzcmM9Imh0dHBzOi8v
+Z2l0aHViLmNvbS9ub3RpZmljYXRpb25zL2JlYWNvbi9CRllBSzZPS01OVjJZRlJITTNaTElLVFpa
+V0c1WEE1Q05GU002QUFBQUFCUEtNT0Y2T1dHRzMzTk5WU1c0NUM3T1I0WEFaTk1KRlpYRzVMRklO
+WFcyM0xGTloyS1VZM1BOVldXSzNUVUw1VVdKVFVPU1NNRUMuZ2lmIiBoZWlnaHQ9IjEiIHdpZHRo
+PSIxIiBhbHQ9IiIgLz48c3BhbiBzdHlsZT0iY29sb3I6IHRyYW5zcGFyZW50OyBmb250LXNpemU6
+IDA7IGRpc3BsYXk6IG5vbmU7IHZpc2liaWxpdHk6IGhpZGRlbjsgb3ZlcmZsb3c6IGhpZGRlbjsg
+b3BhY2l0eTogMDsgd2lkdGg6IDA7IGhlaWdodDogMDsgbWF4LXdpZHRoOiAwOyBtYXgtaGVpZ2h0
+OiAwOyBtc28taGlkZTogYWxsIj5NZXNzYWdlIElEOiA8c3Bhbj4mbHQ7c3F1ZWFrLXNtYWxsdGFs
+ay9zcXVlYWstb2JqZWN0LW1lbW9yeS9pc3N1ZXMvNjMvMjM5MjEwMjk3Nzwvc3Bhbj48c3Bhbj5A
+PC9zcGFuPjxzcGFuPmdpdGh1Yjwvc3Bhbj48c3Bhbj4uPC9zcGFuPjxzcGFuPmNvbSZndDs8L3Nw
+YW4+PC9zcGFuPjwvcD4KPHNjcmlwdCB0eXBlPSJhcHBsaWNhdGlvbi9sZCtqc29uIj5bCnsKIkBj
+b250ZXh0IjogImh0dHA6Ly9zY2hlbWEub3JnIiwKIkB0eXBlIjogIkVtYWlsTWVzc2FnZSIsCiJw
+b3RlbnRpYWxBY3Rpb24iOiB7CiJAdHlwZSI6ICJWaWV3QWN0aW9uIiwKInRhcmdldCI6ICJodHRw
+czovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9zcXVlYWstb2JqZWN0LW1lbW9yeS9pc3N1
+ZXMvNjMjaXNzdWVjb21tZW50LTIzOTIxMDI5NzciLAoidXJsIjogImh0dHBzOi8vZ2l0aHViLmNv
+bS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vlcy82MyNpc3N1ZWNv
+bW1lbnQtMjM5MjEwMjk3NyIsCiJuYW1lIjogIlZpZXcgSXNzdWUiCn0sCiJkZXNjcmlwdGlvbiI6
+ICJWaWV3IHRoaXMgSXNzdWUgb24gR2l0SHViIiwKInB1Ymxpc2hlciI6IHsKIkB0eXBlIjogIk9y
+Z2FuaXphdGlvbiIsCiJuYW1lIjogIkdpdEh1YiIsCiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29t
+Igp9Cn0KXTwvc2NyaXB0Pg==
+
+--===============1375167976243268487==--
+
+
+From commits@source.squeak.org Thu Oct  3 23:48:47 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-dtl.1466.mcz
+Date: Thu, 03 Oct 2024 23:48:31 +0000
+Message-ID: <20241003234840.722CE5826AA@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5834648025051865466=="
+
+--===============5834648025051865466==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+David T. Lewis uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-dtl.1466.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: System-dtl.1466
+Author: dtl
+Time: 3 October 2024, 7:48:28.576422 pm
+UUID: bbdaef69-536a-442e-b15e-10e06b41dbdd
+Ancestors: System-eem.1465
+
+Let ReferenceStream>>#project answer a reasonable default
+Addresses issue https://github.com/squeak-smalltalk/squeak-object-memory/issu=
+es/63
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against System-eem.1465 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ReferenceStream>>project (in category 'writing') -----
+  project
+  	"Return the project we are writing or nil"
+ =20
+  	(topCall respondsTo: #isCurrentProject) ifTrue: [^ topCall].
+  	(topCall respondsTo: #do:) ifTrue: [1 to: 5 do: [:ii |=20
+  		((topCall at: ii ifAbsent: [ ^nil ]) respondsTo: #isCurrentProject) ifTru=
+e: [^ topCall at: ii]]].
++ 	^ Project current!
+- 	^ nil!
+
+
+--===============5834648025051865466==--
+
+
+From notifications@github.com Thu Oct  3 23:55:55 2024
+From: David T Lewis <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [squeak-smalltalk/squeak-object-memory] Project
+ saving does not work in Squeak 6.0 (Issue #63)
+Date: Thu, 03 Oct 2024 16:55:45 -0700
+Message-ID:
+ <squeak-smalltalk/squeak-object-memory/issues/63/2392527148@github.com>
+In-Reply-To: <squeak-smalltalk/squeak-object-memory/issues/63@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7222068518255039703=="
+
+--===============7222068518255039703==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+I can confirm that project saving (as described in steps to reproduce above) =
+still fails in Squeak trunk, but with different symptoms. A fix is in the tru=
+nk update stream in System-dtl.1466. I have not yet tested in the 6.0 release=
+ image to see if a backport is appropriate.
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-object-memory/issues/63#issuecomme=
+nt-2392527148
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-object-memory/issues/63/2392527148(a)git=
+hub.com>
+
+
+
+--===============7222068518255039703==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPkkgY2FuIGNvbmZpcm0gdGhhdCBwcm9qZWN0IHNhdmluZyAo
+YXMgZGVzY3JpYmVkIGluIHN0ZXBzIHRvIHJlcHJvZHVjZSBhYm92ZSkgc3RpbGwgZmFpbHMgaW4g
+U3F1ZWFrIHRydW5rLCBidXQgd2l0aCBkaWZmZXJlbnQgc3ltcHRvbXMuIEEgZml4IGlzIGluIHRo
+ZSB0cnVuayB1cGRhdGUgc3RyZWFtIGluIFN5c3RlbS1kdGwuMTQ2Ni4gSSBoYXZlIG5vdCB5ZXQg
+dGVzdGVkIGluIHRoZSA2LjAgcmVsZWFzZSBpbWFnZSB0byBzZWUgaWYgYSBiYWNrcG9ydCBpcyBh
+cHByb3ByaWF0ZS48L3A+Cgo8cCBzdHlsZT0iZm9udC1zaXplOnNtYWxsOy13ZWJraXQtdGV4dC1z
+aXplLWFkanVzdDpub25lO2NvbG9yOiM2NjY7Ij4mbWRhc2g7PGJyIC8+UmVwbHkgdG8gdGhpcyBl
+bWFpbCBkaXJlY3RseSwgPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRh
+bGsvc3F1ZWFrLW9iamVjdC1tZW1vcnkvaXNzdWVzLzYzI2lzc3VlY29tbWVudC0yMzkyNTI3MTQ4
+Ij52aWV3IGl0IG9uIEdpdEh1YjwvYT4sIG9yIDxhIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9u
+b3RpZmljYXRpb25zL3Vuc3Vic2NyaWJlLWF1dGgvQkZZQUs2S0dIUVpLWFVZUEJORkxSN0xaWlhL
+UURBVkNORlNNNkFBQUFBQlBLTU9GNk9WSEkyRFNNVlFXSVgzTE1WNDNPU0xUT04yV0tRM1BOVldX
+SzNUVUhNWkRHT0pTR1VaRE9NSlVIQSI+dW5zdWJzY3JpYmU8L2E+LjxiciAvPllvdSBhcmUgcmVj
+ZWl2aW5nIHRoaXMgYmVjYXVzZSB5b3UgYXJlIHN1YnNjcmliZWQgdG8gdGhpcyB0aHJlYWQuPGlt
+ZyBzcmM9Imh0dHBzOi8vZ2l0aHViLmNvbS9ub3RpZmljYXRpb25zL2JlYWNvbi9CRllBSzZJTEE2
+REFOUjY1M1RWUFI2RFpaWEtRREE1Q05GU002QUFBQUFCUEtNT0Y2T1dHRzMzTk5WU1c0NUM3T1I0
+WEFaTk1KRlpYRzVMRklOWFcyM0xGTloyS1VZM1BOVldXSzNUVUw1VVdKVFVPVE1JU1kuZ2lmIiBo
+ZWlnaHQ9IjEiIHdpZHRoPSIxIiBhbHQ9IiIgLz48c3BhbiBzdHlsZT0iY29sb3I6IHRyYW5zcGFy
+ZW50OyBmb250LXNpemU6IDA7IGRpc3BsYXk6IG5vbmU7IHZpc2liaWxpdHk6IGhpZGRlbjsgb3Zl
+cmZsb3c6IGhpZGRlbjsgb3BhY2l0eTogMDsgd2lkdGg6IDA7IGhlaWdodDogMDsgbWF4LXdpZHRo
+OiAwOyBtYXgtaGVpZ2h0OiAwOyBtc28taGlkZTogYWxsIj5NZXNzYWdlIElEOiA8c3Bhbj4mbHQ7
+c3F1ZWFrLXNtYWxsdGFsay9zcXVlYWstb2JqZWN0LW1lbW9yeS9pc3N1ZXMvNjMvMjM5MjUyNzE0
+ODwvc3Bhbj48c3Bhbj5APC9zcGFuPjxzcGFuPmdpdGh1Yjwvc3Bhbj48c3Bhbj4uPC9zcGFuPjxz
+cGFuPmNvbSZndDs8L3NwYW4+PC9zcGFuPjwvcD4KPHNjcmlwdCB0eXBlPSJhcHBsaWNhdGlvbi9s
+ZCtqc29uIj5bCnsKIkBjb250ZXh0IjogImh0dHA6Ly9zY2hlbWEub3JnIiwKIkB0eXBlIjogIkVt
+YWlsTWVzc2FnZSIsCiJwb3RlbnRpYWxBY3Rpb24iOiB7CiJAdHlwZSI6ICJWaWV3QWN0aW9uIiwK
+InRhcmdldCI6ICJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9zcXVlYWstb2Jq
+ZWN0LW1lbW9yeS9pc3N1ZXMvNjMjaXNzdWVjb21tZW50LTIzOTI1MjcxNDgiLAoidXJsIjogImh0
+dHBzOi8vZ2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lz
+c3Vlcy82MyNpc3N1ZWNvbW1lbnQtMjM5MjUyNzE0OCIsCiJuYW1lIjogIlZpZXcgSXNzdWUiCn0s
+CiJkZXNjcmlwdGlvbiI6ICJWaWV3IHRoaXMgSXNzdWUgb24gR2l0SHViIiwKInB1Ymxpc2hlciI6
+IHsKIkB0eXBlIjogIk9yZ2FuaXphdGlvbiIsCiJuYW1lIjogIkdpdEh1YiIsCiJ1cmwiOiAiaHR0
+cHM6Ly9naXRodWIuY29tIgp9Cn0KXTwvc2NyaXB0Pg==
+
+--===============7222068518255039703==--
+
+
+From notifications@github.com Fri Oct  4 15:29:03 2024
+From: Daryl Richter <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [squeak-smalltalk/squeak-object-memory] Project
+ saving does not work in Squeak 6.0 (Issue #63)
+Date: Fri, 04 Oct 2024 08:28:53 -0700
+Message-ID:
+ <squeak-smalltalk/squeak-object-memory/issues/63/2393962187@github.com>
+In-Reply-To: <squeak-smalltalk/squeak-object-memory/issues/63@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8006835796335706222=="
+
+--===============8006835796335706222==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Oh, that sounds like good news. Thanks for your response. I would be willing =
+to try to validate it if you can point me to instructions. Although I am only=
+ just getting back into Smalltalk via Squeak I am an experienced coder and wa=
+s a Smalltalker from '93-'01 (mostly VW) so I am relatively competent. :)
+
+Thanks again.
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-object-memory/issues/63#issuecomme=
+nt-2393962187
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-object-memory/issues/63/2393962187(a)git=
+hub.com>
+
+
+
+--===============8006835796335706222==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPk9oLCB0aGF0IHNvdW5kcyBsaWtlIGdvb2QgbmV3cy4gVGhh
+bmtzIGZvciB5b3VyIHJlc3BvbnNlLiBJIHdvdWxkIGJlIHdpbGxpbmcgdG8gdHJ5IHRvIHZhbGlk
+YXRlIGl0IGlmIHlvdSBjYW4gcG9pbnQgbWUgdG8gaW5zdHJ1Y3Rpb25zLiBBbHRob3VnaCBJIGFt
+IG9ubHkganVzdCBnZXR0aW5nIGJhY2sgaW50byBTbWFsbHRhbGsgdmlhIFNxdWVhayBJIGFtIGFu
+IGV4cGVyaWVuY2VkIGNvZGVyIGFuZCB3YXMgYSBTbWFsbHRhbGtlciBmcm9tICc5My0nMDEgKG1v
+c3RseSBWVykgc28gSSBhbSByZWxhdGl2ZWx5IGNvbXBldGVudC4gOik8L3A+CjxwIGRpcj0iYXV0
+byI+VGhhbmtzIGFnYWluLjwvcD4KCjxwIHN0eWxlPSJmb250LXNpemU6c21hbGw7LXdlYmtpdC10
+ZXh0LXNpemUtYWRqdXN0Om5vbmU7Y29sb3I6IzY2NjsiPiZtZGFzaDs8YnIgLz5SZXBseSB0byB0
+aGlzIGVtYWlsIGRpcmVjdGx5LCA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNt
+YWxsdGFsay9zcXVlYWstb2JqZWN0LW1lbW9yeS9pc3N1ZXMvNjMjaXNzdWVjb21tZW50LTIzOTM5
+NjIxODciPnZpZXcgaXQgb24gR2l0SHViPC9hPiwgb3IgPGEgaHJlZj0iaHR0cHM6Ly9naXRodWIu
+Y29tL25vdGlmaWNhdGlvbnMvdW5zdWJzY3JpYmUtYXV0aC9CRllBSzZJQjNSWkdBRFhPV1FaUUVK
+RFpaMlgzTEFWQ05GU002QUFBQUFCUEtNT0Y2T1ZISTJEU01WUVdJWDNMTVY0M09TTFRPTjJXS1Ez
+UE5WV1dLM1RVSE1aREdPSlRIRTNERU1KWUc0Ij51bnN1YnNjcmliZTwvYT4uPGJyIC8+WW91IGFy
+ZSByZWNlaXZpbmcgdGhpcyBiZWNhdXNlIHlvdSBhcmUgc3Vic2NyaWJlZCB0byB0aGlzIHRocmVh
+ZC48aW1nIHNyYz0iaHR0cHM6Ly9naXRodWIuY29tL25vdGlmaWNhdGlvbnMvYmVhY29uL0JGWUFL
+Nk5TSUFZU1M2SElQN1A0UkgzWloyWDNMQTVDTkZTTTZBQUFBQUJQS01PRjZPV0dHMzNOTlZTVzQ1
+QzdPUjRYQVpOTUpGWlhHNUxGSU5YVzIzTEZOWjJLVVkzUE5WV1dLM1RVTDVVV0pUVU9XRDNNVy5n
+aWYiIGhlaWdodD0iMSIgd2lkdGg9IjEiIGFsdD0iIiAvPjxzcGFuIHN0eWxlPSJjb2xvcjogdHJh
+bnNwYXJlbnQ7IGZvbnQtc2l6ZTogMDsgZGlzcGxheTogbm9uZTsgdmlzaWJpbGl0eTogaGlkZGVu
+OyBvdmVyZmxvdzogaGlkZGVuOyBvcGFjaXR5OiAwOyB3aWR0aDogMDsgaGVpZ2h0OiAwOyBtYXgt
+d2lkdGg6IDA7IG1heC1oZWlnaHQ6IDA7IG1zby1oaWRlOiBhbGwiPk1lc3NhZ2UgSUQ6IDxzcGFu
+PiZsdDtzcXVlYWstc21hbGx0YWxrL3NxdWVhay1vYmplY3QtbWVtb3J5L2lzc3Vlcy82My8yMzkz
+OTYyMTg3PC9zcGFuPjxzcGFuPkA8L3NwYW4+PHNwYW4+Z2l0aHViPC9zcGFuPjxzcGFuPi48L3Nw
+YW4+PHNwYW4+Y29tJmd0Ozwvc3Bhbj48L3NwYW4+PC9wPgo8c2NyaXB0IHR5cGU9ImFwcGxpY2F0
+aW9uL2xkK2pzb24iPlsKewoiQGNvbnRleHQiOiAiaHR0cDovL3NjaGVtYS5vcmciLAoiQHR5cGUi
+OiAiRW1haWxNZXNzYWdlIiwKInBvdGVudGlhbEFjdGlvbiI6IHsKIkB0eXBlIjogIlZpZXdBY3Rp
+b24iLAoidGFyZ2V0IjogImh0dHBzOi8vZ2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVh
+ay1vYmplY3QtbWVtb3J5L2lzc3Vlcy82MyNpc3N1ZWNvbW1lbnQtMjM5Mzk2MjE4NyIsCiJ1cmwi
+OiAiaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFrLW9iamVjdC1tZW1v
+cnkvaXNzdWVzLzYzI2lzc3VlY29tbWVudC0yMzkzOTYyMTg3IiwKIm5hbWUiOiAiVmlldyBJc3N1
+ZSIKfSwKImRlc2NyaXB0aW9uIjogIlZpZXcgdGhpcyBJc3N1ZSBvbiBHaXRIdWIiLAoicHVibGlz
+aGVyIjogewoiQHR5cGUiOiAiT3JnYW5pemF0aW9uIiwKIm5hbWUiOiAiR2l0SHViIiwKInVybCI6
+ICJodHRwczovL2dpdGh1Yi5jb20iCn0KfQpdPC9zY3JpcHQ+
+
+--===============8006835796335706222==--
+
+
+From lewis@mail.msen.com Sat Oct  5 00:08:10 2024
+From: David T Lewis <lewis@mail.msen.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [squeak-smalltalk/squeak-object-memory] Project
+ saving does not work in Squeak 6.0 (Issue #63)
+Date: Fri, 04 Oct 2024 20:07:55 -0400
+Message-ID: <fb91dc5e-4511-4fe4-a47c-56f708758624@mail.msen.com>
+In-Reply-To:
+ <squeak-smalltalk/squeak-object-memory/issues/63/2393962187@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1162122117786850733=="
+
+--===============1162122117786850733==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hi Daryl,
+
+On 10/4/24 11:28, Daryl Richter via Squeak-dev wrote:
+>
+> Oh, that sounds like good news. Thanks for your response. I would be 
+> willing to try to validate it if you can point me to instructions. 
+> Although I am only just getting back into Smalltalk via Squeak I am an 
+> experienced coder and was a Smalltalker from '93-'01 (mostly VW) so I 
+> am relatively competent. :)
+>
+Welcome back to Smalltalk and Squeak!
+
+I am attaching a fileout of the change that I pushed to the Squeak trunk 
+update stream. It is a small change that is sufficient to fix project 
+saving (as described in your excellent "how to reproduce") on the latest 
+Squeak trunk development image (follow the links from 
+https://squeak.org/downloads/ to get an up to date trunk image).
+
+The patch is not sufficient to address the problem(s) in a Squeak 6.0 
+release image. This is almost certainly because other related issues 
+have already been fixed in our trunk development stream, so it may not 
+be worth putting much time into getting it working in the older (but 
+official) release image.
+
+HTH and again, welcome back :-)
+
+Dave
+
+p.s. Please have a look at https://squeak.org/development_process/ for 
+an overview of how updates get done in the trunk development image
+
+
+
+
+
+
+
+--===============1162122117786850733==
+Content-Type: text/plain
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="ReferenceStream-project.st"
+MIME-Version: 1.0
+
+77u/J0Zyb20gU3F1ZWFrNi4xYWxwaGEgb2YgMyBPY3RvYmVyIDIwMjQgW2xhdGVzdCB1cGRhdGU6
+ICMyMzE0MV0gb24gNCBPY3RvYmVyIDIwMjQgYXQgNzoyNzo1OCBwbSchDQ0hUmVmZXJlbmNlU3Ry
+ZWFtIG1ldGhvZHNGb3I6ICd3cml0aW5nJyBzdGFtcDogJ2R0bCAxMC8zLzIwMjQgMTk6MjInIQ1w
+cm9qZWN0DQkiUmV0dXJuIHRoZSBwcm9qZWN0IHdlIGFyZSB3cml0aW5nIG9yIG5pbCINDQkodG9w
+Q2FsbCByZXNwb25kc1RvOiAjaXNDdXJyZW50UHJvamVjdCkgaWZUcnVlOiBbXiB0b3BDYWxsXS4N
+CSh0b3BDYWxsIHJlc3BvbmRzVG86ICNkbzopIGlmVHJ1ZTogWzEgdG86IDUgZG86IFs6aWkgfCAN
+CQkoKHRvcENhbGwgYXQ6IGlpIGlmQWJzZW50OiBbIF5uaWwgXSkgcmVzcG9uZHNUbzogI2lzQ3Vy
+cmVudFByb2plY3QpIGlmVHJ1ZTogW14gdG9wQ2FsbCBhdDogaWldXV0uDQleIFByb2plY3QgY3Vy
+cmVudCEgIQ0=
+
+--===============1162122117786850733==--
+
+
+From vaidasd@gmail.com Tue Oct  8 12:03:05 2024
+From: Vaidotas =?utf-8?q?Did=C5=BEbalis?= <vaidasd@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [squeak-smalltalk/squeak-object-memory] Project
+ saving does not work in Squeak 6.0 (Issue #63)
+Date: Tue, 08 Oct 2024 15:02:18 +0300
+Message-ID:
+ <CAJn_Y17BPW8OepPoK2DyN7_ohC4Dx1m1T3rUjpvBznLNjtj0Tw@mail.gmail.com>
+In-Reply-To: <fb91dc5e-4511-4fe4-a47c-56f708758624@mail.msen.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1747753216729046417=="
+
+--===============1747753216729046417==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hello, Dave,
+Used trunk image (Squeak6.1alpha update: #23141)  with the patch applied,
+used steps described in the ticket. Saving still warns about blocks in
+segment, proceeding produces .pr file on disk, trying to load it patch
+fails with following walkback1.txt, . Attempting quick and perhaps dirty
+fix (see attached changeset), failes with walkback2.txt
+regards,
+Vaidotas
+
+
+
+>
+> I am attaching a fileout of the change that I pushed to the Squeak trunk
+> update stream. It is a small change that is sufficient to fix project
+> saving (as described in your excellent "how to reproduce") on the latest
+> Squeak trunk development image (follow the links from
+> https://squeak.org/downloads/ to get an up to date trunk image).
+>
+>
+>
+>
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to
+> squeak-dev-leave(a)lists.squeakfoundation.org
+
+
+
+
+
+
+
+
+
+--===============1747753216729046417==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGRpdj5IZWxsbywgRGF2ZSw8L2Rpdj48ZGl2
+PlVzZWQgdHJ1bmsgaW1hZ2UgCihTcXVlYWs2LjFhbHBoYSB1cGRhdGU6ICMyMzE0MSnCoCB3aXRo
+IHRoZSBwYXRjaCBhcHBsaWVkLCB1c2VkIHN0ZXBzIGRlc2NyaWJlZCBpbiB0aGUgdGlja2V0LiBT
+YXZpbmcgc3RpbGwgd2FybnMgYWJvdXQgYmxvY2tzIGluIHNlZ21lbnQsIHByb2NlZWRpbmcgcHJv
+ZHVjZXMgLnByIGZpbGUgb24gZGlzaywgdHJ5aW5nIHRvIGxvYWQgaXQgcGF0Y2ggZmFpbHMgd2l0
+aCBmb2xsb3dpbmcgd2Fsa2JhY2sxLnR4dCwgLiBBdHRlbXB0aW5nIHF1aWNrIGFuZCBwZXJoYXBz
+IGRpcnR5IGZpeCAoc2VlIGF0dGFjaGVkIGNoYW5nZXNldCksIGZhaWxlcyB3aXRoIHdhbGtiYWNr
+Mi50eHQgPGJyPjwvZGl2PjxkaXY+cmVnYXJkcyw8L2Rpdj48ZGl2PlZhaWRvdGFzPGJyPjwvZGl2
+PjxkaXY+PGJyPjwvZGl2PjwvZGl2Pjxicj48ZGl2IGNsYXNzPSJnbWFpbF9xdW90ZSI+PGJsb2Nr
+cXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFyZ2luOjBweCAwcHggMHB4IDAuOGV4
+O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwyMDQpO3BhZGRpbmctbGVmdDoxZXgi
+Pjxicj4KPGJyPgpJIGFtIGF0dGFjaGluZyBhIGZpbGVvdXQgb2YgdGhlIGNoYW5nZSB0aGF0IEkg
+cHVzaGVkIHRvIHRoZSBTcXVlYWsgdHJ1bmsgPGJyPgp1cGRhdGUgc3RyZWFtLiBJdCBpcyBhIHNt
+YWxsIGNoYW5nZSB0aGF0IGlzIHN1ZmZpY2llbnQgdG8gZml4IHByb2plY3QgPGJyPgpzYXZpbmcg
+KGFzIGRlc2NyaWJlZCBpbiB5b3VyIGV4Y2VsbGVudCAmcXVvdDtob3cgdG8gcmVwcm9kdWNlJnF1
+b3Q7KSBvbiB0aGUgbGF0ZXN0IDxicj4KU3F1ZWFrIHRydW5rIGRldmVsb3BtZW50IGltYWdlIChm
+b2xsb3cgdGhlIGxpbmtzIGZyb20gPGJyPgo8YSBocmVmPSJodHRwczovL3NxdWVhay5vcmcvZG93
+bmxvYWRzLyIgcmVsPSJub3JlZmVycmVyIiB0YXJnZXQ9Il9ibGFuayI+aHR0cHM6Ly9zcXVlYWsu
+b3JnL2Rvd25sb2Fkcy88L2E+IHRvIGdldCBhbiB1cCB0byBkYXRlIHRydW5rIGltYWdlKS48YnI+
+Cjxicj4KPGJyPgo8YnI+Cjxicj4KU3F1ZWFrLWRldiBtYWlsaW5nIGxpc3QgLS0gPGEgaHJlZj0i
+bWFpbHRvOnNxdWVhay1kZXZAbGlzdHMuc3F1ZWFrZm91bmRhdGlvbi5vcmciIHRhcmdldD0iX2Js
+YW5rIj5zcXVlYWstZGV2QGxpc3RzLnNxdWVha2ZvdW5kYXRpb24ub3JnPC9hPjxicj4KVG8gdW5z
+dWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byA8YSBocmVmPSJtYWlsdG86c3F1ZWFrLWRldi1sZWF2
+ZUBsaXN0cy5zcXVlYWtmb3VuZGF0aW9uLm9yZyIgdGFyZ2V0PSJfYmxhbmsiPnNxdWVhay1kZXYt
+bGVhdmVAbGlzdHMuc3F1ZWFrZm91bmRhdGlvbi5vcmc8L2E+PC9ibG9ja3F1b3RlPjwvZGl2Pjwv
+ZGl2Pgo=
+
+--===============1747753216729046417==
+Content-Type: text/plain
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="63.1.cs"
+MIME-Version: 1.0
+
+77u/J0Zyb20gU3F1ZWFrNi4xYWxwaGEgb2YgMyBPY3RvYmVyIDIwMjQgW2xhdGVzdCB1cGRhdGU6
+ICMyMzE0MV0gb24gOCBPY3RvYmVyIDIwMjQgYXQgMjo1MTowNyBwbSchDQ0hU21hcnRSZWZTdHJl
+YW0gbWV0aG9kc0ZvcjogJ2ltcG9ydCBpbWFnZSBzZWdtZW50JyBzdGFtcDogJ3ZkIDEwLzgvMjAy
+NCAxNDo0OSchDW1hcENsYXNzOiBuZXdDbGFzcyBvcmlnTmFtZTogb3JpZ2luYWxOYW1lDQkiU2Vl
+IGlmIGluc3RhbmNlcyBjaGFuZ2VkIHNoYXBlLiAgSWYgc28sIG1ha2UgYSBmYWtlIGNsYXNzIGZv
+ciB0aGUgb2xkIHNoYXBlIGFuZCByZXR1cm4gaXQuICBSZW1lbWJlciB0aGUgb3JpZ2luYWwgY2xh
+c3MgbmFtZS4iDQ0JfCBuZXdOYW1lIG9sZEluc3RWYXJzIGZha2VDbGFzcyB8DQluZXdDbGFzcyBp
+c01ldGEgaWZUcnVlOiBbXiBuZXdDbGFzc10uDQluZXdOYW1lIDo9IG5ld0NsYXNzIG5hbWUuDQko
+c2VsZiByZW5hbWVkIGF0OiBvcmlnaW5hbE5hbWUgaWZQcmVzZW50OiBbOmZvdW5kIHwgXiBmb3Vu
+ZF0pLg0JKHN0ZWFkeSBpbmNsdWRlczogbmV3Q2xhc3MpICYgKG5ld05hbWUgPT0gb3JpZ2luYWxO
+YW1lKSBpZlRydWU6IFteIG5ld0NsYXNzXS4NCQkiaW5zdGFuY2VzIGluIHRoZSBzZWdtZW50IGhh
+dmUgdGhlIHJpZ2h0IHNoYXBlIg0Jb2xkSW5zdFZhcnMgOj0gc3RydWN0dXJlcyBhdDogb3JpZ2lu
+YWxOYW1lIGlmQWJzZW50OiBbDQkJCXNlbGYgZXJyb3I6ICdjbGFzcyBpcyBub3QgaW4gc3RydWN0
+dXJlcyBsaXN0J10uCSJNaXNzaW5nIGluIG9iamVjdCBmaWxlIg0NCSJBbGxvdyBtYXBwaW5nIGZy
+b20gb2xkIHRvIG5ldyBzdHJpbmcgbmFtZXMiDQkobmV3TmFtZSA9PSAjQnl0ZVN0cmluZyBhbmQ6
+W29yaWdpbmFsTmFtZSA9PSAjU3RyaW5nXSkgaWZUcnVlOltebmV3Q2xhc3NdLg0JKG5ld05hbWUg
+PT0gI1dpZGVTdHJpbmcgYW5kOltvcmlnaW5hbE5hbWUgPT0gI011bHRpU3RyaW5nXSkgaWZUcnVl
+OltebmV3Q2xhc3NdLg0JKG5ld05hbWUgPT0gI1dpZGVTeW1ib2wgYW5kOltvcmlnaW5hbE5hbWUg
+PT0gI011bHRpU3ltYm9sXSkgaWZUcnVlOltebmV3Q2xhc3NdLg0NCSJWYXJpYWJsZSBjbGFzc2Vz
+IGFyZSBub3QgaGFuZGxlZCBmdWxseS4gVGhpcyBvbmUgaXMgZmluZS4gLS1iZiINCW5ld05hbWUg
+PT0gI01ldGhvZENvbnRleHQgaWZUcnVlOiBbXm5ld0NsYXNzXS4NCSJBcyBJIGhvcGUgYXJlIHRo
+ZXNlPyAgLS1lZW0iDQkoIyhDb250ZXh0IEJsb2NrQ2xvc3VyZSBBZGRpdGlvbmFsTWV0aG9kU3Rh
+dGUpIGluY2x1ZGVzOiBuZXdOYW1lKSBpZlRydWU6DQkJW15uZXdDbGFzc10uDQ0JZmFrZUNsYXNz
+IDo9IE9iamVjdCBzdWJjbGFzczogKCdGYWtlMzcnLCBvcmlnaW5hbE5hbWUpIGFzU3ltYm9sDQkJ
+aW5zdGFuY2VWYXJpYWJsZU5hbWVzOiBvbGRJbnN0VmFycyBhbGxCdXRGaXJzdA0JCWNsYXNzVmFy
+aWFibGVOYW1lczogJycNCQlwb29sRGljdGlvbmFyaWVzOiAnJw0JCWNhdGVnb3J5OiAnT2Jzb2xl
+dGUnLg0JQ2hhbmdlU2V0IGN1cnJlbnQgcmVtb3ZlQ2xhc3NDaGFuZ2VzOiBmYWtlQ2xhc3MgbmFt
+ZS4JInJlZHVjZSBjbHV0dGVyIg0JXiBmYWtlQ2xhc3MNISAhDQ0=
+
+--===============1747753216729046417==
+Content-Type: text/plain
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="walkback1.txt"
+MIME-Version: 1.0
+
+U21hcnRSZWZTdHJlYW0oT2JqZWN0KT4+ZXJyb3I6DQpbXSBpbiBTbWFydFJlZlN0cmVhbT4+bWFw
+Q2xhc3M6b3JpZ05hbWU6DQpEaWN0aW9uYXJ5Pj5hdDppZkFic2VudDoNClNtYXJ0UmVmU3RyZWFt
+Pj5tYXBDbGFzczpvcmlnTmFtZToNCltdIGluIFNtYXJ0UmVmU3RyZWFtPj5yZXNoYXBlZENsYXNz
+ZXNJbjoNCkFycmF5KFNlcXVlbmNlYWJsZUNvbGxlY3Rpb24pPj53aXRoSW5kZXhEbzoNClNtYXJ0
+UmVmU3RyZWFtPj5yZXNoYXBlZENsYXNzZXNJbjoNCk5hdGl2ZUltYWdlU2VnbWVudChJbWFnZVNl
+Z21lbnQpPj5jb21lRnVsbHlVcE9uUmVsb2FkOg0KU21hcnRSZWZTdHJlYW0oRGF0YVN0cmVhbSk+
+Pm5leHQNClNtYXJ0UmVmU3RyZWFtKFJlZmVyZW5jZVN0cmVhbSk+Pm5leHQNClNtYXJ0UmVmU3Ry
+ZWFtPj5uZXh0DQpTbWFydFJlZlN0cmVhbT4+c2NhbkZyb206DQpPYmplY3RTY2FubmVyPj5zY2Fu
+RnJvbToNCltdIGluIFtdIGluIFtdIGluIE11bHRpQnl0ZUJpbmFyeU9yVGV4dFN0cmVhbShQb3Np
+dGlvbmFibGVTdHJlYW0pPj5maWxlSW5Gb3I6YW5ub3VuY2luZzoNCkZ1bGxCbG9ja0Nsb3N1cmUo
+QmxvY2tDbG9zdXJlKT4+b246ZG86DQpbXSBpbiBbXSBpbiBNdWx0aUJ5dGVCaW5hcnlPclRleHRT
+dHJlYW0oUG9zaXRpb25hYmxlU3RyZWFtKT4+ZmlsZUluRm9yOmFubm91bmNpbmc6DQpGdWxsQmxv
+Y2tDbG9zdXJlKEJsb2NrQ2xvc3VyZSk+Pm9uOmRvOg0KW10gaW4gTXVsdGlCeXRlQmluYXJ5T3JU
+ZXh0U3RyZWFtKFBvc2l0aW9uYWJsZVN0cmVhbSk+PmZpbGVJbkZvcjphbm5vdW5jaW5nOg0KW10g
+aW4gW10gaW4gUHJvZ3Jlc3NJbml0aWF0aW9uRXhjZXB0aW9uPj5zZW5kTm90aWZpY2F0aW9uc1Rv
+Og0KRnVsbEJsb2NrQ2xvc3VyZShCbG9ja0Nsb3N1cmUpPj5lbnN1cmU6
+
+--===============1747753216729046417==
+Content-Type: text/plain
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="walkback2.txt"
+MIME-Version: 1.0
+
+TmF0aXZlSW1hZ2VTZWdtZW50KE9iamVjdCk+PmVycm9yOg0KTmF0aXZlSW1hZ2VTZWdtZW50Pj5s
+b2FkU2VnbWVudEZyb206b3V0UG9pbnRlcnM6DQpOYXRpdmVJbWFnZVNlZ21lbnQoSW1hZ2VTZWdt
+ZW50KT4+Y29tZUZ1bGx5VXBPblJlbG9hZDoNClNtYXJ0UmVmU3RyZWFtKERhdGFTdHJlYW0pPj5u
+ZXh0DQpTbWFydFJlZlN0cmVhbShSZWZlcmVuY2VTdHJlYW0pPj5uZXh0DQpTbWFydFJlZlN0cmVh
+bT4+bmV4dA0KU21hcnRSZWZTdHJlYW0+PnNjYW5Gcm9tOg0KT2JqZWN0U2Nhbm5lcj4+c2NhbkZy
+b206DQpbXSBpbiBbXSBpbiBbXSBpbiBNdWx0aUJ5dGVCaW5hcnlPclRleHRTdHJlYW0oUG9zaXRp
+b25hYmxlU3RyZWFtKT4+ZmlsZUluRm9yOmFubm91bmNpbmc6DQpGdWxsQmxvY2tDbG9zdXJlKEJs
+b2NrQ2xvc3VyZSk+Pm9uOmRvOg0KW10gaW4gW10gaW4gTXVsdGlCeXRlQmluYXJ5T3JUZXh0U3Ry
+ZWFtKFBvc2l0aW9uYWJsZVN0cmVhbSk+PmZpbGVJbkZvcjphbm5vdW5jaW5nOg0KRnVsbEJsb2Nr
+Q2xvc3VyZShCbG9ja0Nsb3N1cmUpPj5vbjpkbzoNCltdIGluIE11bHRpQnl0ZUJpbmFyeU9yVGV4
+dFN0cmVhbShQb3NpdGlvbmFibGVTdHJlYW0pPj5maWxlSW5Gb3I6YW5ub3VuY2luZzoNCltdIGlu
+IFtdIGluIFByb2dyZXNzSW5pdGlhdGlvbkV4Y2VwdGlvbj4+c2VuZE5vdGlmaWNhdGlvbnNUbzoN
+CkZ1bGxCbG9ja0Nsb3N1cmUoQmxvY2tDbG9zdXJlKT4+ZW5zdXJlOg0KW10gaW4gUHJvZ3Jlc3NJ
+bml0aWF0aW9uRXhjZXB0aW9uPj5zZW5kTm90aWZpY2F0aW9uc1RvOg0KQ29udGV4dD4+cmVzdW1l
+RXZhbHVhdGluZzp0aHJvdWdoOg0KUHJvZ3Jlc3NJbml0aWF0aW9uRXhjZXB0aW9uPj5kaXNwbGF5
+OmF0OmZyb206dG86ZHVyaW5nOg0KUHJvZ3Jlc3NJbml0aWF0aW9uRXhjZXB0aW9uIGNsYXNzPj5k
+aXNwbGF5OmF0OmZyb206dG86ZHVyaW5nOg0KQnl0ZVN0cmluZyhTdHJpbmcpPj5kaXNwbGF5UHJv
+Z3Jlc3NBdDpmcm9tOnRvOmR1cmluZzoNCg==
+
+--===============1747753216729046417==--
+
+
+From lecteur@zogotounga.net Tue Oct  8 16:17:36 2024
+From: =?utf-8?q?St=C3=A9phane?= Rollandin <lecteur@zogotounga.net>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] [ANN] Roguerrants is now on itch.io
+Date: Tue, 08 Oct 2024 18:17:25 +0200
+Message-ID: <5368f87b-3703-4d72-b8eb-b75dc76180f1@zogotounga.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8932587929795323210=="
+
+--===============8932587929795323210==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+I just made Roguerrants available, along with an example game, on itch.io:
+
+https://spfa.itch.io/roguerrants
+https://spfa.itch.io/tavern-of-adventures
+
+It is far from being finished, let alone polished, but already quite fun 
+as you can see from the videos.
+
+Stef
+
+--===============8932587929795323210==--
+
+
+From bruce.oneel@pckswarms.ch Tue Oct  8 16:55:02 2024
+From: Bruce O'Neel <bruce.oneel@pckswarms.ch>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: [ANN] Roguerrants is now on itch.io
+Date: Tue, 08 Oct 2024 18:54:54 +0200
+Message-ID: <ea42a2cdc878b69948929f2c062c6677@mail.infomaniak.com>
+In-Reply-To: <5368f87b-3703-4d72-b8eb-b75dc76180f1@zogotounga.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2237729193243957352=="
+
+--===============2237729193243957352==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Wow, very very cool!
+
+On 2024-10-08T18:17:25.000+02:00, St=C3=A9phane Rollandin
+<lecteur(a)zogotounga.net> wrote:
+
+>=C2=A0Hello,
+>=C2=A0
+>=C2=A0I=C2=A0just=C2=A0made=C2=A0Roguerrants=C2=A0available,=C2=A0along=C2=
+=A0with=C2=A0an=C2=A0example=C2=A0game,=C2=A0on=C2=A0itch.io=C2=A0[http://itc=
+h.io]:
+>=C2=A0
+>=C2=A0https://spfa.itch.io/roguerrants
+>=C2=A0
+>=C2=A0https://spfa.itch.io/tavern-of-adventures
+>=C2=A0
+>=C2=A0It=C2=A0is=C2=A0far=C2=A0from=C2=A0being=C2=A0finished,=C2=A0let=C2=A0=
+alone=C2=A0polished,=C2=A0but=C2=A0already=C2=A0quite=C2=A0fun=C2=A0
+>=C2=A0
+>=C2=A0as=C2=A0you=C2=A0can=C2=A0see=C2=A0from=C2=A0the=C2=A0videos.
+>=C2=A0
+>=C2=A0Stef
+>=C2=A0
+>=C2=A0Squeak-dev=C2=A0mailing=C2=A0list=C2=A0--=C2=A0squeak-dev(a)lists.sque=
+akfoundation.org
+>=C2=A0
+>=C2=A0To=C2=A0unsubscribe=C2=A0send=C2=A0an=C2=A0email=C2=A0to=C2=A0squeak-d=
+ev-leave(a)lists.squeakfoundation.org
+
+
+
+
+--===============2237729193243957352==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGh0bWw+PGJvZHk+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6ICdIZWx2ZXRpY2EgTmV1ZScsIEhl
+bHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTRweCI+V293LCB2ZXJ5IHZl
+cnkgY29vbCE8YnI+PC9kaXY+PGRpdiBjbGFzcz0iaWtfbWFpbF9xdW90ZSBhbnN3ZXJDb250ZW50
+TWVzc2FnZSI+PGRpdj5PbiAyMDI0LTEwLTA4VDE4OjE3OjI1LjAwMCswMjowMCwgU3TDqXBoYW5l
+IFJvbGxhbmRpbiAmbHQ7bGVjdGV1ckB6b2dvdG91bmdhLm5ldCZndDsgd3JvdGU6PGJyPjwvZGl2
+PjxibG9ja3F1b3RlIGNsYXNzPSJ3cy1uZy1xdW90ZSI+PHByZSBzdHlsZT0id2hpdGUtc3BhY2U6
+IG5vcm1hbDsiPjxkaXY+SGVsbG8sPGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSBqdXN0
+IG1hZGUgUm9ndWVycmFudHMgYXZhaWxhYmxlLCBhbG9uZyB3aXRoIGFuIGV4YW1wbGUgZ2FtZSwg
+b24gPGEgaHJlZj0iaHR0cDovL2l0Y2guaW8iIGNsYXNzPSJkZWZhdWx0TWFpbExpbmsiIHRhcmdl
+dD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiIGRhdGEtaWs9ImlrLXNlY3VyZSI+
+aXRjaC5pbzwvYT46PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+PGEgaHJlZj0iaHR0cHM6
+Ly9zcGZhLml0Y2guaW8vcm9ndWVycmFudHMiIGNsYXNzPSJkZWZhdWx0TWFpbExpbmsiIHRhcmdl
+dD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiIGRhdGEtaWs9ImlrLXNlY3VyZSI+
+aHR0cHM6Ly9zcGZhLml0Y2guaW8vcm9ndWVycmFudHM8L2E+PGJyPjwvZGl2PjxkaXY+PGEgaHJl
+Zj0iaHR0cHM6Ly9zcGZhLml0Y2guaW8vdGF2ZXJuLW9mLWFkdmVudHVyZXMiIGNsYXNzPSJkZWZh
+dWx0TWFpbExpbmsiIHRhcmdldD0iX2JsYW5rIiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiIGRh
+dGEtaWs9ImlrLXNlY3VyZSI+aHR0cHM6Ly9zcGZhLml0Y2guaW8vdGF2ZXJuLW9mLWFkdmVudHVy
+ZXM8L2E+PGJyPjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SXQgaXMgZmFyIGZyb20gYmVpbmcg
+ZmluaXNoZWQsIGxldCBhbG9uZSBwb2xpc2hlZCwgYnV0IGFscmVhZHkgcXVpdGUgZnVuIDxicj48
+L2Rpdj48ZGl2PmFzIHlvdSBjYW4gc2VlIGZyb20gdGhlIHZpZGVvcy48YnI+PC9kaXY+PGRpdj48
+YnI+PC9kaXY+PGRpdj5TdGVmPGJyPjwvZGl2PjxkaXY+U3F1ZWFrLWRldiBtYWlsaW5nIGxpc3Qg
+LS0gPGEgaHJlZj0ibWFpbHRvOnNxdWVhay1kZXZAbGlzdHMuc3F1ZWFrZm91bmRhdGlvbi5vcmci
+IGNsYXNzPSJkZWZhdWx0TWFpbExpbmsiPnNxdWVhay1kZXZAbGlzdHMuc3F1ZWFrZm91bmRhdGlv
+bi5vcmc8L2E+PGJyPjwvZGl2PjxkaXY+VG8gdW5zdWJzY3JpYmUgc2VuZCBhbiBlbWFpbCB0byA8
+YSBocmVmPSJtYWlsdG86c3F1ZWFrLWRldi1sZWF2ZUBsaXN0cy5zcXVlYWtmb3VuZGF0aW9uLm9y
+ZyIgY2xhc3M9ImRlZmF1bHRNYWlsTGluayI+c3F1ZWFrLWRldi1sZWF2ZUBsaXN0cy5zcXVlYWtm
+b3VuZGF0aW9uLm9yZzwvYT48YnI+PC9kaXY+PC9wcmU+PC9ibG9ja3F1b3RlPjwvZGl2PjwvYm9k
+eT48L2h0bWw+Cgo=
+
+--===============2237729193243957352==--
+
+

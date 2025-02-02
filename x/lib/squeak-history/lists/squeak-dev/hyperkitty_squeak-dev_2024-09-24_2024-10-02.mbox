@@ -1,0 +1,1352 @@
+From lewis@mail.msen.com Tue Sep 24 19:13:43 2024
+From: lewis@mail.msen.com
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Improved DirectoryEntry implementation
+Date: Tue, 24 Sep 2024 15:08:33 -0400
+Message-ID: <1727205208-500897@mid.hostedemail.com>
+In-Reply-To: <1727045897-585683@mid.hostedemail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6410551925261966838=="
+
+--===============6410551925261966838==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Just some follow up observations: Chris' comments regarding performance and g=
+arbage collection prompted me to run a profile to check it out. I have quite =
+a few files in my Squeak default directory, so I just did this:
+
+	fd :=3D FileDirectory default.
+	TimeProfileBrowser onBlock: [10000 timesRepeat: [fd entries]].
+
+About 80% of the time goes into primitives. About 10% of the time goes into D=
+irectoryEntry>>#convertFromSystemName to convert the raw string data from the=
+ primitive to the string that is saved in DirectoryEntry #name (this is exist=
+ing behavior in trunk). About 1.7% of the time goes into looking up DateAndTi=
+me>>localOffsetSeconds (new behavior associated with using DateAndTime rather=
+ than Integer). There are two DateAdTime instances for each DirectoryEntry, e=
+ach with two slots containing immediate SmallIntegers on a 64 bit image, no f=
+ractions or other non-immediate numbers. The surprise for me was time going i=
+nto convertFromSystemName, I had not noticed that before. The directory entry=
+ primitives themselves have room for improvement but that's more of a VM topi=
+c.
+
+Dave
+
+---
+Sent from Squeak Inbox Talk
+
+On 2024-09-22T18:54:11-04:00, lewis(a)mail.msen.com wrote:
+
+> Hi Chris,
+>=20
+> I find your "I can't put my finger on it..." argument to be quite convincin=
+g actually, thank you for that.
+>=20
+> The inbox submissions will probably end up in Treated but I hope you will i=
+ndulge me be leaving in the Inbox for a few days for the sake of discussion.
+>=20
+> Dave
+>=20
+> ---
+> Sent from Squeak Inbox Talk
+>=20
+> On 2024-09-21T14:44:02-05:00, asqueaker(a)gmail.com wrote:
+>=20
+> > I can't put my finger on why, but I *feel* like it's important -- for
+> > DirectoryEntry and perhaps generally throughout the image -- to have
+> > relatively raw, low-level representations of the objects from the VM.  And
+> > let the image implementations build on them seamlessly from there.  Seeing
+> > the raw data in the inspectors even -- when I see the low-level "data"
+> > objects (like with DirectoryEntry) it clearly "documents" for me what's in
+> > the VM, what isn't, and therefore what translations the image is
+> > responsible for.  Seeing first-class DateAndTimes next to everything else
+> > that came from the VM (name, size) would be very confusing, in particular
+> > because, again, that's what 'attributes' dictionary is supposed to be for.
+> > So, I would wonder, "did the VM return these DateAndTime instances??"
+> >=20
+> > Maybe it's just me, but I feel like the eager conversion of those fields
+> > would actually *obscures* my understanding of what's going on.  The conce=
+rn
+> > about garbage and efficiency is actually the biggest issue, though.
+> >=20
+> > On Sat, Sep 21, 2024 at 2:16=E2=80=AFPM Chris Muller <asqueaker(a)gmail.c=
+om> wrote:
+> >=20
+> > > Hi Dave,
+> > >
+> > > There are two intentions behind these updates:
+> > >>
+> > >> 1) Make the DirectoryEntry implementation easier to understand.
+> > >>
+> > >> 2) Prepare the image to handle a (currently nonexistent) improved
+> > >> FilePlugin primitive to address several ancient issues.
+> > >>
+> > >
+> > > That sounds good, however, there's more than that here, a
+> > > significant functional change, in fact.
+> > >
+> > > But first, aren't DirectoryEntry>>#creationDateAndTime and
+> > > #modificationDateAndTime currently residing in trunk simply wrong?  Your
+> > > submission here has already informed me that we need to subtract the lo=
+cal
+> > > offset.
+> > >
+> > > And with that in Files-cmm.211, does it realign the conversation at all?
+> > >
+> > >
+> > >> Addressing 1) makes it easier to see why 2) is needed.
+> > >>
+> > >> The only compatibility issue I can think of would involve deserializin=
+g a
+> > >> previously saved DirectoryEntry instance. That could be an issue for i=
+mage
+> > >> segments, saved Squeak projects, or objects stored in Magma. On the ot=
+her
+> > >> hand, I don't think that DirectoryEntry instances are likely to stored=
+ in
+> > >> that manner so it may be a non-issue.
+> > >>
+> > >
+> > > Agree, DirectoryEntry are highly transient, and it's hard to imagine a
+> > > case where they'd be persistent, although I suppose it's possible (wayb=
+ack
+> > > archive?).
+> > >
+> > > Overall, I think new theoretical FilePlugin numbers and calculations are
+> > > fine, but there's still the entirely separate issue of eager vs. lazy
+> > > initialization.  I don't think eager initialization helps much in makin=
+g it
+> > > "easier to understand", because it's the same numerical translation that
+> > > has to be done, just in a different place.
+> > >
+> > > Here is an example of why it might help to make DirectoryEntry easier to
+> > >> understand:
+> > >>
+> > >>         tempFileName :=3D 'foo.txt'.
+> > >>         FileDirectory default deleteFileNamed: tempFileName.
+> > >>         (FileStream newFileNamed: tempFileName) close. "new empty file"
+> > >>         entry :=3D FileDirectory default entries detect: [:e | e name =
+=3D
+> > >> tempFileName].
+> > >>         ctime :=3D entry creationTime.
+> > >>         creationTime :=3D DateAndTime fromUnixTime: ctime.
+> > >>         now :=3D DateAndTime now.
+> > >>         creationTime - now. "=3D=3D> we would expect this to be a dura=
+tion
+> > >> close to zero, but it is not"
+> > >>
+> > >> Why? Because the FilePlugin primitives are still using the ancient (and
+> > >> undefinable) "seconds since the Smalltalk epoch in some local time zon=
+e"
+> > >> implemention. We cannot fix that without replacing the primitives, but=
+ it's
+> > >> hard for any of us to see the problem when a DirectoryEntry has time s=
+tamps
+> > >> that just look like plausible big numbers.
+> > >>
+> > >
+> > > Files-cmm.211 addresses the above, and it should be moved to trunk
+> > > irregardless what we do beyond that.
+> > >
+> > > I'm basically just strongly against the eager initialization, and that's
+> > > all.
+> > >
+> > > Best,
+> > >   Chris
+> > >
+> > >
+
+--===============6410551925261966838==--
+
+
+From commits@source.squeak.org Tue Sep 24 19:33:28 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: CollectionsTests-eem.408.mcz
+Date: Tue, 24 Sep 2024 19:33:20 +0000
+Message-ID: <20240924193324.AA1405826FB@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2150280880017155650=="
+
+--===============2150280880017155650==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of CollectionsTests to project The Trunk:
+http://source.squeak.org/trunk/CollectionsTests-eem.408.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: CollectionsTests-eem.408
+Author: eem
+Time: 24 September 2024, 12:33:17.967257 pm
+UUID: 7b1cce00-6db1-4bcc-80cf-4bb2862cf6c1
+Ancestors: CollectionsTests-eem.407
+
+Extend ReadStream>>testReset to test that reset on "substreams" works as expe=
+cted.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against CollectionsTests-e=
+em.407 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ReadStreamTest>>testReset (in category 'tests - positioning')=
+ -----
+  testReset
+  	| stream |
+ =20
+  	stream :=3D self emptyStream.
+  	stream reset.
+  	self assert: stream position =3D 0.
+  =09
+  	stream :=3D self streamOnArray.
+  	stream reset.
+  	self assert: stream position =3D 0.
+  	self deny: stream atEnd.
+  	stream position: 3.
+  	self assert: stream atEnd.
+  	stream reset.
++ 	self assert: stream position =3D 0.
++=20
++ 	stream :=3D ReadStream on: 'hello there world' from: 7 to: 11. "there"
++ 	self assert: stream contents equals: (stream reset; contents)!
+- 	self assert: stream position =3D 0.!
+
+
+--===============2150280880017155650==--
+
+
+From commits@source.squeak.org Tue Sep 24 19:43:01 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: CollectionsTests-eem.409.mcz
+Date: Tue, 24 Sep 2024 19:42:55 +0000
+Message-ID: <20240924194258.1E4955826FB@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7350011898370581425=="
+
+--===============7350011898370581425==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of CollectionsTests to project The Trunk:
+http://source.squeak.org/trunk/CollectionsTests-eem.409.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: CollectionsTests-eem.409
+Author: eem
+Time: 24 September 2024, 12:42:52.819891 pm
+UUID: e935ddaf-d746-4929-96b8-d74c6185b3da
+Ancestors: CollectionsTests-eem.408
+
+Make the ReadStreamTest>>testReset more stringent.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against CollectionsTests-e=
+em.408 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ReadStreamTest>>testReset (in category 'tests - positioning')=
+ -----
+  testReset
+  	| stream |
+ =20
+  	stream :=3D self emptyStream.
+  	stream reset.
+  	self assert: stream position =3D 0.
+  =09
+  	stream :=3D self streamOnArray.
+  	stream reset.
+  	self assert: stream position =3D 0.
+  	self deny: stream atEnd.
+  	stream position: 3.
+  	self assert: stream atEnd.
+  	stream reset.
+  	self assert: stream position =3D 0.
+ =20
+  	stream :=3D ReadStream on: 'hello there world' from: 7 to: 11. "there"
++ 	self assert: 6 equals: stream position.
++ 	self assert: stream contents equals: (stream reset; contents).
++ 	stream reset.
++ 	self assert: 6 equals: stream position.
++ 	self assert: stream contents equals: (stream reset; upToEnd)!
+- 	self assert: stream contents equals: (stream reset; contents)!
+
+
+--===============7350011898370581425==--
+
+
+From commits@source.squeak.org Tue Sep 24 19:53:27 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Collections-eem.1073.mcz
+Date: Tue, 24 Sep 2024 19:53:20 +0000
+Message-ID: <20240924195324.61A82583D24@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7354799850510333359=="
+
+--===============7354799850510333359==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Collections to project The Trunk:
+http://source.squeak.org/trunk/Collections-eem.1073.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Collections-eem.1073
+Author: eem
+Time: 24 September 2024, 12:53:17.162005 pm
+UUID: b86f7d13-6ddf-403e-9fed-df987a9b96f3
+Ancestors: Collections-eem.1072
+
+Make ReadStream>>reset & WriteStream>>reset work for sub streams.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Collections-eem.10=
+72 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was added:
++ ----- Method: ReadStream>>reset (in category 'positioning') -----
++ reset
++ 	position :=3D initialPositionOrNil ifNil: [0] ifNotNil: [initialPositionOr=
+Nil - 1]!
+
+Item was changed:
+  ----- Method: WriteStream>>reset (in category 'positioning') -----
+  reset=20
+  	"Refer to the comment in PositionableStream|reset."
+ =20
+  	readLimit :=3D readLimit max: position.
++ 	position :=3D initialPositionOrNil ifNil: [0] ifNotNil: [initialPositionOr=
+Nil - 1]!
+- 	position :=3D 0!
+
+
+--===============7354799850510333359==--
+
+
+From commits@source.squeak.org Tue Sep 24 19:55:37 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Compiler-eem.507.mcz
+Date: Tue, 24 Sep 2024 19:55:30 +0000
+Message-ID: <20240924195533.7DBE2583D24@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6233251370913619219=="
+
+--===============6233251370913619219==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Compiler to project The Trunk:
+http://source.squeak.org/trunk/Compiler-eem.507.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Compiler-eem.507
+Author: eem
+Time: 24 September 2024, 12:55:27.446706 pm
+UUID: 3443c17c-c59d-4923-829a-19909803cfd6
+Ancestors: Compiler-eem.506
+
+Fix the source correction issue that leaves methods with uncorrected source, =
+at least in browsers.  This doesn't fix the issue in workspaces where one sel=
+ects a subrange of the text to evaluate for doits. But here the fact that doi=
+ts no longer hold onto their source hides the issue. [P.S. I wonder when that=
+ regression occured]
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Compiler-eem.506 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  Object subclass: #CompilationCue
++ 	instanceVariableNames: 'source sourceStream context receiver class environ=
+ment requestor encoderClass methodTrailer corrected'
+- 	instanceVariableNames: 'source sourceStream context receiver class environ=
+ment requestor encoderClass methodTrailer'
+  	classVariableNames: ''
+  	poolDictionaries: ''
+  	category: 'Compiler-Kernel'!
+ =20
+  !CompilationCue commentStamp: 'eem 3/30/2017 17:32' prior: 0!
+  A CompilationCue is a helper class holding enough context for evaluating/co=
+mpiling Smalltalk code.
+ =20
+  That is mainly the source code, and the source code editor to interact with=
+ if the Compiler is used interactively.
+  But that is also any additional information necessary to resolve variable n=
+ames.
+ =20
+  When compiling a method, the Compiler typically need to know the target cla=
+ss in which to install the method.
+ =20
+  When evaluating an expression, the Compiler also needs a receiver (for acce=
+ssing the value of its instance variables), its class (for resolving instance=
+/class variable names), and optionnally a context of execution when debugging=
+ a method (for accessing values of temporaries and parameters).
+ =20
+  Instance Variables
+  	class:			<Behavior>
+  	context:		<Context | nil>
+  	environment:	<Environment | nil>
+  	receiver:		<Object>
+  	requestor:		<TextEditor | nil>
+  	source:			<Stream>
+ =20
+  class
+  	- the target class in which to install the compiled method;
+  	  this enables to resolve the instance variable names, class variable name=
+s and shared pool variable names.
+  	  When evaluating, this should be the receiver class
+ =20
+  context
+  	- the context introspected when evaluating the code: this is typically for=
+ accessing parameters and temporary variables when debugging
+ =20
+  environment
+  	- the environment in which to resolve global variable names
+ =20
+  receiver
+  	- the receiver into which to evaluate the code: this is typically for acce=
+ssing instance variables in an inspector
+ =20
+  requestor
+  	- typically the text editor containing the source code being compiled/eval=
+uated. This enables the Compiler to interact in case of syntax error.
+ =20
+  source
+  	- a ReadStream on the source code to be compiled
+  !
+
+Item was added:
++ ----- Method: CompilationCue>>correctFrom:to:with: (in category 'interactiv=
+e error correction') -----
++ correctFrom: start to: stop with: aString
++ 	corrected :=3D true.
++ 	requestor correctFrom: start to: stop with: aString!
+
+Item was added:
++ ----- Method: CompilationCue>>corrected (in category 'interactive error cor=
+rection') -----
++ corrected
++ 	^corrected!
+
+Item was added:
++ ----- Method: CompilationCue>>correctedSource (in category 'interactive err=
+or correction') -----
++ correctedSource
++ 	| currentSource position |
++ 	source ifNotNil: [^source].
++ 	position :=3D sourceStream position.
++ 	sourceStream reset.
++ 	currentSource :=3D sourceStream contents.
++ 	sourceStream position: position.
++ 	^currentSource!
+
+Item was changed:
+  ----- Method: CompilationCue>>initializeWithSource:context:receiver:class:e=
+nvironment:requestor: (in category 'initialization') -----
+  initializeWithSource: aTextOrStringOrStream context: aContext receiver: rec=
+Object class: aClass environment: anEnvironment requestor: reqObject
+- 	self initialize.
+  	aTextOrStringOrStream isStream
+  		ifTrue: [sourceStream :=3D aTextOrStringOrStream]
+  		ifFalse:
+  			[source :=3D aTextOrStringOrStream.
+  			 sourceStream :=3D ReadStream on: aTextOrStringOrStream asString].
+  	context :=3D aContext.
+  	receiver :=3D recObject.
+  	class :=3D aClass.
+  	environment :=3D anEnvironment.
++ 	requestor :=3D reqObject.
++ 	corrected :=3D false!
+- 	requestor :=3D reqObject!
+
+Item was changed:
+  ----- Method: Parser>>parseCue:noPattern:ifFail: (in category 'public acces=
+s') -----
+  parseCue: aCue noPattern: noPattern ifFail: aBlock=20
+  	"Answer a MethodNode for the argument, sourceStream, that is the root
+  	 of a parse tree. Parsing is done with respect to the CompilationCue to=20
+  	 resolve variables, etc. Errors in parsing are reported to the cue's reque=
+stor;=20
+  	 otherwise aBlock is evaluated. The argument noPattern is a Boolean that is
+  	 true if the the sourceStream does not contain a method header (i.e., for =
+DoIts)."
+ =20
++ 	| methNode myStream |
+- 	| methNode repeatNeeded myStream s p subSelection |
+  	myStream :=3D aCue sourceStream.
++ 	[| repeatNeeded s p subSelection |
++ 	 repeatNeeded :=3D false.
+- 	[repeatNeeded :=3D false.
+  	 p :=3D myStream position.
+  	 s :=3D myStream upToEnd.
+  	 myStream position: p.
+ =20
+  	 doitFlag :=3D noPattern.
+  	 [(self encoderFromCue: aCue) init: aCue notifying: self.
++ 	  self init: myStream cue: aCue failBlock: [^aBlock value].
+- 	 self init: myStream cue: aCue failBlock: [^aBlock value].
+ =20
++ 	  subSelection :=3D self interactive and: [cue requestor selectionInterval=
+ =3D (p + 1 to: p + s size)].
+- 	 subSelection :=3D self interactive and: [cue requestor selectionInterval =
+=3D (p + 1 to: p + s size)].
+ =20
++ 	  failBlock:=3D aBlock.
++ 	  methNode :=3D self method: noPattern context: cue context]=20
+- 	 failBlock:=3D aBlock.
+- 	 methNode :=3D self method: noPattern context: cue context]=20
+  		on: ReparseAfterSourceEditing=20
+  		do:	[ :ex |
+  			repeatNeeded :=3D true.
+  			properties :=3D nil. "Avoid accumulating pragmas and primitives Number"
+  			myStream :=3D ex newSource=20
+  				ifNil: [subSelection
+  							ifTrue:
+  								[ReadStream
+  									on: cue requestor text string
+  									from: cue requestor selectionInterval first
+  									to: cue requestor selectionInterval last]
+  							ifFalse:
+  								[ReadStream on: cue requestor text string]]
+  				ifNotNil: [:src | myStream :=3D src readStream]].
+  	 repeatNeeded] whileTrue:
+  		[encoder :=3D self encoder class new].
++ 	methNode sourceText: cue correctedSource.
+- 	methNode sourceText: s.
+  	^methNode!
+
+Item was changed:
+  ----- Method: Parser>>substituteWord:wordInterval:offset: (in category 'err=
+or correction') -----
+  substituteWord: correctWord wordInterval: spot offset: o
+  	"Substitute the correctSelector into the (presumed interactive) receiver.
+  	 Update requestorOffset based on the delta size and answer the updated off=
+set."
+ =20
++ 	cue correctFrom: spot first + o to: spot last + o with: correctWord.
+- 	cue requestor correctFrom: spot first + o to: spot last + o with: correctW=
+ord.
+  	requestorOffset :=3D requestorOffset + correctWord size - spot size.
+  	^o + correctWord size - spot size!
+
+
+--===============6233251370913619219==--
+
+
+From tim@rowledge.org Tue Sep 24 21:04:15 2024
+From: Tim Rowledge <tim@rowledge.org>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Improved DirectoryEntry implementation
+Date: Tue, 24 Sep 2024 14:04:03 -0700
+Message-ID: <1246481A-3803-4AEF-9EE8-91B0B6134DA2@rowledge.org>
+In-Reply-To: <1727205208-500897@mid.hostedemail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1875681963255336762=="
+
+--===============1875681963255336762==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+This makes me wonder about a couple of things
+
+a) why on earth haven't we incorporated the improved profiler into the system=
+ by default?
+b) it might be important that unix appears to cache directory data and thus *=
+may* be distorting timings here
+c) the textconvertor #decodesString: method might be improvable if it incorpo=
+rated the lineend changing into the basic loop?
+d) there may be improvements possible when explicitly dealing with filenames =
+retrieved from the OS - could they ever include lineends? Are the suitable OS=
+ calls to get the file names returned already processed?
+e) such a shame people had to choose to use multiple character encodings inst=
+ead of everyone using my language ;-)
+
+> On 2024-09-24, at 12:08 PM, lewis(a)mail.msen.com wrote:
+>=20
+> Just some follow up observations: Chris' comments regarding performance and=
+ garbage collection prompted me to run a profile to check it out. I have quit=
+e a few files in my Squeak default directory, so I just did this:
+>=20
+> 	fd :=3D FileDirectory default.
+> 	TimeProfileBrowser onBlock: [10000 timesRepeat: [fd entries]].
+>=20
+> About 80% of the time goes into primitives. About 10% of the time goes into=
+ DirectoryEntry>>#convertFromSystemName to convert the raw string data from t=
+he primitive to the string that is saved in DirectoryEntry #name (this is exi=
+sting behavior in trunk). About 1.7% of the time goes into looking up DateAnd=
+Time>>localOffsetSeconds (new behavior associated with using DateAndTime rath=
+er than Integer). There are two DateAdTime instances for each DirectoryEntry,=
+ each with two slots containing immediate SmallIntegers on a 64 bit image, no=
+ fractions or other non-immediate numbers. The surprise for me was time going=
+ into convertFromSystemName, I had not noticed that before. The directory ent=
+ry primitives themselves have room for improvement but that's more of a VM to=
+pic.
+>=20
+> Dave
+>=20
+> ---
+> Sent from Squeak Inbox Talk
+>=20
+> On 2024-09-22T18:54:11-04:00, lewis(a)mail.msen.com wrote:
+>=20
+>> Hi Chris,
+>>=20
+>> I find your "I can't put my finger on it..." argument to be quite convinci=
+ng actually, thank you for that.
+>>=20
+>> The inbox submissions will probably end up in Treated but I hope you will =
+indulge me be leaving in the Inbox for a few days for the sake of discussion.
+>>=20
+>> Dave
+>>=20
+>> ---
+>> Sent from Squeak Inbox Talk
+>>=20
+>> On 2024-09-21T14:44:02-05:00, asqueaker(a)gmail.com wrote:
+>>=20
+>>> I can't put my finger on why, but I *feel* like it's important -- for
+>>> DirectoryEntry and perhaps generally throughout the image -- to have
+>>> relatively raw, low-level representations of the objects from the VM.  And
+>>> let the image implementations build on them seamlessly from there.  Seeing
+>>> the raw data in the inspectors even -- when I see the low-level "data"
+>>> objects (like with DirectoryEntry) it clearly "documents" for me what's in
+>>> the VM, what isn't, and therefore what translations the image is
+>>> responsible for.  Seeing first-class DateAndTimes next to everything else
+>>> that came from the VM (name, size) would be very confusing, in particular
+>>> because, again, that's what 'attributes' dictionary is supposed to be for.
+>>> So, I would wonder, "did the VM return these DateAndTime instances??"
+>>>=20
+>>> Maybe it's just me, but I feel like the eager conversion of those fields
+>>> would actually *obscures* my understanding of what's going on.  The conce=
+rn
+>>> about garbage and efficiency is actually the biggest issue, though.
+>>>=20
+>>> On Sat, Sep 21, 2024 at 2:16=E2=80=AFPM Chris Muller <asqueaker(a)gmail.c=
+om> wrote:
+>>>=20
+>>>> Hi Dave,
+>>>>=20
+>>>> There are two intentions behind these updates:
+>>>>>=20
+>>>>> 1) Make the DirectoryEntry implementation easier to understand.
+>>>>>=20
+>>>>> 2) Prepare the image to handle a (currently nonexistent) improved
+>>>>> FilePlugin primitive to address several ancient issues.
+>>>>>=20
+>>>>=20
+>>>> That sounds good, however, there's more than that here, a
+>>>> significant functional change, in fact.
+>>>>=20
+>>>> But first, aren't DirectoryEntry>>#creationDateAndTime and
+>>>> #modificationDateAndTime currently residing in trunk simply wrong?  Your
+>>>> submission here has already informed me that we need to subtract the loc=
+al
+>>>> offset.
+>>>>=20
+>>>> And with that in Files-cmm.211, does it realign the conversation at all?
+>>>>=20
+>>>>=20
+>>>>> Addressing 1) makes it easier to see why 2) is needed.
+>>>>>=20
+>>>>> The only compatibility issue I can think of would involve deserializing=
+ a
+>>>>> previously saved DirectoryEntry instance. That could be an issue for im=
+age
+>>>>> segments, saved Squeak projects, or objects stored in Magma. On the oth=
+er
+>>>>> hand, I don't think that DirectoryEntry instances are likely to stored =
+in
+>>>>> that manner so it may be a non-issue.
+>>>>>=20
+>>>>=20
+>>>> Agree, DirectoryEntry are highly transient, and it's hard to imagine a
+>>>> case where they'd be persistent, although I suppose it's possible (wayba=
+ck
+>>>> archive?).
+>>>>=20
+>>>> Overall, I think new theoretical FilePlugin numbers and calculations are
+>>>> fine, but there's still the entirely separate issue of eager vs. lazy
+>>>> initialization.  I don't think eager initialization helps much in making=
+ it
+>>>> "easier to understand", because it's the same numerical translation that
+>>>> has to be done, just in a different place.
+>>>>=20
+>>>> Here is an example of why it might help to make DirectoryEntry easier to
+>>>>> understand:
+>>>>>=20
+>>>>>        tempFileName :=3D 'foo.txt'.
+>>>>>        FileDirectory default deleteFileNamed: tempFileName.
+>>>>>        (FileStream newFileNamed: tempFileName) close. "new empty file"
+>>>>>        entry :=3D FileDirectory default entries detect: [:e | e name =3D
+>>>>> tempFileName].
+>>>>>        ctime :=3D entry creationTime.
+>>>>>        creationTime :=3D DateAndTime fromUnixTime: ctime.
+>>>>>        now :=3D DateAndTime now.
+>>>>>        creationTime - now. "=3D=3D> we would expect this to be a durati=
+on
+>>>>> close to zero, but it is not"
+>>>>>=20
+>>>>> Why? Because the FilePlugin primitives are still using the ancient (and
+>>>>> undefinable) "seconds since the Smalltalk epoch in some local time zone"
+>>>>> implemention. We cannot fix that without replacing the primitives, but =
+it's
+>>>>> hard for any of us to see the problem when a DirectoryEntry has time st=
+amps
+>>>>> that just look like plausible big numbers.
+>>>>>=20
+>>>>=20
+>>>> Files-cmm.211 addresses the above, and it should be moved to trunk
+>>>> irregardless what we do beyond that.
+>>>>=20
+>>>> I'm basically just strongly against the eager initialization, and that's
+>>>> all.
+>>>>=20
+>>>> Best,
+>>>>  Chris
+>>>>=20
+>>>>=20
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.o=
+rg
+
+
+tim
+--
+tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+Design: The activity of preparing for a design review.
+
+
+
+--===============1875681963255336762==--
+
+
+From commits@source.squeak.org Wed Sep 25 20:01:27 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Kernel-eem.1580.mcz
+Date: Wed, 25 Sep 2024 20:01:18 +0000
+Message-ID: <20240925200122.EF0B95826D7@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5480731211854746738=="
+
+--===============5480731211854746738==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Kernel to project The Trunk:
+http://source.squeak.org/trunk/Kernel-eem.1580.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Kernel-eem.1580
+Author: eem
+Time: 25 September 2024, 1:01:14.342036 pm
+UUID: fdbee6fc-502d-41e1-aa1b-cb166e133b80
+Ancestors: Kernel-eem.1579
+
+Add error reporting for perform:withArguments:inSuperclass: given that the la=
+test VMs detect and report recursive argument arrays.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Kernel-eem.1579 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: Context>>object:perform:withArguments:inClass: (in category '=
+mirror primitives') -----
+  object: anObject perform: selector withArguments: argArray inClass: lookupC=
+lass
+  	"Send the selector, aSymbol, to anObject with arguments in argArray.
+  	 Fail if the number of arguments expected by the selector=20
+  	 does not match the size of argArray, or if lookupClass
+  	 cannot be found among the anObject's superclasses.
+  	 Primitive. Essential for the debugger."
+ =20
+  	<primitive: 100 error: error>
++ 	error =3D=3D #'inappropriate operation' ifTrue:
++ 		[^self error: 'argArray is recursive'].
++ 	selector isSymbol ifFalse:
+- 	(selector isSymbol) ifFalse:
+  		[^self error: 'selector argument must be a Symbol'].
+  	(argArray isMemberOf: Array) ifFalse:
+  		[^self error: 'argArray must be an Array'].
++ 	selector numArgs =3D argArray size
+- 	(selector numArgs =3D argArray size)
+  		ifFalse: [^self error: 'incorrect number of arguments'].
+  	((self objectClass: anObject) =3D=3D lookupClass
+  	 or: [(self objectClass: anObject) inheritsFrom: lookupClass]) ifFalse:
+  		[^self error: 'lookupClass is not in anObject''s inheritance chain'].
+  	self primitiveFailed!
+
+Item was changed:
+  ----- Method: Object>>perform:withArguments:inSuperclass: (in category 'mes=
+sage handling') -----
+  perform: selector withArguments: argArray inSuperclass: lookupClass
+  	"NOTE:  This is just like perform:withArguments:, except that
+  	the message lookup process begins, not with the receivers's class,
+  	but with the supplied superclass instead.  It will fail if lookupClass
+  	cannot be found among the receiver's superclasses.
+  	Primitive. Essential. See Object documentation whatIsAPrimitive."
+ =20
++ 	<primitive: 100 error: error>
++ 	error =3D=3D #'inappropriate operation' ifTrue:
++ 		[^self error: 'argArray is recursive'].
++ 	selector isSymbol ifFalse:
++ 		[^self error: 'selector argument must be a Symbol'].
++ 	selector numArgs =3D argArray size ifFalse:
++ 		[^self error: 'incorrect number of arguments'].
++ 	(self class =3D=3D lookupClass or: [self class inheritsFrom: lookupClass])=
+ ifFalse:
++ 		[^self error: 'lookupClass is not in my inheritance chain'].
+- 	<primitive: 100>
+- 	(selector isSymbol)
+- 		ifFalse: [^ self error: 'selector argument must be a Symbol'].
+- 	(selector numArgs =3D argArray size)
+- 		ifFalse: [^ self error: 'incorrect number of arguments'].
+- 	(self class =3D=3D lookupClass or: [self class inheritsFrom: lookupClass])
+- 		ifFalse: [^ self error: 'lookupClass is not in my inheritance chain'].
+  	self primitiveFailed!
+
+
+--===============5480731211854746738==--
+
+
+From commits@source.squeak.org Wed Sep 25 20:12:31 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1272.mcz
+Date: Wed, 25 Sep 2024 20:12:23 +0000
+Message-ID: <20240925201227.4144D5826D7@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5397996541509321438=="
+
+--===============5397996541509321438==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1272.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1272
+Author: eem
+Time: 25 September 2024, 1:12:19.07791 pm
+UUID: 7d017369-457c-47c7-8efb-cd58bf10042e
+Ancestors: Tools-eem.1271
+
+Fix a rare bug in the debugger where the stack list gets out of sync with the=
+ stack.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1271 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: Debugger>>newStack: (in category 'private') -----
+  newStack: stack
+  	| oldStack diff matchIndex |
+  	oldStack :=3D contextStack.
+  	contextStack :=3D stack.
++ 	(oldStack isNil or: [oldStack last ~~ stack last or: [oldStack first ~~ st=
+ack first]]) ifTrue:
+- 	(oldStack isNil or: [oldStack last ~~ stack last]) ifTrue:
+  		[contextStackList :=3D stack collect: [:ctx | ctx printString].
+  		 ^self].
+  	"May be able to re-use some of previous list"
+  	diff :=3D stack size - oldStack size.
+  	contextStackList :=3D diff <=3D 0
+  		ifTrue: [contextStackList copyFrom: 1 - diff to: oldStack size]
+  		ifFalse:
+  			[matchIndex :=3D stack lastIndexOf: oldStack first startingAt: diff + 1.
+  			 matchIndex =3D 0
+  				ifTrue: [contextStack collect: [:ctx | ctx printString]]
+  				ifFalse: [((contextStack first: matchIndex - 1) collect: [:ctx| ctx pri=
+ntString]), contextStackList]]
+  						"#(d e f h i) =3D> #(a b c d e f g h i)
+  						diff :=3D 3.
+  						matchIndex :=3D 4.
+  						#(a b c d e f g h i) :=3D #(a b c), #(d e f h i)"!
+
+
+--===============5397996541509321438==--
+
+
+From commits@source.squeak.org Fri Sep 27 05:08:18 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-eem.1465.mcz
+Date: Fri, 27 Sep 2024 05:08:04 +0000
+Message-ID: <20240927050812.DE6B858270C@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2048166745042632492=="
+
+--===============2048166745042632492==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Eliot Miranda uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-eem.1465.mcz
+
+==================== Summary ====================
+
+Name: System-eem.1465
+Author: eem
+Time: 26 September 2024, 10:07:59.621681 pm
+UUID: c0192c57-ab9c-46cd-96c6-705fa8e869cf
+Ancestors: System-eem.1464
+
+Fix regression introduced by System-eem.1458 that broke FilePackage.
+
+=============== Diff against System-eem.1464 ===============
+
+
+--===============2048166745042632492==--
+
+
+From eliot.miranda@gmail.com Fri Sep 27 05:10:45 2024
+From: Eliot Miranda <eliot.miranda@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] System-MCStReaderTest.1465.mcz
+Date: Thu, 26 Sep 2024 22:10:21 -0700
+Message-ID:
+ <CAC20JE1V7gpN-X+UBVEkRXgFSduKeyuWxV14UJCEjgtFLJkp+A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1997327736395844244=="
+
+--===============1997327736395844244==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hi All,
+
+  apologies for this. I committed after fixing during a TestRunner run and
+hence the initials aren't eem. I've resubmitted with a sane version name.
+
+_,,,^..^,,,_
+best, Eliot
+
+
+
+--===============1997327736395844244==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGRpdiBkaXI9Imx0ciI+PGRpdiBjbGFzcz0iZ21haWxfZGVmYXVsdCIgc3R5bGU9ImZvbnQtc2l6
+ZTpzbWFsbCI+SGkgQWxsLDxiciBjbGVhcj0iYWxsIj48L2Rpdj48c3BhbiBjbGFzcz0iZ21haWxf
+c2lnbmF0dXJlX3ByZWZpeCI+IDwvc3Bhbj48ZGl2Pjxicj48L2Rpdj48ZGl2IHN0eWxlPSJmb250
+LXNpemU6c21hbGwiIGNsYXNzPSJnbWFpbF9kZWZhdWx0Ij4gwqAgYXBvbG9naWVzIGZvciB0aGlz
+LiBJIGNvbW1pdHRlZCBhZnRlciBmaXhpbmcgZHVyaW5nIGEgVGVzdFJ1bm5lciBydW4gYW5kIGhl
+bmNlIHRoZSBpbml0aWFscyBhcmVuJiMzOTt0IGVlbS4gSSYjMzk7dmUgcmVzdWJtaXR0ZWQgd2l0
+aCBhIHNhbmUgdmVyc2lvbiBuYW1lLjwvZGl2Pjxicj48ZGl2IGRpcj0ibHRyIiBjbGFzcz0iZ21h
+aWxfc2lnbmF0dXJlIiBkYXRhLXNtYXJ0bWFpbD0iZ21haWxfc2lnbmF0dXJlIj48ZGl2IGRpcj0i
+bHRyIj48ZGl2PjxzcGFuIHN0eWxlPSJmb250LXNpemU6c21hbGw7Ym9yZGVyLWNvbGxhcHNlOnNl
+cGFyYXRlIj48ZGl2Pl8sLCxeLi5eLCwsXzxicj48L2Rpdj48ZGl2PmJlc3QswqBFbGlvdDwvZGl2
+Pjwvc3Bhbj48L2Rpdj48L2Rpdj48L2Rpdj48L2Rpdj4K
+
+--===============1997327736395844244==--
+
+
+From commits@source.squeak.org Fri Sep 27 05:32:11 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Morphic-cmm.2166.mcz
+Date: Fri, 27 Sep 2024 05:32:00 +0000
+Message-ID: <20240927053206.6D233582730@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2807064922475211140=="
+
+--===============2807064922475211140==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Chris Muller uploaded a new version of Morphic to project The Trunk:
+http://source.squeak.org/trunk/Morphic-cmm.2166.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Morphic-cmm.2166
+Author: cmm
+Time: 27 September 2024, 12:31:52.789538 am
+UUID: 2262e85d-7b0f-4280-b48b-51e82abb9d32
+Ancestors: Morphic-eem.2165
+
+Sanitize the password copied left exposed by the UI widget.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Morphic-eem.2165 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: FillInTheBlankMorph class>>requestPassword:initialAnswer:cent=
+erAt:inWorld:onCancelReturn:acceptOnCR: (in category 'instance creation') ---=
+--
+  requestPassword: queryString initialAnswer: defaultAnswer centerAt: aPoint =
+inWorld: aWorld onCancelReturn: returnOnCancel acceptOnCR: acceptBoolean
+  	"Create an instance of me whose question is queryString with the given ini=
+tial answer. Invoke it centered at the given point, and answer the string the=
+ user accepts.   If the user cancels, answer returnOnCancel."
+  	"FillInTheBlankMorph
+  		requestPassword: 'Type something, then type CR.'
+  		initialAnswer: 'yo ho ho!!'
+  		centerAt: Display center
+  		inWorld: self currentWorld
+  		onCancelReturn: nil
+  		acceptOnCR: true"
+ =20
+  	| aFillInTheBlankMorph |
+  	aFillInTheBlankMorph :=3D self new
+  		setPasswordQuery: queryString
+  		initialAnswer: defaultAnswer
+  		answerHeight: 50
+  		acceptOnCR: acceptBoolean.
+ =20
+  	aFillInTheBlankMorph createAcceptButton
+  		action: [aFillInTheBlankMorph textPane accept].
+  	aFillInTheBlankMorph createCancelButton
+  		action: [aFillInTheBlankMorph closeDialog: returnOnCancel].
+  	=09
+  	aFillInTheBlankMorph preferredPosition: aPoint.
++ 	^ [aFillInTheBlankMorph getUserResponse] ensure:
++ 			[ "Sanitize the password left exposed by the UI widget"
++ 			| pane |
++ 			pane :=3D aFillInTheBlankMorph textPane.
++ 			pane text atAllPut: Character space.
++ 			pane setText: Text empty ]!
+- 	^ aFillInTheBlankMorph getUserResponse!
+
+
+--===============2807064922475211140==--
+
+
+From commits@source.squeak.org Fri Sep 27 14:25:14 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Monticello-eem.811.mcz
+Date: Fri, 27 Sep 2024 14:25:05 +0000
+Message-ID: <20240927142509.383FC583D2B@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6932322865362306476=="
+
+--===============6932322865362306476==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Monticello to project The Trunk:
+http://source.squeak.org/trunk/Monticello-eem.811.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Monticello-eem.811
+Author: eem
+Time: 27 September 2024, 7:25:02.381484 am
+UUID: 82626852-788d-4ca2-a1c9-0d8912424574
+Ancestors: Monticello-eem.810
+
+Fix a bug in merging removals. MCRemovals don't have timestamps.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Monticello-eem.810=
+ =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: MCConflict>>isLocalNewer (in category 'testing') -----
+  isLocalNewer
++ 	operation isRemoval ifTrue:
++ 		[^false].
+  	^ (self localDefinition fullTimeStamp ifNil: [^ false]) > self remoteDefin=
+ition fullTimeStamp!
+
+Item was changed:
+  ----- Method: MCConflict>>isRemoteNewer (in category 'testing') -----
+  isRemoteNewer
++ 	operation isRemoval ifTrue:
++ 		[^true].
+  	^ (self localDefinition fullTimeStamp ifNil: [^ false]) < self remoteDefin=
+ition fullTimeStamp!
+
+
+--===============6932322865362306476==--
+
+
+From scott.gibson@posteo.net Tue Oct  1 11:52:03 2024
+From: Scott Gibson <scott.gibson@posteo.net>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Weekly Squeak news: Happy 28th Birthday to Squeak!
+Date: Tue, 01 Oct 2024 11:51:45 +0000
+Message-ID: <0d8f525e-cc44-4fef-bb67-01ea31daa36f@posteo.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1924822343946327206=="
+
+--===============1924822343946327206==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+The latest Weekly Squeak news article is now available.
+
+This celebration article notes the announcement of Squeak and contains 
+birthday wishes and anecdotes, including those from Alan Kay as well as 
+a few present and past contributors. A big thanks to everyone who has 
+contributed to Squeak over the years, especially those who continue to 
+give their time and effort! There are still so many people enjoying and 
+using Squeak, and every contribution, however seemingly small, benefits 
+many. A big thanks to all!
+
+If you would like to, share your thoughts or wishes in the comments!
+
+https://news.squeak.org/2024/10/01/happy-28th-birthday-to-squeak/
+
+Cheers!
+Scott
+
+--===============1924822343946327206==
+Content-Type: application/pkcs7-signature
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+MIME-Version: 1.0
+
+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
+MAkGA1UEBhMCUEwxITAfBgNVBAoMGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEcMBoGA1UEAwwT
+Q2VydHVtIFNNSU1FIFJTQSBDQTAeFw0yNDA0MzAyMTE0MjZaFw0yNTA0MzAyMTE0MjVaMEoxIDAe
+BgNVBAMMF3Njb3R0LmdpYnNvbkBwb3N0ZW8ubmV0MSYwJAYJKoZIhvcNAQkBFhdzY290dC5naWJz
+b25AcG9zdGVvLm5ldDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANA+gfjphBFe06Ns
+gDCNXlPMU7KcDGdsje9neOrkbjsUz0dDoA65bU79ydRs700oxnSU6z2BywWU/NF1i6PzZtfffjYN
+w3phCBv682jHLujD3GKCuiJtYLiW1MBKtT3rV6JAKzHzYW+cwsF/IOhuEnbC741YtwAf6FgmErkH
+NmagaN+Ya4z489omUlG1bZ4t7ZlKJ/jb4N5slNrgZQQbftJuKgGQUlG53ueYVVGJ3Uf+UdIeVUCb
+XbmE2bWJz4DM6NSXJ5fMMYwgLD6nXYuxQRHo2bQNxCCkehdsvmXRN/InGCGpCVxq1wisw2pWS28y
+GtIRQJlub9pU0NxnJcwMu8+CJdLZ45XIP7C2NGiTi2rLTPlvWdRcf71r6Sdez6pQa6mKUX81oIiF
+IyCmcuvdFQwu/oK27OOG5B45yzqBN4B9w/+K+EajdJX2OdSgnDDd3OCIXcQSXSnNC1PNPOPn3JaR
+G+I4ha8fFSvA4gE5JPXhab/aKyrJrHK1FPNh4mXIfOFLmXsAz8vF0Ahwxx7EsNwC09QiFJBB+E0h
+dVBuzdzXyp6oZsCmPn9FoPS4uAkpOcwQW9m03XNBMeeiHLO/Uzi8tF5POvZGB4KTkJdO4NyE25YV
+O55jjTqvS3mGZGIPKFk7NL+PudPJ+Tr0fblMAivGSjENmpFkbBSAUSITqqspAgMBAAGjggG8MIIB
+uDAMBgNVHRMBAf8EAjAAMEEGA1UdHwQ6MDgwNqA0oDKGMGh0dHA6Ly9jc21pbWVyc2FjYS5jcmwu
+Y2VydHVtLnBsL2NzbWltZXJzYWNhLmNybDCBgwYIKwYBBQUHAQEEdzB1MC4GCCsGAQUFBzABhiJo
+dHRwOi8vY3NtaW1lcnNhY2Eub2NzcC1jZXJ0dW0uY29tMEMGCCsGAQUFBzAChjdodHRwOi8vY3Nt
+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
+OSpMjQAAAAAAAA==
+
+--===============1924822343946327206==--
+
+
+From notifications@github.com Tue Oct  1 20:35:34 2024
+From: MariusDoe <notifications@github.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] [squeak-smalltalk/squeak-filesystem]
+ FSWriteStream>>nextPut: does not truncate a file in memory (Issue #14)
+Date: Tue, 01 Oct 2024 13:35:21 -0700
+Message-ID: <squeak-smalltalk/squeak-filesystem/issues/14@github.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2969222952238093229=="
+
+--===============2969222952238093229==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+When using an `FSMemoryStore`, after closing a write stream that only called =
+`nextPut:`, the file is not properly truncated. `nextPutAll:` does not have t=
+his behavior.
+```smalltalk
+| fs ref |
+fs :=3D FileSystem memory.
+ref :=3D fs / 'test'.
+ref writeStreamDo: [:s | s nextPutAll: 'abc'].
+ref contents. "'abc'"
+ref writeStreamDo: [:s | s nextPutAll: 'xy'].
+ref contents. "'xy'"
+ref writeStreamDo: [:s | s nextPut: $!].
+ref contents. "'!y'"
+```
+Some investigation:
+- `FSWriteStream>>basicNextPut:` calls `at:put:` on the `FSMemoryHandle`
+- `at:put:` is overridden on `FSMemoryHandle`, to (among other things) do [`s=
+ize :=3D size max: index`](https://github.com/squeak-smalltalk/squeak-filesys=
+tem/blob/74acb4ae27d80f4f030b387fc4b558327a826586/src/FS-Memory.package/FSMem=
+oryHandle.class/instance/at.put..st#L7) (keeping at least the original size)
+- normally (in `FSHandle>>at:put:` and with `basicNextPutAll:`), `at:write:st=
+artingAt:count:` is called, [which, on `FSMemoryHandle`, sets `size` to the i=
+ndex of the byte that was written last](https://github.com/squeak-smalltalk/s=
+queak-filesystem/blob/74acb4ae27d80f4f030b387fc4b558327a826586/src/FS-Memory.=
+package/FSMemoryHandle.class/instance/at.write.startingAt.count..st#L12) (cor=
+rectly truncating the file)
+
+I'm not sure whether `basicNextPut:` is at fault for calling `at:put:` instea=
+d of `at:write:startingAt:count:` or whether `at:put:` should instead set the=
+ size to the `index` - maybe `at:put:` is sometimes used to set bytes in the =
+middle of a file, without wanting a truncation?
+
+--=20
+Reply to this email directly or view it on GitHub:
+https://github.com/squeak-smalltalk/squeak-filesystem/issues/14
+You are receiving this because you are subscribed to this thread.
+
+Message ID: <squeak-smalltalk/squeak-filesystem/issues/14(a)github.com>
+
+
+
+--===============2969222952238093229==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PHA+PC9wPgo8cCBkaXI9ImF1dG8iPldoZW4gdXNpbmcgYW4gPGNvZGUgY2xhc3M9Im5vdHJhbnNs
+YXRlIj5GU01lbW9yeVN0b3JlPC9jb2RlPiwgYWZ0ZXIgY2xvc2luZyBhIHdyaXRlIHN0cmVhbSB0
+aGF0IG9ubHkgY2FsbGVkIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+bmV4dFB1dDo8L2NvZGU+
+LCB0aGUgZmlsZSBpcyBub3QgcHJvcGVybHkgdHJ1bmNhdGVkLiA8Y29kZSBjbGFzcz0ibm90cmFu
+c2xhdGUiPm5leHRQdXRBbGw6PC9jb2RlPiBkb2VzIG5vdCBoYXZlIHRoaXMgYmVoYXZpb3IuPC9w
+Pgo8ZGl2IGNsYXNzPSJoaWdobGlnaHQgaGlnaGxpZ2h0LXNvdXJjZS1zbWFsbHRhbGsiIGRpcj0i
+YXV0byI+PHByZSBjbGFzcz0ibm90cmFuc2xhdGUiPnwgPHNwYW4gY2xhc3M9InBsLWMxIj5mczwv
+c3Bhbj4gPHNwYW4gY2xhc3M9InBsLWMxIj5yZWY8L3NwYW4+IHwKZnMgPHNwYW4gY2xhc3M9InBs
+LWsiPjo9PC9zcGFuPiA8c3BhbiBjbGFzcz0icGwtYzEiPkZpbGVTeXN0ZW08L3NwYW4+IG1lbW9y
+eS4KcmVmIDxzcGFuIGNsYXNzPSJwbC1rIj46PTwvc3Bhbj4gZnMgPHNwYW4gY2xhc3M9InBsLWsi
+Pi88L3NwYW4+IDxzcGFuIGNsYXNzPSJwbC1zIj48c3BhbiBjbGFzcz0icGwtcGRzIj4nPC9zcGFu
+PnRlc3Q8c3BhbiBjbGFzcz0icGwtcGRzIj4nPC9zcGFuPjwvc3Bhbj4uCnJlZiA8c3BhbiBjbGFz
+cz0icGwtYzEiPndyaXRlU3RyZWFtRG86PC9zcGFuPiBbPHNwYW4gY2xhc3M9InBsLWVuIj46czwv
+c3Bhbj4gfCBzIDxzcGFuIGNsYXNzPSJwbC1jMSI+bmV4dFB1dEFsbDo8L3NwYW4+IDxzcGFuIGNs
+YXNzPSJwbC1zIj48c3BhbiBjbGFzcz0icGwtcGRzIj4nPC9zcGFuPmFiYzxzcGFuIGNsYXNzPSJw
+bC1wZHMiPic8L3NwYW4+PC9zcGFuPl0uCnJlZiBjb250ZW50cy4gPHNwYW4gY2xhc3M9InBsLWMi
+PjxzcGFuIGNsYXNzPSJwbC1jIj4iPC9zcGFuPidhYmMnPHNwYW4gY2xhc3M9InBsLWMiPiI8L3Nw
+YW4+PC9zcGFuPgpyZWYgPHNwYW4gY2xhc3M9InBsLWMxIj53cml0ZVN0cmVhbURvOjwvc3Bhbj4g
+WzxzcGFuIGNsYXNzPSJwbC1lbiI+OnM8L3NwYW4+IHwgcyA8c3BhbiBjbGFzcz0icGwtYzEiPm5l
+eHRQdXRBbGw6PC9zcGFuPiA8c3BhbiBjbGFzcz0icGwtcyI+PHNwYW4gY2xhc3M9InBsLXBkcyI+
+Jzwvc3Bhbj54eTxzcGFuIGNsYXNzPSJwbC1wZHMiPic8L3NwYW4+PC9zcGFuPl0uCnJlZiBjb250
+ZW50cy4gPHNwYW4gY2xhc3M9InBsLWMiPjxzcGFuIGNsYXNzPSJwbC1jIj4iPC9zcGFuPid4eSc8
+c3BhbiBjbGFzcz0icGwtYyI+Ijwvc3Bhbj48L3NwYW4+CnJlZiA8c3BhbiBjbGFzcz0icGwtYzEi
+PndyaXRlU3RyZWFtRG86PC9zcGFuPiBbPHNwYW4gY2xhc3M9InBsLWVuIj46czwvc3Bhbj4gfCBz
+IDxzcGFuIGNsYXNzPSJwbC1jMSI+bmV4dFB1dDo8L3NwYW4+ICQhXS4KcmVmIGNvbnRlbnRzLiA8
+c3BhbiBjbGFzcz0icGwtYyI+PHNwYW4gY2xhc3M9InBsLWMiPiI8L3NwYW4+JyF5JzxzcGFuIGNs
+YXNzPSJwbC1jIj4iPC9zcGFuPjwvc3Bhbj48L3ByZT48L2Rpdj4KPHAgZGlyPSJhdXRvIj5Tb21l
+IGludmVzdGlnYXRpb246PC9wPgo8dWwgZGlyPSJhdXRvIj4KPGxpPjxjb2RlIGNsYXNzPSJub3Ry
+YW5zbGF0ZSI+RlNXcml0ZVN0cmVhbSZndDsmZ3Q7YmFzaWNOZXh0UHV0OjwvY29kZT4gY2FsbHMg
+PGNvZGUgY2xhc3M9Im5vdHJhbnNsYXRlIj5hdDpwdXQ6PC9jb2RlPiBvbiB0aGUgPGNvZGUgY2xh
+c3M9Im5vdHJhbnNsYXRlIj5GU01lbW9yeUhhbmRsZTwvY29kZT48L2xpPgo8bGk+PGNvZGUgY2xh
+c3M9Im5vdHJhbnNsYXRlIj5hdDpwdXQ6PC9jb2RlPiBpcyBvdmVycmlkZGVuIG9uIDxjb2RlIGNs
+YXNzPSJub3RyYW5zbGF0ZSI+RlNNZW1vcnlIYW5kbGU8L2NvZGU+LCB0byAoYW1vbmcgb3RoZXIg
+dGhpbmdzKSBkbyA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9z
+cXVlYWstZmlsZXN5c3RlbS9ibG9iLzc0YWNiNGFlMjdkODBmNGYwMzBiMzg3ZmM0YjU1ODMyN2E4
+MjY1ODYvc3JjL0ZTLU1lbW9yeS5wYWNrYWdlL0ZTTWVtb3J5SGFuZGxlLmNsYXNzL2luc3RhbmNl
+L2F0LnB1dC4uc3QjTDciPjxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+c2l6ZSA6PSBzaXplIG1h
+eDogaW5kZXg8L2NvZGU+PC9hPiAoa2VlcGluZyBhdCBsZWFzdCB0aGUgb3JpZ2luYWwgc2l6ZSk8
+L2xpPgo8bGk+bm9ybWFsbHkgKGluIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+RlNIYW5kbGUm
+Z3Q7Jmd0O2F0OnB1dDo8L2NvZGU+IGFuZCB3aXRoIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+
+YmFzaWNOZXh0UHV0QWxsOjwvY29kZT4pLCA8Y29kZSBjbGFzcz0ibm90cmFuc2xhdGUiPmF0Ondy
+aXRlOnN0YXJ0aW5nQXQ6Y291bnQ6PC9jb2RlPiBpcyBjYWxsZWQsIDxhIGhyZWY9Imh0dHBzOi8v
+Z2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1maWxlc3lzdGVtL2Jsb2IvNzRhY2I0
+YWUyN2Q4MGY0ZjAzMGIzODdmYzRiNTU4MzI3YTgyNjU4Ni9zcmMvRlMtTWVtb3J5LnBhY2thZ2Uv
+RlNNZW1vcnlIYW5kbGUuY2xhc3MvaW5zdGFuY2UvYXQud3JpdGUuc3RhcnRpbmdBdC5jb3VudC4u
+c3QjTDEyIj53aGljaCwgb24gPGNvZGUgY2xhc3M9Im5vdHJhbnNsYXRlIj5GU01lbW9yeUhhbmRs
+ZTwvY29kZT4sIHNldHMgPGNvZGUgY2xhc3M9Im5vdHJhbnNsYXRlIj5zaXplPC9jb2RlPiB0byB0
+aGUgaW5kZXggb2YgdGhlIGJ5dGUgdGhhdCB3YXMgd3JpdHRlbiBsYXN0PC9hPiAoY29ycmVjdGx5
+IHRydW5jYXRpbmcgdGhlIGZpbGUpPC9saT4KPC91bD4KPHAgZGlyPSJhdXRvIj5JJ20gbm90IHN1
+cmUgd2hldGhlciA8Y29kZSBjbGFzcz0ibm90cmFuc2xhdGUiPmJhc2ljTmV4dFB1dDo8L2NvZGU+
+IGlzIGF0IGZhdWx0IGZvciBjYWxsaW5nIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0ZSI+YXQ6cHV0
+OjwvY29kZT4gaW5zdGVhZCBvZiA8Y29kZSBjbGFzcz0ibm90cmFuc2xhdGUiPmF0OndyaXRlOnN0
+YXJ0aW5nQXQ6Y291bnQ6PC9jb2RlPiBvciB3aGV0aGVyIDxjb2RlIGNsYXNzPSJub3RyYW5zbGF0
+ZSI+YXQ6cHV0OjwvY29kZT4gc2hvdWxkIGluc3RlYWQgc2V0IHRoZSBzaXplIHRvIHRoZSA8Y29k
+ZSBjbGFzcz0ibm90cmFuc2xhdGUiPmluZGV4PC9jb2RlPiAtIG1heWJlIDxjb2RlIGNsYXNzPSJu
+b3RyYW5zbGF0ZSI+YXQ6cHV0OjwvY29kZT4gaXMgc29tZXRpbWVzIHVzZWQgdG8gc2V0IGJ5dGVz
+IGluIHRoZSBtaWRkbGUgb2YgYSBmaWxlLCB3aXRob3V0IHdhbnRpbmcgYSB0cnVuY2F0aW9uPzwv
+cD4KCjxwIHN0eWxlPSJmb250LXNpemU6c21hbGw7LXdlYmtpdC10ZXh0LXNpemUtYWRqdXN0Om5v
+bmU7Y29sb3I6IzY2NjsiPiZtZGFzaDs8YnIgLz5SZXBseSB0byB0aGlzIGVtYWlsIGRpcmVjdGx5
+LCA8YSBocmVmPSJodHRwczovL2dpdGh1Yi5jb20vc3F1ZWFrLXNtYWxsdGFsay9zcXVlYWstZmls
+ZXN5c3RlbS9pc3N1ZXMvMTQiPnZpZXcgaXQgb24gR2l0SHViPC9hPiwgb3IgPGEgaHJlZj0iaHR0
+cHM6Ly9naXRodWIuY29tL25vdGlmaWNhdGlvbnMvdW5zdWJzY3JpYmUtYXV0aC9CRllBSzZQWDdJ
+UFgzVUxPMllYQUtURFpaTUJRVEFWQ05GU002QUFBQUFCUEdMS0RQU1ZISTJEU01WUVdJWDNMTVY0
+M0FTTFRPTjJXS09aU0dVM0RBTUpXR00yRElOWSI+dW5zdWJzY3JpYmU8L2E+LjxiciAvPllvdSBh
+cmUgcmVjZWl2aW5nIHRoaXMgYmVjYXVzZSB5b3UgYXJlIHN1YnNjcmliZWQgdG8gdGhpcyB0aHJl
+YWQuPGltZyBzcmM9Imh0dHBzOi8vZ2l0aHViLmNvbS9ub3RpZmljYXRpb25zL2JlYWNvbi9CRllB
+SzZNVkpPUFNENjZTM1UzRVhaTFpaTUJRVEE1Q05GU002QUFBQUFCUEdMS0RQU1dHRzMzTk5WU1c0
+NUM3T1I0WEFaTkZKRlpYRzVMRlZKUlc2M0xOTVZYSElYM0pNVEhKUkdINk80LmdpZiIgaGVpZ2h0
+PSIxIiB3aWR0aD0iMSIgYWx0PSIiIC8+PHNwYW4gc3R5bGU9ImNvbG9yOiB0cmFuc3BhcmVudDsg
+Zm9udC1zaXplOiAwOyBkaXNwbGF5OiBub25lOyB2aXNpYmlsaXR5OiBoaWRkZW47IG92ZXJmbG93
+OiBoaWRkZW47IG9wYWNpdHk6IDA7IHdpZHRoOiAwOyBoZWlnaHQ6IDA7IG1heC13aWR0aDogMDsg
+bWF4LWhlaWdodDogMDsgbXNvLWhpZGU6IGFsbCI+TWVzc2FnZSBJRDogPHNwYW4+Jmx0O3NxdWVh
+ay1zbWFsbHRhbGsvc3F1ZWFrLWZpbGVzeXN0ZW0vaXNzdWVzLzE0PC9zcGFuPjxzcGFuPkA8L3Nw
+YW4+PHNwYW4+Z2l0aHViPC9zcGFuPjxzcGFuPi48L3NwYW4+PHNwYW4+Y29tJmd0Ozwvc3Bhbj48
+L3NwYW4+PC9wPgo8c2NyaXB0IHR5cGU9ImFwcGxpY2F0aW9uL2xkK2pzb24iPlsKewoiQGNvbnRl
+eHQiOiAiaHR0cDovL3NjaGVtYS5vcmciLAoiQHR5cGUiOiAiRW1haWxNZXNzYWdlIiwKInBvdGVu
+dGlhbEFjdGlvbiI6IHsKIkB0eXBlIjogIlZpZXdBY3Rpb24iLAoidGFyZ2V0IjogImh0dHBzOi8v
+Z2l0aHViLmNvbS9zcXVlYWstc21hbGx0YWxrL3NxdWVhay1maWxlc3lzdGVtL2lzc3Vlcy8xNCIs
+CiJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3NxdWVhay1zbWFsbHRhbGsvc3F1ZWFrLWZpbGVz
+eXN0ZW0vaXNzdWVzLzE0IiwKIm5hbWUiOiAiVmlldyBJc3N1ZSIKfSwKImRlc2NyaXB0aW9uIjog
+IlZpZXcgdGhpcyBJc3N1ZSBvbiBHaXRIdWIiLAoicHVibGlzaGVyIjogewoiQHR5cGUiOiAiT3Jn
+YW5pemF0aW9uIiwKIm5hbWUiOiAiR2l0SHViIiwKInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20i
+Cn0KfQpdPC9zY3JpcHQ+
+
+--===============2969222952238093229==--
+
+

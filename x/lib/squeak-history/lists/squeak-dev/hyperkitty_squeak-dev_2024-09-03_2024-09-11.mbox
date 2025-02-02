@@ -1,0 +1,1947 @@
+From JuanVuletich@zoho.com Tue Sep  3 11:41:51 2024
+From: Juan Vuletich <JuanVuletich@zoho.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Andy Greenberg RIP
+Date: Tue, 03 Sep 2024 08:41:21 -0300
+Message-ID: <66D6F5E1.70601@zoho.com>
+In-Reply-To: <797d8975-cd8d-4e06-950e-193099633d00@mail.msen.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6365278273378285731=="
+
+--===============6365278273378285731==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+On 9/2/2024 6:34 PM, David T Lewis wrote:
+> On 9/2/24 12:16, Tim Rowledge wrote:
+>> A little more about Andy -
+>>
+>> from our own swiki - https://wiki.squeak.org/squeak/517
+>> https://www.pcgamer.com/games/rpg/andrew-greenberg-co-creator-of-the-influ=
+ential-wizardry-series-of-rpgs-has-died/=20
+>>
+>>
+>>
+>> tim
+>
+> Very sad news and gone much too early.
+>
+> Method stamps get overwritten with time, but you can get a sense of=20
+> Andrew's early Squeak work with
+>
+>     Utilities methodsWithInitials: 'acg'
+>
+> And his registration on squeaksource.com adds adds:
+>
+>   Andrew C. Greenberg (acg)
+>   A former technologist turned lawyer, I have been active in Squeak=20
+> development since just after version 2. In addition to various=20
+> portions of the Squeak core, I developed the rePlugin regular=20
+> expression plugin and other goodies.
+>
+> I believe that I recall his legal expertise being quite important as=20
+> various Squeak license issues were being cleaned up, which was truly a=20
+> huge gift to the community.
+>
+> Dave
+>
+>
+>
+>
+>
+>
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to=20
+> squeak-dev-leave(a)lists.squeakfoundation.org
+
+This is sad. He was a nice person, a friendly member of our community,=20
+and did many things that helped and still help us all.
+
+He will not be forgotten.
+
+--=20
+Juan Vuletich
+www.cuis-smalltalk.org
+https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev
+https://github.com/jvuletich
+https://www.linkedin.com/in/juan-vuletich-75611b3
+https://independent.academia.edu/JuanVuletich
+https://www.researchgate.net/profile/Juan-Vuletich
+https://patents.justia.com/inventor/juan-manuel-vuletich
+https://twitter.com/JuanVuletich
+
+
+--===============6365278273378285731==--
+
+
+From tim@rowledge.org Wed Sep  4 00:15:17 2024
+From: Tim Rowledge <tim@rowledge.org>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Make a Pi-Apps install script for Squeak
+Date: Tue, 03 Sep 2024 17:14:57 -0700
+Message-ID: <CA48A187-A455-4BB0-A4CE-6E36730D4CFC@rowledge.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8954844451197719263=="
+
+--===============8954844451197719263==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Anyone fancy having a go?
+
+https://pi-apps.io/wiki/development/Creating-an-app/
+
+tim
+--
+tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+Oxymorons: Alone together
+
+
+
+--===============8954844451197719263==--
+
+
+From tim@rowledge.org Thu Sep  5 18:56:44 2024
+From: Tim Rowledge <tim@rowledge.org>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: New, more powerful Raspberry Pi Pico announced
+Date: Thu, 05 Sep 2024 11:56:34 -0700
+Message-ID: <0D07EAA2-A0E6-41C5-B535-4654C6F68454@rowledge.org>
+In-Reply-To: <3E15DC65-324C-4D54-9624-1FFFEF64AC41@rowledge.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7832653536893607625=="
+
+--===============7832653536893607625==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+
+
+> On 2024-08-08, at 9:22 AM, Tim Rowledge <tim(a)rowledge.org> wrote:
+>=20
+> The original Pico was too limited to seem of much interest for Smalltalk bu=
+t today they announced a new variant with a whopping 520Kb of on-chip SRAM an=
+d support for QSPI external RAM (whatever that is). With 2 ARM Coretex-M33 co=
+res (with floating point and DSP hardware!) I think you could plausibly run a=
+ Smalltalk of some form on that.=20
+
+Well, it turns out Pimoroni have made an interesting variant with 8Mb of PSRA=
+M and 16Mb of flash. I have no idea at all about whether to PSRAM would truly=
+ help but if it did then one could run a pretty serious Smalltalk system on i=
+t. Then again, for about the same price you can get a Pi Zero 2 W - but horse=
+s for courses.
+
+tim
+--
+tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+Strange OpCodes: IML: Invoke Murphy's Laws
+
+
+
+--===============7832653536893607625==--
+
+
+From commits@source.squeak.org Thu Sep  5 19:38:30 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-eem.1458.mcz
+Date: Thu, 05 Sep 2024 19:38:15 +0000
+Message-ID: <20240905193822.1DCD6582366@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3537399630226323477=="
+
+--===============3537399630226323477==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-eem.1458.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: System-eem.1458
+Author: eem
+Time: 5 September 2024, 12:37:55.484282 pm
+UUID: e45f05c3-8186-4589-9698-7a24b111a408
+Ancestors: System-eem.1457
+
+Improvements to change recovery. Have ChangeRecord scan its item for type. In=
+clude in the types #classDefinition (for class and metaclass definitions) and=
+ #methodRemoval.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against System-eem.1457 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was added:
++ ----- Method: ChangeRecord>>className (in category 'access') -----
++ className
++ 	^meta ifNil: [class] ifNotNil: [meta ifTrue: [class, ' class'] ifFalse: [c=
+lass]]!
+
+Item was added:
++ ----- Method: ChangeRecord>>file:position:item: (in category 'initializatio=
+n') -----
++ file: f position: p item: aString
++ 	file :=3D f.
++ 	position :=3D p.
++ 	type :=3D self scanStringForType: aString.
++ 	type =3D=3D #methodRemoval ifTrue:
++ 		[(self scanStringForClass: aString) ifNotNil:
++ 			[:className|
++ 			 class :=3D (meta :=3D className endsWith: ' class')
++ 						ifTrue: [className allButLast: 6]
++ 						ifFalse: [className]]].
++ 	(type =3D #classDefinition
++ 	or: [type =3D #doit
++ 	and: [(aString includesSubstring: 'organization')
++ 		or: [aString includesSubstring: 'reorganize']]]) ifTrue:
++ 		[| message index |
++ 		 message :=3D self messageForDoItExpression: aString.
++ 		 class :=3D (meta :=3D message receiver isString not)
++ 					ifTrue: [message receiver receiver]
++ 					ifFalse: [message arguments first].
++ 		 (type =3D #classDefinition
++ 		 and: [(index :=3D message selector keywords indexOf: #category:) > 0]) i=
+fTrue:
++ 			[category :=3D message arguments at: index]]!
+
+Item was added:
++ ----- Method: ChangeRecord>>messageForDoItExpression: (in category 'private=
+') -----
++ messageForDoItExpression: aString
++ 	"Parse what is expected to be a doit containing either a class definition,=
+ a metaclass definition,
++ 	 or a class initialization, (and maybe one day a reorganization of some so=
+rt; they're all doIts),
++ 	 and answer a MessageSend for the expression. Map global bindings to the n=
+ames of those bindings.
++ 			Class definitions start with
++ 				FooSuperclass blahSubclass: #FooClassName
++ 			Metaclass definitions start with
++ 				FooClass class instanceVariableNames:
++ 			Class initializations look like
++ 				FooClass initialize"
++ 	| methodNode |
++ 	methodNode :=3D Parser new
++ 						parse: aString readStream
++ 						class: ((Smalltalk classNamed: (aString first: (aString indexOf: Char=
+acter space) - 1)) ifNil: [Object])
++ 						noPattern: true
++ 						notifying: nil ifFail: nil.
++ 	^self messageSendForMessage: methodNode block statements first expr!
+
+Item was added:
++ ----- Method: ChangeRecord>>messageSendForMessage: (in category 'private') =
+-----
++ messageSendForMessage: aMessageNode
++ 	^MessageSend
++ 		receiver: (aMessageNode receiver isVariableNode
++ 					ifTrue: [aMessageNode receiver key isString
++ 								ifTrue: [aMessageNode receiver key]
++ 								ifFalse: [aMessageNode receiver key key]] "i.e. aMessageNode receiv=
+er key is a variable binding, e.g. #Object=3D>Object"
++ 					ifFalse: [self messageSendForMessage: aMessageNode receiver])
++ 		selector: aMessageNode selector key
++ 		arguments: (aMessageNode arguments collect: #key)!
+
+Item was changed:
+  ----- Method: ChangeRecord>>methodClass: (in category 'access') -----
+  methodClass: anEnvironment
+  	| methodClassName methodClass |
++ 	(#(method #classComment #classDefinition #methodRemoval) includes: type) i=
+fFalse: [ ^ nil ].
+- 	(#(method #classComment) includes: type) ifFalse: [ ^ nil ].
+  	methodClassName :=3D class substrings
+  		ifEmpty: [ ^ nil ]
+  		ifNotEmptyDo:
+  			[ : parts | parts first asSymbol ].
+  	(anEnvironment includesKey: methodClassName) ifFalse: [ ^ nil ].
+  	methodClass :=3D anEnvironment at: methodClassName.
+  	^ meta
+  		ifTrue: [ methodClass class ]
+  		ifFalse: [ methodClass ]!
+
+Item was changed:
+  ----- Method: ChangeRecord>>methodSelector (in category 'access') -----
+  methodSelector
++ 	type =3D=3D #method ifTrue:
++ 		[^(Smalltalk at: class ifAbsent: [Object]) newParser parseSelector: self =
+string].
++ 	type =3D=3D #classDefinition ifTrue:
++ 		[^(self messageForDoItExpression: self string) selector].
++ 	type =3D=3D #methodRemoval ifTrue:
++ 		[| string |
++ 		string :=3D self string.
++ 		^(Scanner new scan: (ReadStream on: string from: (string indexOf: $#) to:=
+ string size)) advance].
++ 	^nil!
+- 	^type =3D=3D #method ifTrue:
+- 		[(Smalltalk at: class ifAbsent: [Object]) newParser parseSelector: self s=
+tring]!
+
+Item was added:
++ ----- Method: ChangeRecord>>scanStringForClass: (in category 'initializatio=
+n') -----
++ scanStringForClass: aString
++ 	| classIndex spaceIndex |
++ 	(aString notEmpty and: [aString first isUppercase]) ifFalse:
++ 		[^nil].
++ 	classIndex :=3D aString indexOfSubCollection: ' class'.
++ 	spaceIndex :=3D aString indexOf: Character space.
++ 	classIndex =3D spaceIndex ifTrue:
++ 		[^aString first: classIndex + 6].
++ 	classIndex =3D 0 ifTrue:
++ 		[^aString first: spaceIndex - 1].
++ 	^nil!
+
+Item was added:
++ ----- Method: ChangeRecord>>scanStringForType: (in category 'initialization=
+') -----
++ scanStringForType: aString
++ 	| removeIndex spaceIndex stream stringIndex classIndex |
++ 	(aString beginsWith: '----') ifTrue:
++ 		[^#misc].
++ 	((removeIndex :=3D aString indexOfSubCollection: 'removeSelector:') > 0
++ 	and: [((spaceIndex :=3D aString indexOf: Character space) =3D (removeIndex=
+ - 1)
++ 		or: [spaceIndex =3D (removeIndex - 7)
++ 		and: [(aString indexOfSubCollection: ' class ') =3D spaceIndex]])
++ 		and: [stream :=3D ReadStream on: aString from: removeIndex + 15 to: aStri=
+ng size.
++ 			(Scanner new scan: stream) advance isSymbol
++ 			and: [stream position =3D aString size]]]) ifTrue:
++ 		[^#methodRemoval].
++ 	"Could be a class definition.
++ 			Class definitions start with Superclass blahSubclass: #ClassName
++ 			Metaclass definitions start with ClassName class instanceVariableNames:
++ 	So check for plausible beginnings:
++ 		FooSuperclass<space>subclassKeyword:<space>#
++ 		FooClass<space>class<space>instanceVariableNames:"
++ 	(((stringIndex :=3D aString indexOfSubCollection: 'ubclass: #') > 0
++ 	and: [((spaceIndex :=3D aString indexOf: Character space) between: 2 and: =
+stringIndex - 1)
++ 	and: [(aString indexOf: Character space startingAt: spaceIndex + 1) =3D (s=
+tringIndex + 8)]])
++ 	or: [(stringIndex :=3D aString indexOfSubCollection: 'instanceVariableName=
+s:') > 0
++ 		and: [((classIndex :=3D aString indexOfSubCollection: ' class') between: =
+2 and: stringIndex)
++ 		and: [(spaceIndex :=3D aString indexOf: Character space) =3D classIndex
++ 		and: [(classIndex + 6 to: stringIndex - 1) allSatisfy: [:i| (aString at: =
+i) isSeparator]]]]]) ifTrue:
++ 		[^#classDefinition].
++ 	^#doIt!
+
+Item was changed:
+  ----- Method: ChangeSet class>>scanFile:from:to: (in category 'scanning') -=
+----
+  scanFile: file from: startPosition to: stopPosition
+  	| changeList |
+  	changeList :=3D OrderedCollection new.
+  	file position: startPosition.
+  'Scanning ', file localName, '...'
+  	displayProgressFrom: startPosition to: stopPosition
+  	during: [:bar | | itemPosition item prevChar |
+  	[ [file position < stopPosition] whileTrue:[
+  		bar value: file position.
+  		[file atEnd not and: [file peek isSeparator]]
+  			whileTrue: [prevChar :=3D file next].
+  		(file peekFor: $!!) ifTrue:[
+  			(prevChar =3D Character cr or: [prevChar =3D Character lf])
+  				ifTrue: [changeList addAll: (self scanCategory: file)].
+  		] ifFalse:[
+  			itemPosition :=3D file position.
+  			item :=3D file nextChunk.
+  			file skipStyleChunk.
++ 			item size > 0 ifTrue:
++ 				[changeList add: (ChangeRecord new file: file position: itemPosition it=
+em: item)]]]
+- 			item size > 0 ifTrue:[
+- 				changeList add: (ChangeRecord new file: file position: itemPosition typ=
+e: #doIt)]]]
+  	] on: InvalidUTF8 do: [:ex |
+  		file isSourceFile ifTrue: [ex pass] ifFalse: [
+  			self notify: ex messageText, '\\Proceed to try the legacy MacRoman encod=
+ing.' translated withCRs.
+  			file reset; setConverterForOldCode.
+  			^ self scanFile: file from: startPosition to: stopPosition]] ].
+  	^changeList!
+
+
+--===============3537399630226323477==--
+
+
+From commits@source.squeak.org Thu Sep  5 20:19:35 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1264.mcz
+Date: Thu, 05 Sep 2024 20:19:25 +0000
+Message-ID: <20240905201930.F3F48582624@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1504187267758053883=="
+
+--===============1504187267758053883==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1264.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1264
+Author: eem
+Time: 5 September 2024, 1:19:19.891942 pm
+UUID: 847031cb-cef5-433e-aa4e-3e0bfa7e45f7
+Ancestors: Tools-eem.1263
+
+Improvements to change recovery. Using System-eem.1458
+- allow selecting all changes of a given type (method, classDefinition, metho=
+dRemoval, classComment, doit, etc)
+- have remove older versions be aware of method removals so if the last chang=
+e is a removal all older versions of the method are removed
+- add select definitions for this class which selects class definitions and m=
+ethod removals as well as method definitions
+- if some methods/removals are selected make remove older versions remove old=
+er versions of only those methods
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1263 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeList>>mainChangeListMenu: (in category 'menu actions') =
+-----
+  mainChangeListMenu: aMenu
+  	"Fill aMenu up so that it comprises the primary changelist-browser menu"
+  	<changeListMenu>
+ =20
+  	aMenu addTitle: 'change list' translated.
+  	aMenu addStayUpItemSpecial.
+ =20
+  	aMenu addTranslatedList: #(
+ =20
+  	('fileIn selections'							fileInSelections						'import the selected item=
+s into the image')
+  	('fileOut selections...'						fileOutSelections						'create a new file co=
+ntaining the selected items')
+  	-
+  	('compare to current'						compareToCurrentVersion			'open a separate wind=
+ow which shows the text differences between the on-file version and the in-im=
+age version.' )
+  	('toggle diffing (D)'							toggleDiffing						'start or stop showing diff=
+s in the code pane.')
+  	-
+  	('select conflicts with any changeset'		selectAllConflicts					'select met=
+hods in the file which also occur in any change-set in the system')
+  	('select conflicts with current changeset'	selectConflicts						'select me=
+thods in the file which also occur in the current change-set')
+  	('select conflicts with...'						selectConflictsWith					'allows you to de=
+signate a file or change-set against which to check for code conflicts.')
+  	-
+  	('select unchanged definitions'				selectUnchangedDefinitions			'select cl=
+ass definitions, class comments and methods in the file whose in-image versio=
+ns are the same as their in-file counterparts' )
+  	('select unchanged methods'					selectUnchangedMethods				'select methods =
+in the file whose in-image versions are the same as their in-file counterpart=
+s' )
+  	('select new methods'						selectNewMethods					'select methods in the fil=
+e that do not current occur in the image')
+  	('select methods for this class'				selectMethodsForThisClass			'select al=
+l methods in the file that belong to the currently-selected class\(shift to e=
+xtend selections)')
+  	('select methods for extant classes'			selectMethodsForExtantClasses		'sel=
+ect all methods in the file that belong to a class that exists in the image\(=
+shift to extend selections)')
++ 	('select definitions for this class'				selectDefinitionsForThisClass			's=
+elect all definitions in the file that belong to the currently-selected class=
+\(shift to extend selections)')
++ 	('select definitions of this type'				selectDefinitionsForThisType			'sele=
+ct all definitions in the file of teh same type as the currently-selected cha=
+nge\(shift to extend selections)')
+  	('select changes with contents matching'		selectContentsMatching				'selec=
+t all changes in the file whose text includes a pattern\(shift to extend sele=
+ctions)')
+ =20
+  	-
+  	('select all (a)'								selectAll								'select all the items in the lis=
+t')
+  	('deselect all'								deselectAll							'deselect all the items in the li=
+st')
+  	('invert selections'							invertSelections						'select every item that i=
+s not currently selected, and deselect every item that *is* currently selecte=
+d')
+  	('select all before'							selectAllBefore							'select every item before=
+ the current selection')
+  	-
+  	('browse all versions of single selection'			browseVersions		'open a versi=
+on browser showing the versions of the currently selected method')
+  	('browse all versions of selections'			browseAllVersionsOfSelections		'ope=
+n a version browser showing all the versions of all the selected methods')
+  	('browse current versions of selections'		browseCurrentVersionsOfSelection=
+s	'open a message-list browser showing the current (in-image) counterparts of=
+ the selected methods')
+  	('destroy current methods of selections'		destroyCurrentCodeOfSelections		=
+'remove (*destroy*) the in-image counterparts of all selected methods')
+  	-
+  	('remove doIts'								removeDoIts							'remove all items that are doIts =
+rather than methods')
+  	('remove older versions'						removeOlderMethodVersions			'remove all but =
+the most recent versions of methods in the list')
+  	('remove up-to-date versions'				removeExistingMethodVersions		'remove all=
+ items whose code is the same as the counterpart in-image code')
+  	('remove selected items'						removeSelections					'remove the selected it=
+ems from the change-list')
+  	('remove unselected items'					removeNonSelections					'remove all the ite=
+ms not currently selected from the change-list')).
+ =20
+  	^ aMenu!
+
+Item was changed:
+  ----- Method: ChangeList>>removeOlderMethodVersions (in category 'menu acti=
+ons') -----
+  removeOlderMethodVersions
++ 	"Remove older versions of entries from the receiver. If there are selectio=
+ns, then only remove older,
++ 	 versions of the selected selectors, select the remaining youngest version=
+s, and set the listIndex to
++ 	 select the first of these."
++ 	| newChangeList newList found selectedSelectors |
+- 	"Remove older versions of entries from the receiver."
+- 	| newChangeList newList found |
+  	newChangeList :=3D OrderedCollection new.
+  	newList :=3D OrderedCollection new.
++ 	changeList with: listSelections do:
++ 		[:changeRecord :selected|
++ 		selected ifTrue:
++ 			[changeRecord methodSelector ifNotNil:
++ 				[:selector|
++ 				(selectedSelectors ifNil: [selectedSelectors :=3D IdentitySet new]) add=
+: selector]]].
++ 	found :=3D Set new.
+- 	found :=3D OrderedCollection new.
+-=20
+  	changeList reverseWith: list do:
++ 		[:changeRecord :listString | | selector |
++ 		((selector :=3D changeRecord methodSelector) notNil
++ 		and: [selectedSelectors isNil or: [selectedSelectors includes: selector]])
++ 			ifTrue:
++ 				[(found ifAbsentAdd: selector) ifTrue:
++ 					[newChangeList add: changeRecord.
++ 					 newList add: listString]]
++ 			ifFalse:
++ 				[newChangeList add: changeRecord.
++ 				 newList add: listString]].
++ 	newChangeList size < changeList size ifTrue:
++ 		[changeList :=3D newChangeList reversed.
++ 		list :=3D newList reversed.
++ 		listIndex :=3D 0.
++ 		listSelections :=3D Array new: list size withAll: false].
++ 	selectedSelectors ifNotNil:
++ 		[changeList with: (1 to: list size) do:
++ 			[:changeRecord :index|
++ 			(selectedSelectors includes: changeRecord methodSelector) ifTrue:
++ 				[listIndex =3D 0 ifTrue: [listIndex :=3D index].
++ 				 listSelections at: index put: true]]].
+- 		[:chRec :strNstamp | | str | str :=3D strNstamp copyUpTo: $;.
+- 			(found includes: str)
+- 				ifFalse:
+- 					[found add: str.
+- 					newChangeList add: chRec.
+- 					newList add: strNstamp]].
+- 	newChangeList size < changeList size
+- 		ifTrue:
+- 			[changeList :=3D newChangeList reversed.
+- 			list :=3D newList reversed.
+- 			listIndex :=3D 0.
+- 			listSelections :=3D Array new: list size withAll: false].
+  	self changed: #list!
+
+Item was changed:
+  ----- Method: ChangeList>>scanFile:from:to: (in category 'scanning') -----
+  scanFile: aFile from: startPosition to: stopPosition
+  =09
+  	file :=3D aFile.
+  	changeList :=3D OrderedCollection new.
+  	list :=3D OrderedCollection new.
+  	listIndex :=3D 0.
+  	file position: startPosition.
+  ('Scanning {1}...' translated format: {aFile localName})
+  	displayProgressFrom: startPosition to: stopPosition
++ 	during: [:bar | | prevChar itemPosition item change |
+- 	during: [:bar | | prevChar itemPosition item |
+  	[ [file position < stopPosition]
+  		whileTrue:
+  		[bar value: file position.
+  		[file atEnd not and: [file peek isSeparator]]
+  				whileTrue: [prevChar :=3D file next].
+  		(file peekFor: $!!)
+  		ifTrue:
+  			[(prevChar =3D Character cr or: [prevChar =3D Character lf])
+  				ifTrue: [self scanCategory]]
+  		ifFalse:
+  			[itemPosition :=3D file position.
+  			item :=3D file nextChunk.
+  			file skipStyleChunk.
+  			item size > 0 ifTrue:
++ 				[change :=3D ChangeRecord new file: file position: itemPosition item: i=
+tem.
++ 				 self addItem: change text: change type, ': ' , (item contractTo: 50)]]]
+- 				[(item beginsWith: '----')
+- 					ifTrue:
+- 						[self addItem: (ChangeRecord new
+- 								file: file position: itemPosition type: #misc)
+- 								text: 'misc: ' , (item contractTo: 50)]
+- 					ifFalse:
+- 						[self addItem: (ChangeRecord new
+- 								file: file position: itemPosition type: #doIt)
+- 								text: 'do it: ' , (item contractTo: 50)]]]]
+  	] on: InvalidUTF8 do: [:ex |
+  		aFile isSourceFile ifTrue: [ex pass] ifFalse: [
+  			self notify: ex messageText, '\\Proceed to try the legacy MacRoman encod=
+ing.' translated withCRs.
+  			aFile reset; setConverterForOldCode.
++ 			^ self scanFile: aFile from: startPosition to: stopPosition]]].
++ 	self resetListSelections!
+- 			^ self scanFile: aFile from: startPosition to: stopPosition]] ].
+- 	self resetListSelections.!
+
+Item was added:
++ ----- Method: ChangeList>>selectDefinitionsForThisClass (in category 'menu =
+actions') -----
++ selectDefinitionsForThisClass
++ 	self currentChange ifNotNil:
++ 		[:currentChange|
++ 		currentChange className ifNotNil:
++ 			[:className|
++ 			self selectSuchThat:
++ 				[ :change | change className =3D=3D className]]]!
+
+Item was added:
++ ----- Method: ChangeList>>selectDefinitionsForThisType (in category 'menu a=
+ctions') -----
++ selectDefinitionsForThisType
++ 	self currentChange ifNotNil:
++ 		[:currentChange|
++ 		currentChange type ifNotNil:
++ 			[:type|
++ 			self selectSuchThat:
++ 				[ :change | change type =3D=3D type]]]!
+
+
+--===============1504187267758053883==--
+
+
+From commits@source.squeak.org Thu Sep  5 20:56:14 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1265.mcz
+Date: Thu, 05 Sep 2024 20:56:01 +0000
+Message-ID: <20240905205609.504725826E8@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4359322099907854760=="
+
+--===============4359322099907854760==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1265.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1265
+Author: eem
+Time: 5 September 2024, 1:55:57.638087 pm
+UUID: bbb33cb9-0548-4b37-b8f7-186522ca9e19
+Ancestors: Tools-eem.1264
+
+Improvements to change recovery. Provide "select changes for this selector" w=
+hich works for method definitions/removals, class definitions, etc, and spawn=
+ selections, which opens a new change sorter containing just the selected ite=
+ms.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1264 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeList>>mainChangeListMenu: (in category 'menu actions') =
+-----
+  mainChangeListMenu: aMenu
+  	"Fill aMenu up so that it comprises the primary changelist-browser menu"
+  	<changeListMenu>
+ =20
+  	aMenu addTitle: 'change list' translated.
+  	aMenu addStayUpItemSpecial.
+ =20
+  	aMenu addTranslatedList: #(
+ =20
+  	('fileIn selections'							fileInSelections						'import the selected item=
+s into the image')
+  	('fileOut selections...'						fileOutSelections						'create a new file co=
+ntaining the selected items')
++ 	('spawn selections'						spawnSelections						'open a new change list cont=
+aining the selected changes')
+  	-
+  	('compare to current'						compareToCurrentVersion			'open a separate wind=
+ow which shows the text differences between the on-file version and the in-im=
+age version.' )
+  	('toggle diffing (D)'							toggleDiffing						'start or stop showing diff=
+s in the code pane.')
+  	-
+  	('select conflicts with any changeset'		selectAllConflicts					'select met=
+hods in the file which also occur in any change-set in the system')
+  	('select conflicts with current changeset'	selectConflicts						'select me=
+thods in the file which also occur in the current change-set')
+  	('select conflicts with...'						selectConflictsWith					'allows you to de=
+signate a file or change-set against which to check for code conflicts.')
+  	-
+  	('select unchanged definitions'				selectUnchangedDefinitions			'select cl=
+ass definitions, class comments and methods in the file whose in-image versio=
+ns are the same as their in-file counterparts' )
+  	('select unchanged methods'					selectUnchangedMethods				'select methods =
+in the file whose in-image versions are the same as their in-file counterpart=
+s' )
+  	('select new methods'						selectNewMethods					'select methods in the fil=
+e that do not current occur in the image')
+  	('select methods for this class'				selectMethodsForThisClass			'select al=
+l methods in the file that belong to the currently-selected class\(shift to e=
+xtend selections)')
+  	('select methods for extant classes'			selectMethodsForExtantClasses		'sel=
+ect all methods in the file that belong to a class that exists in the image\(=
+shift to extend selections)')
+  	('select definitions for this class'				selectDefinitionsForThisClass			's=
+elect all definitions in the file that belong to the currently-selected class=
+\(shift to extend selections)')
++ 	('select definitions for this selector'				selectDefinitionsForThisSelecto=
+r			'select all definitions in the file that have the same selector as the se=
+lected change\(shift to extend selections)')
+  	('select definitions of this type'				selectDefinitionsForThisType			'sele=
+ct all definitions in the file of teh same type as the currently-selected cha=
+nge\(shift to extend selections)')
+  	('select changes with contents matching'		selectContentsMatching				'selec=
+t all changes in the file whose text includes a pattern\(shift to extend sele=
+ctions)')
+ =20
+  	-
+  	('select all (a)'								selectAll								'select all the items in the lis=
+t')
+  	('deselect all'								deselectAll							'deselect all the items in the li=
+st')
+  	('invert selections'							invertSelections						'select every item that i=
+s not currently selected, and deselect every item that *is* currently selecte=
+d')
+  	('select all before'							selectAllBefore							'select every item before=
+ the current selection')
+  	-
+  	('browse all versions of single selection'			browseVersions		'open a versi=
+on browser showing the versions of the currently selected method')
+  	('browse all versions of selections'			browseAllVersionsOfSelections		'ope=
+n a version browser showing all the versions of all the selected methods')
+  	('browse current versions of selections'		browseCurrentVersionsOfSelection=
+s	'open a message-list browser showing the current (in-image) counterparts of=
+ the selected methods')
+  	('destroy current methods of selections'		destroyCurrentCodeOfSelections		=
+'remove (*destroy*) the in-image counterparts of all selected methods')
+  	-
+  	('remove doIts'								removeDoIts							'remove all items that are doIts =
+rather than methods')
+  	('remove older versions'						removeOlderMethodVersions			'remove all but =
+the most recent versions of methods in the list')
+  	('remove up-to-date versions'				removeExistingMethodVersions		'remove all=
+ items whose code is the same as the counterpart in-image code')
+  	('remove selected items'						removeSelections					'remove the selected it=
+ems from the change-list')
+  	('remove unselected items'					removeNonSelections					'remove all the ite=
+ms not currently selected from the change-list')).
+ =20
+  	^ aMenu!
+
+Item was added:
++ ----- Method: ChangeList>>selectDefinitionsForThisSelector (in category 'me=
+nu actions') -----
++ selectDefinitionsForThisSelector
++ 	self currentChange ifNotNil:
++ 		[:currentChange|
++ 		currentChange methodSelector ifNotNil:
++ 			[:methodSelector|
++ 			self selectSuchThat:
++ 				[ :change | change methodSelector =3D=3D methodSelector]]]!
+
+Item was added:
++ ----- Method: ChangeList>>spawnSelections (in category 'menu actions') -----
++ spawnSelections
++ 	| newChangeList |
++ 	newChangeList :=3D self class new.
++ 	(1 to: changeList size) with: listSelections do:
++ 		[:i :selected|
++ 		selected ifTrue:
++ 			[newChangeList addItem: (changeList at: i) text: (list at: i)]].
++ 	newChangeList changeList isEmpty ifTrue:
++ 		[UIManager inform: 'there are no selected changes!!'].
++ 	newChangeList resetListSelections.
++ 	self class
++ 		open: newChangeList
++ 		name: 'Spawned changes' translated
++ 		multiSelect: self showsVersions not!
+
+
+--===============4359322099907854760==--
+
+
+From commits@source.squeak.org Thu Sep  5 21:18:36 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1266.mcz
+Date: Thu, 05 Sep 2024 21:18:24 +0000
+Message-ID: <20240905211830.E7CD35826E8@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8325667836032305606=="
+
+--===============8325667836032305606==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1266.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1266
+Author: eem
+Time: 5 September 2024, 2:18:20.66114 pm
+UUID: 96f62e4c-0d98-499e-aae6-cd35eacac63f
+Ancestors: Tools-eem.1265
+
+Fix regression in select unchanged definitions now that methodRemoval is its =
+own type fo ChangeRecord.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1265 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeList>>selectUnchangedDefinitions (in category 'menu act=
+ions') -----
+  selectUnchangedDefinitions
+  	"Selects all recognizable definitions for which there is already a definit=
+ion in the current image, whose source is exactly the same."
+  	| change class tokens |
+  	Cursor read showWhile:=20
+  	[1 to: changeList size do:
+  		[:i | change :=3D changeList at: i.
+  		listSelections at: i put: false.
+ =20
+  		(change type =3D #method
+  		 and: [(class :=3D change methodClass) notNil
+  		 and: [class includesSelector: change methodSelector]]) ifTrue:
+  			[listSelections
+  				at: i
+  				put: change string withBlanksCondensed
+  					=3D (class sourceCodeAt: change methodSelector) asString withBlanksCon=
+densed].
+ =20
++ 		(change type =3D #methodRemoval
++ 		 and: [(class :=3D change methodClass) notNil
++ 		 and: [(class includesSelector: change methodSelector) not]]) ifTrue:
++ 			[listSelections at: i put: true].
++=20
+  		(change type =3D=3D #classComment
+  		and: [(class :=3D change commentClass) notNil]) ifTrue:
+  			[listSelections at: i put: change string =3D class comment asString].
+ =20
+  		change type =3D=3D #doIt ifTrue:
+  			[tokens :=3D Scanner new scanTokens: change string.
+ =20
+  			 ((tokens select:
+  				[:substr| #(subclass: variableSubclass: variableByteSubclass: variableW=
+ordSubclass:
+  							instanceVariableNames: classVariableNames: ) includes: substr])
+  					asSet size >=3D 3
+  			 and: [(class :=3D Smalltalk at: tokens third ifAbsent: []) notNil
+  			 and: [class isBehavior]]) ifTrue:
+  				[listSelections
+  					at: i
+  					put: change string withBlanksCondensed
+  						=3D class definition withBlanksCondensed].
+ =20
+  			(tokens size =3D 4
+  			 and: [tokens second =3D=3D #class
+  			 and: [tokens third =3D=3D #instanceVariableNames:
+  			 and: [(class :=3D Smalltalk at: tokens first ifAbsent: []) notNil
+  			 and: [class isBehavior]]]]) ifTrue:
+  				[listSelections
+  					at: i
+  					put: change string withBlanksCondensed
++ 						=3D class class definition withBlanksCondensed]]]].
+- 						=3D class class definition withBlanksCondensed].
+ =20
+- 			(tokens size =3D 3
+- 			 and: [tokens second =3D=3D #removeSelector:
+- 			 and: [(class :=3D Smalltalk at: tokens first ifAbsent: []) isNil
+- 			 	or: [class isBehavior and: [(class includesSelector: tokens third) not=
+]]]]) ifTrue:
+- 				[listSelections at: i put: true].
+-=20
+- 			(tokens size =3D 4
+- 			 and: [tokens second =3D=3D #class
+- 			 and: [tokens third =3D=3D #removeSelector:
+- 			 and: [(class :=3D Smalltalk at: tokens first ifAbsent: []) isNil
+- 			 	or: [class isBehavior and: [(class class includesSelector: tokens four=
+th) not]]]]]) ifTrue:
+- 				[listSelections at: i put: true]]]].
+-=20
+  	self changed: #allSelections!
+
+
+--===============8325667836032305606==--
+
+
+From commits@source.squeak.org Thu Sep  5 21:50:31 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-eem.1459.mcz
+Date: Thu, 05 Sep 2024 21:50:15 +0000
+Message-ID: <20240905215025.D6C3F5826E8@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6814204096918926515=="
+
+--===============6814204096918926515==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-eem.1459.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: System-eem.1459
+Author: eem
+Time: 5 September 2024, 2:50:09.87911 pm
+UUID: b6be53bd-d73a-4f00-b88d-2a076ca22cf8
+Ancestors: System-eem.1458
+
+Fix regression in filing in a class definition in System-eem.1458
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against System-eem.1458 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeRecord>>fileIn: (in category 'initialization') -----
+  fileIn: anEnvironment
+  	"File the receiver in.  If I represent a method or a class-comment, file t=
+he method in and make a note of it in the recent-submissions list; if I repre=
+sent a do-it, then, well, do it; if I represent a reorganization then get org=
+anized!!"
+ =20
+  	Cursor read showWhile:
+  		[| s cls aSelector |
++ 		(type =3D=3D #doIt or: [type =3D=3D #classDefinition])
+- 		type =3D=3D #doIt
+  			ifTrue:
+  				[((s :=3D self string) beginsWith: '----') ifFalse: [Compiler evaluate:=
+ s]]
+  			ifFalse:
+  				[cls :=3D self methodClass: anEnvironment.
+  				 type =3D=3D #method ifTrue:
+  					[[cls compile: self text classified: category withStamp: stamp notifyi=
+ng: nil]
+  					on: CurrentEnvironment do: [:e | e resume: anEnvironment].
+  					(aSelector :=3D self methodSelector) ifNotNil:
+  						[RecentMessages default recordSelector: aSelector forClass: cls inEnv=
+ironment: anEnvironment]].
+  				 type =3D=3D #classComment ifTrue:
+  					[cls comment: self text stamp: stamp.
+  					RecentMessages default recordSelector: #Comment forClass: cls inEnviro=
+nment: anEnvironment].
+  				 type =3D=3D #reorganize ifTrue:
+  					[cls organization changeFromString: self text]]]!
+
+
+--===============6814204096918926515==--
+
+
+From commits@source.squeak.org Thu Sep  5 21:51:18 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1267.mcz
+Date: Thu, 05 Sep 2024 21:51:04 +0000
+Message-ID: <20240905215112.29A89583E3C@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3957337099752707252=="
+
+--===============3957337099752707252==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1267.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1267
+Author: eem
+Time: 5 September 2024, 2:51:00.767028 pm
+UUID: 53e8794b-30ab-4a87-9945-f7e2d4df0637
+Ancestors: Tools-eem.1266
+
+Fix regression in diffing a class definition in System-eem.1458
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1266 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeList>>contentsDiffedFromCurrent (in category 'viewing a=
+ccess') -----
+  contentsDiffedFromCurrent
+  	"Answer the contents diffed forward from current (in-memory) method versio=
+n"
+ =20
+  	| aChange aClass |
+  	listIndex =3D 0
+  		ifTrue: [^ ''].
+  	aChange :=3D changeList at: listIndex.
+  	 (aChange type =3D=3D #method
+  	 and: [(aClass :=3D aChange methodClass) notNil
+  	 and: [aClass includesSelector: aChange methodSelector]]) ifTrue:
+  		[^self
+  			methodDiffFor: aChange text
+  			class: aClass
+  			selector: aChange methodSelector
+  			prettyDiffs: self showingPrettyDiffs].
+ =20
++ 	aChange type =3D=3D #classDefinition ifTrue:
+- 	aChange type =3D=3D #doIt ifTrue:
+  		[| tokens |
+  		 tokens :=3D Scanner new scanTokens: aChange string.
+  		 ((tokens select:
+  				[:substr| #(subclass: variableByteSubclass: variableWordSubclass:
+  							instanceVariableNames: classVariableNames: ) includes: substr])
+  					asSet size >=3D 3
+  		  and: [(aClass :=3D Smalltalk at: tokens third ifAbsent: []) notNil
+  		  and: [aClass isBehavior]]) ifTrue:
+  			[^ClassDiffBuilder buildDisplayPatchFrom: aClass definition to: aChange =
+string].
+ =20
+  		(tokens size =3D 4
+  		 and: [tokens second =3D=3D #class
+  		 and: [tokens third =3D=3D #instanceVariableNames:
+  		 and: [(aClass :=3D Smalltalk at: tokens first ifAbsent: []) notNil
+  		 and: [aClass isBehavior]]]]) ifTrue:
+  			[^ClassDiffBuilder buildDisplayPatchFrom: aClass class definition to: aC=
+hange string]].
+ =20
+  	(aChange type =3D=3D #classComment
+  	and: [(aClass :=3D aChange commentClass) notNil]) ifTrue:
+  		[^ClassDiffBuilder buildDisplayPatchFrom: aClass comment asString to: aCh=
+ange string].
+ =20
+  	^(changeList at: listIndex) text!
+
+
+--===============3957337099752707252==--
+
+
+From commits@source.squeak.org Thu Sep  5 22:10:05 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-eem.1460.mcz
+Date: Thu, 05 Sep 2024 22:09:51 +0000
+Message-ID: <20240905221000.374DC583BF4@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0450562012161013219=="
+
+--===============0450562012161013219==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-eem.1460.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: System-eem.1460
+Author: eem
+Time: 5 September 2024, 3:09:45.782544 pm
+UUID: da3f59e7-3ce7-4b06-be06-087021e0b309
+Ancestors: System-eem.1459
+
+Fix regression in filing in a method removal in System-eem.1458
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against System-eem.1459 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeRecord>>fileIn: (in category 'initialization') -----
+  fileIn: anEnvironment
+  	"File the receiver in.  If I represent a method or a class-comment, file t=
+he method in and make a note of it in the recent-submissions list; if I repre=
+sent a do-it, then, well, do it; if I represent a reorganization then get org=
+anized!!"
+ =20
+  	Cursor read showWhile:
+  		[| s cls aSelector |
++ 		(#(doIt classDefinition methodRemoval) includes: type)
+- 		(type =3D=3D #doIt or: [type =3D=3D #classDefinition])
+  			ifTrue:
+  				[((s :=3D self string) beginsWith: '----') ifFalse: [Compiler evaluate:=
+ s]]
+  			ifFalse:
+  				[cls :=3D self methodClass: anEnvironment.
+  				 type =3D=3D #method ifTrue:
+  					[[cls compile: self text classified: category withStamp: stamp notifyi=
+ng: nil]
+  					on: CurrentEnvironment do: [:e | e resume: anEnvironment].
+  					(aSelector :=3D self methodSelector) ifNotNil:
+  						[RecentMessages default recordSelector: aSelector forClass: cls inEnv=
+ironment: anEnvironment]].
+  				 type =3D=3D #classComment ifTrue:
+  					[cls comment: self text stamp: stamp.
+  					RecentMessages default recordSelector: #Comment forClass: cls inEnviro=
+nment: anEnvironment].
+  				 type =3D=3D #reorganize ifTrue:
+  					[cls organization changeFromString: self text]]]!
+
+
+--===============0450562012161013219==--
+
+
+From commits@source.squeak.org Fri Sep  6 02:38:12 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1268.mcz
+Date: Fri, 06 Sep 2024 02:38:01 +0000
+Message-ID: <20240906023807.0912D583C0A@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4168908827759667576=="
+
+--===============4168908827759667576==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1268.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1268
+Author: eem
+Time: 5 September 2024, 7:35:49.78065 pm
+UUID: 93a4c86b-5533-4951-b9b9-d1f29e41e1d4
+Ancestors: Tools-eem.1267
+
+Fix regression in selecting unchanged class definitions in System-eem.1458
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1267 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeList>>selectUnchangedDefinitions (in category 'menu act=
+ions') -----
+  selectUnchangedDefinitions
+  	"Selects all recognizable definitions for which there is already a definit=
+ion in the current image, whose source is exactly the same."
+  	| change class tokens |
+  	Cursor read showWhile:=20
+  	[1 to: changeList size do:
+  		[:i | change :=3D changeList at: i.
+  		listSelections at: i put: false.
+ =20
+  		(change type =3D #method
+  		 and: [(class :=3D change methodClass) notNil
+  		 and: [class includesSelector: change methodSelector]]) ifTrue:
+  			[listSelections
+  				at: i
+  				put: change string withBlanksCondensed
+  					=3D (class sourceCodeAt: change methodSelector) asString withBlanksCon=
+densed].
+ =20
+  		(change type =3D #methodRemoval
+  		 and: [(class :=3D change methodClass) notNil
+  		 and: [(class includesSelector: change methodSelector) not]]) ifTrue:
+  			[listSelections at: i put: true].
+ =20
+  		(change type =3D=3D #classComment
+  		and: [(class :=3D change commentClass) notNil]) ifTrue:
+  			[listSelections at: i put: change string =3D class comment asString].
+ =20
++ 		(change type =3D=3D #doIt
++ 		 or: [change type =3D=3D #classDefinition]) ifTrue:
+- 		change type =3D=3D #doIt ifTrue:
+  			[tokens :=3D Scanner new scanTokens: change string.
+ =20
+  			 ((tokens select:
+  				[:substr| #(subclass: variableSubclass: variableByteSubclass: variableW=
+ordSubclass:
+  							instanceVariableNames: classVariableNames: ) includes: substr])
+  					asSet size >=3D 3
+  			 and: [(class :=3D Smalltalk at: tokens third ifAbsent: []) notNil
+  			 and: [class isBehavior]]) ifTrue:
+  				[listSelections
+  					at: i
+  					put: change string withBlanksCondensed
+  						=3D class definition withBlanksCondensed].
+ =20
+  			(tokens size =3D 4
+  			 and: [tokens second =3D=3D #class
+  			 and: [tokens third =3D=3D #instanceVariableNames:
+  			 and: [(class :=3D Smalltalk at: tokens first ifAbsent: []) notNil
+  			 and: [class isBehavior]]]]) ifTrue:
+  				[listSelections
+  					at: i
+  					put: change string withBlanksCondensed
+  						=3D class class definition withBlanksCondensed]]]].
+ =20
+  	self changed: #allSelections!
+
+
+--===============4168908827759667576==--
+
+
+From commits@source.squeak.org Fri Sep  6 03:48:37 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Inbox: HelpSystem-Core-wsg.147.mcz
+Date: Fri, 06 Sep 2024 03:48:29 +0000
+Message-ID: <20240906034831.E7160582723@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8483863252348991500=="
+
+--===============8483863252348991500==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+A new version of HelpSystem-Core was added to project The Inbox:
+http://source.squeak.org/inbox/HelpSystem-Core-wsg.147.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: HelpSystem-Core-wsg.147
+Author: wsg
+Time: 5 September 2024, 11:48:27.994001 pm
+UUID: 905fda17-b5e9-4e09-814e-446deb397344
+Ancestors: HelpSystem-Core-mt.146
+
+Updated help text to reflect current menu navigation.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against HelpSystem-Core-mt=
+.146 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: HelpOnHelp class>>introduction (in category 'pages') -----
+  introduction
+  	"This method was automatically generated. Edit it using:"
+  	"HelpOnHelp edit: #introduction"
++ 	<generated>
++ 	^(HelpTopic
+- 	^HelpTopic
+  		title: 'Introduction'
+  		contents:=20
+  'WELCOME TO THE HELP SYSTEM
+ =20
++ The help system is a simple user interface to display help contents to the =
+user. It can be accessed from the world menu using "Help" -> "Squeak Help" or=
+ by evaluating ''HelpBrowser open'' in a workspace.
+- The help system is a simple user interface to display help contents to the =
+user. It can be accessed from the world menu using "Tools" -> "Help Browser" =
+or by evaluating ''HelpBrowser open'' in a workspace.
+ =20
+  There is a predefined mechanism allowing you to have help contents stored a=
+s source code using methods in specific help provider classes. This allows yo=
+u to manage the help texts using the standard development tools. But this is =
+only one possible representation.
++ !!' readStream nextChunkText)
++ 			key: #introduction;
++ 			shouldStyle: false;
++ 			yourself!
+- !!' readStream nextChunkText!
+
+
+--===============8483863252348991500==--
+
+
+From scott.gibson@posteo.net Fri Sep  6 14:06:04 2024
+From: scott.gibson@posteo.net
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: The Inbox: HelpSystem-Core-wsg.147.mcz
+Date: Fri, 06 Sep 2024 13:53:47 +0000
+Message-ID: <4X0dLF30ktz6twq@submission01.posteo.de>
+In-Reply-To: <20240906034831.E7160582723@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1183282678389617069=="
+
+--===============1183282678389617069==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+I followed the method comment to use "HelpOnHelp edit: #introduction" to edit=
+. However, this also added extra code that does not appear necessary for this=
+ change. Is there any problem just changing the necessary "contents:" text in=
+ the introduction method and submitting that change instead?
+
+Thanks!
+Scott
+
+---
+Sent from Squeak Inbox Talk
+
+On 2024-09-06T03:48:29+00:00, commits(a)source.squeak.org wrote:
+
+> A new version of HelpSystem-Core was added to project The Inbox:
+> http://source.squeak.org/inbox/HelpSystem-Core-wsg.147.mcz
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Name: HelpSystem-Core-wsg.147
+> Author: wsg
+> Time: 5 September 2024, 11:48:27.994001 pm
+> UUID: 905fda17-b5e9-4e09-814e-446deb397344
+> Ancestors: HelpSystem-Core-mt.146
+>=20
+> Updated help text to reflect current menu navigation.
+>=20
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against HelpSystem-Core-=
+mt.146 =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Item was changed:
+>   ----- Method: HelpOnHelp class>>introduction (in category 'pages') -----
+>   introduction
+>   	"This method was automatically generated. Edit it using:"
+>   	"HelpOnHelp edit: #introduction"
+> + 	<generated>
+> + 	^(HelpTopic
+> - 	^HelpTopic
+>   		title: 'Introduction'
+>   		contents:=20
+>   'WELCOME TO THE HELP SYSTEM
+>  =20
+> + The help system is a simple user interface to display help contents to th=
+e user. It can be accessed from the world menu using "Help" -> "Squeak Help" =
+or by evaluating ''HelpBrowser open'' in a workspace.
+> - The help system is a simple user interface to display help contents to th=
+e user. It can be accessed from the world menu using "Tools" -> "Help Browser=
+" or by evaluating ''HelpBrowser open'' in a workspace.
+>  =20
+>   There is a predefined mechanism allowing you to have help contents stored=
+ as source code using methods in specific help provider classes. This allows =
+you to manage the help texts using the standard development tools. But this i=
+s only one possible representation.
+> + !!' readStream nextChunkText)
+> + 			key: #introduction;
+> + 			shouldStyle: false;
+> + 			yourself!
+> - !!' readStream nextChunkText!
+
+--===============1183282678389617069==--
+
+
+From scott.gibson@posteo.net Fri Sep  6 16:36:02 2024
+From: Scott Gibson <scott.gibson@posteo.net>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Weekly Squeak news: Code Contributions to Squeak
+Date: Fri, 06 Sep 2024 16:35:36 +0000
+Message-ID: <b7abc3f4-93ed-4d68-8b51-f3c73378a4ec@posteo.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============3462383272908047373=="
+
+--===============3462383272908047373==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+The latest Weekly Squeak news article is now available.
+
+You can read the article at 
+https://news.squeak.org/2024/09/06/code-contributions-to-squeak/.
+
+Enjoy!
+Scott
+
+
+--===============3462383272908047373==
+Content-Type: application/pkcs7-signature
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+MIME-Version: 1.0
+
+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
+MAkGA1UEBhMCUEwxITAfBgNVBAoMGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEcMBoGA1UEAwwT
+Q2VydHVtIFNNSU1FIFJTQSBDQTAeFw0yNDA0MzAyMTE0MjZaFw0yNTA0MzAyMTE0MjVaMEoxIDAe
+BgNVBAMMF3Njb3R0LmdpYnNvbkBwb3N0ZW8ubmV0MSYwJAYJKoZIhvcNAQkBFhdzY290dC5naWJz
+b25AcG9zdGVvLm5ldDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANA+gfjphBFe06Ns
+gDCNXlPMU7KcDGdsje9neOrkbjsUz0dDoA65bU79ydRs700oxnSU6z2BywWU/NF1i6PzZtfffjYN
+w3phCBv682jHLujD3GKCuiJtYLiW1MBKtT3rV6JAKzHzYW+cwsF/IOhuEnbC741YtwAf6FgmErkH
+NmagaN+Ya4z489omUlG1bZ4t7ZlKJ/jb4N5slNrgZQQbftJuKgGQUlG53ueYVVGJ3Uf+UdIeVUCb
+XbmE2bWJz4DM6NSXJ5fMMYwgLD6nXYuxQRHo2bQNxCCkehdsvmXRN/InGCGpCVxq1wisw2pWS28y
+GtIRQJlub9pU0NxnJcwMu8+CJdLZ45XIP7C2NGiTi2rLTPlvWdRcf71r6Sdez6pQa6mKUX81oIiF
+IyCmcuvdFQwu/oK27OOG5B45yzqBN4B9w/+K+EajdJX2OdSgnDDd3OCIXcQSXSnNC1PNPOPn3JaR
+G+I4ha8fFSvA4gE5JPXhab/aKyrJrHK1FPNh4mXIfOFLmXsAz8vF0Ahwxx7EsNwC09QiFJBB+E0h
+dVBuzdzXyp6oZsCmPn9FoPS4uAkpOcwQW9m03XNBMeeiHLO/Uzi8tF5POvZGB4KTkJdO4NyE25YV
+O55jjTqvS3mGZGIPKFk7NL+PudPJ+Tr0fblMAivGSjENmpFkbBSAUSITqqspAgMBAAGjggG8MIIB
+uDAMBgNVHRMBAf8EAjAAMEEGA1UdHwQ6MDgwNqA0oDKGMGh0dHA6Ly9jc21pbWVyc2FjYS5jcmwu
+Y2VydHVtLnBsL2NzbWltZXJzYWNhLmNybDCBgwYIKwYBBQUHAQEEdzB1MC4GCCsGAQUFBzABhiJo
+dHRwOi8vY3NtaW1lcnNhY2Eub2NzcC1jZXJ0dW0uY29tMEMGCCsGAQUFBzAChjdodHRwOi8vY3Nt
+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
+MmY90QAAAAAAAA==
+
+--===============3462383272908047373==--
+
+
+From commits@source.squeak.org Wed Sep 11 10:28:19 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-eem.1461.mcz
+Date: Sat, 07 Sep 2024 19:57:42 +0000
+Message-ID: <20240907195818.38DC558269F@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7416013892978245334=="
+
+--===============7416013892978245334==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-eem.1461.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: System-eem.1461
+Author: eem
+Time: 7 September 2024, 12:57:22.836755 pm
+UUID: b2fdccd5-83a9-4d1d-bd27-982e976d114b
+Ancestors: System-eem.1460
+
+Fix SystemOrganizer superclassOrder: for the TreeBrowser. The TreeBrowser wil=
+l ask for a system category that "doesn't exist". e.g. in SystemOrganization =
+there is no entry for "System", but instead entires in System, such as=20
+"System-Changes", "System-Support", etc. So if the TreeBrowser asks for the c=
+lasses in System answer all the classes in categories beginning with "System-=
+". Hence fileOutSystemCategory in the TreeBrowser now does something useful.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against System-eem.1460 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: SystemOrganizer>>superclassOrder: (in category 'fileIn/Out') =
+-----
+  superclassOrder: category=20
+  	"Answer an OrderedCollection containing references to the classes in the=20
+  	category whose name is the argument, category (a string). The classes=20
+  	are ordered with superclasses first so they can be filed in."
+ =20
++ 	| classNames |
++ 	classNames :=3D (self listAtCategoryNamed: category asSymbol) ifEmpty:
++ 						[| prefix selectedClassNames |
++ 						prefix :=3D category, '-'.
++ 						selectedClassNames :=3D OrderedCollection new.
++ 						categoryArray do:
++ 							[:systemCategory|
++ 							(systemCategory beginsWith: prefix) ifTrue:
++ 								[selectedClassNames addAllLast: (self listAtCategoryNamed: systemCa=
+tegory)]].
++ 						selectedClassNames].
++ 	^ChangeSet superclassOrder: (classNames collect: [:title | self environmen=
+t at: title] thenSelect: [:each | each isBehavior])!
+- 	| behaviors classes |
+- 	behaviors :=3D (self listAtCategoryNamed: category asSymbol)=20
+- 			collect: [:title | self environment at: title].
+- 	classes :=3D behaviors select: [:each | each isBehavior].
+- 	^ChangeSet superclassOrder: classes!
+
+
+--===============7416013892978245334==--
+
+
+From commits@source.squeak.org Wed Sep 11 10:28:20 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1269.mcz
+Date: Sat, 07 Sep 2024 20:07:57 +0000
+Message-ID: <20240907200828.2CFAC5826BA@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6418917798918973147=="
+
+--===============6418917798918973147==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1269.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1269
+Author: eem
+Time: 7 September 2024, 1:07:43.829358 pm
+UUID: 8a3116b9-75d7-4a25-ac51-ae8d9a07540d
+Ancestors: Tools-eem.1268
+
+Improvements to change recovery. Make the ChangeList tolerant to doIts that h=
+ave a selector (e.g. initialize).
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1268 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeList>>annotation (in category 'viewing access') -----
+  annotation
+  	"Answer the string to be shown in an annotation pane.  Make plain that the=
+ annotation is associated with the current in-image version of the code, not =
+of the selected disk-based version, and if the corresponding method is missin=
+g from the in-image version, mention that fact."
+ =20
+  	| annot aChange aClass |
+ =20
+  	annot :=3D super annotation.
+  	annot asString =3D '------' ifTrue: [^ annot].
+ =20
++ 	^ ((aChange :=3D self currentChange) notNil and: [aChange methodClassName =
+notNil and: [aChange methodSelector notNil]])
+- 	^ ((aChange :=3D self currentChange) notNil and: [aChange methodSelector n=
+otNil])
+  		ifFalse:
+  			[annot]
+  		ifTrue:
++ 			[((aClass :=3D aChange methodClass) isNil
++ 			 or: [(aClass includesSelector: aChange methodSelector) not])
+- 			[((aClass :=3D aChange methodClass) isNil or: [(aClass includesSelector:=
+ aChange methodSelector) not])
+  				ifTrue:
+  					[aChange methodClassName, ' >> ', aChange methodSelector, ' is not pre=
+sent in the current image.']
+  				ifFalse:
+  					['current version: ', annot]]!
+
+
+--===============6418917798918973147==--
+
+
+From commits@source.squeak.org Wed Sep 11 10:28:21 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-eem.1462.mcz
+Date: Sat, 07 Sep 2024 20:11:44 +0000
+Message-ID: <20240907201231.0E3295826BA@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2889147184362436761=="
+
+--===============2889147184362436761==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-eem.1462.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: System-eem.1462
+Author: eem
+Time: 7 September 2024, 1:11:15.114501 pm
+UUID: 37757270-7616-4b8c-a2a2-3159d0a8e9fe
+Ancestors: System-eem.1461
+
+Have ChangeRecords of type doIt answer a methodSelector where relevant. e.g. =
+FooClass initialize answeers #initialize.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against System-eem.1461 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeRecord>>messageForDoItExpression: (in category 'private=
+') -----
+  messageForDoItExpression: aString
+  	"Parse what is expected to be a doit containing either a class definition,=
+ a metaclass definition,
+  	 or a class initialization, (and maybe one day a reorganization of some so=
+rt; they're all doIts),
+  	 and answer a MessageSend for the expression. Map global bindings to the n=
+ames of those bindings.
+  			Class definitions start with
+  				FooSuperclass blahSubclass: #FooClassName
+  			Metaclass definitions start with
+  				FooClass class instanceVariableNames:
+  			Class initializations look like
+  				FooClass initialize"
+  	| methodNode |
+  	methodNode :=3D Parser new
+  						parse: aString readStream
+  						class: ((Smalltalk classNamed: (aString first: (aString indexOf: Char=
+acter space) - 1)) ifNil: [Object])
+  						noPattern: true
++ 						notifying: nil ifFail: [^nil].
+- 						notifying: nil ifFail: nil.
+  	^self messageSendForMessage: methodNode block statements first expr!
+
+Item was changed:
+  ----- Method: ChangeRecord>>methodSelector (in category 'access') -----
+  methodSelector
+  	type =3D=3D #method ifTrue:
+  		[^(Smalltalk at: class ifAbsent: [Object]) newParser parseSelector: self =
+string].
+  	type =3D=3D #classDefinition ifTrue:
+  		[^(self messageForDoItExpression: self string) selector].
+  	type =3D=3D #methodRemoval ifTrue:
+  		[| string |
+  		string :=3D self string.
+  		^(Scanner new scan: (ReadStream on: string from: (string indexOf: $#) to:=
+ string size)) advance].
++ 	type =3D=3D #doIt ifTrue:
++ 		[(self messageForDoItExpression: self string) ifNotNil:
++ 			[:messageSend| ^messageSend selector]].
+  	^nil!
+
+
+--===============2889147184362436761==--
+
+
+From commits@source.squeak.org Wed Sep 11 10:28:23 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: System-eem.1463.mcz
+Date: Sat, 07 Sep 2024 21:06:34 +0000
+Message-ID: <20240907210745.07FC05826BA@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============7112726913802808272=="
+
+--===============7112726913802808272==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of System to project The Trunk:
+http://source.squeak.org/trunk/System-eem.1463.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: System-eem.1463
+Author: eem
+Time: 7 September 2024, 2:06:17.538307 pm
+UUID: 2221bd06-4532-4295-ad84-de19d14d10ce
+Ancestors: System-eem.1462
+
+Make ChangeRecord's selector parsing machinery more robust, and squash Undecl=
+ared warnings.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against System-eem.1462 =
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeRecord>>messageForDoItExpression: (in category 'private=
+') -----
+  messageForDoItExpression: aString
+  	"Parse what is expected to be a doit containing either a class definition,=
+ a metaclass definition,
+  	 or a class initialization, (and maybe one day a reorganization of some so=
+rt; they're all doIts),
+  	 and answer a MessageSend for the expression. Map global bindings to the n=
+ames of those bindings.
+  			Class definitions start with
+  				FooSuperclass blahSubclass: #FooClassName
+  			Metaclass definitions start with
+  				FooClass class instanceVariableNames:
+  			Class initializations look like
+  				FooClass initialize"
++ 	| spaceIndex stream methodNode resultNode |
++ 	(spaceIndex :=3D aString indexOf: Character space) =3D 0 ifTrue:
++ 		[^nil].
++ 	methodNode :=3D [Parser new
++ 						parse: (stream :=3D aString readStream)
++ 						class: ((Smalltalk classNamed: (aString first: spaceIndex - 1)) ifNil=
+: [Object])
+- 	| methodNode |
+- 	methodNode :=3D Parser new
+- 						parse: aString readStream
+- 						class: ((Smalltalk classNamed: (aString first: (aString indexOf: Char=
+acter space) - 1)) ifNil: [Object])
+  						noPattern: true
++ 						notifying: self
++ 						ifFail: [^nil]]
++ 							on: UndeclaredVariableNotification
++ 							do: [:ex| ex resume: false].
++ 	resultNode :=3D methodNode block statements first.
++ 	"If the stream is not at the end this is some complex doIt, not one of the=
+ sytsem generated ones."
++ 	^(stream atEnd
++ 	  and: [resultNode class =3D=3D ReturnNode
++ 	  and: [resultNode expr isMessage]]) ifTrue:
++ 		[self messageSendForMessage: resultNode expr]!
+- 						notifying: nil ifFail: [^nil].
+- 	^self messageSendForMessage: methodNode block statements first expr!
+
+Item was changed:
+  ----- Method: ChangeRecord>>messageSendForMessage: (in category 'private') =
+-----
+  messageSendForMessage: aMessageNode
++ 	^(aMessageNode receiver isVariableNode
++ 		ifTrue: [aMessageNode receiver key isString
++ 					ifTrue: [aMessageNode receiver key]
++ 					ifFalse: [aMessageNode receiver key key]] "i.e. aMessageNode receiver =
+key is a variable binding, e.g. #Object=3D>Object"
++ 		ifFalse:
++ 			[aMessageNode receiver isMessage
++ 				ifTrue: [self messageSendForMessage: aMessageNode receiver]]) ifNotNil:
++ 		[:receiverNode|
++ 		 (aMessageNode arguments allSatisfy: [:arg| arg isLeaf]) ifTrue:
++ 			[MessageSend
++ 				receiver: receiverNode
++ 				selector: aMessageNode selector key
++ 				arguments: (aMessageNode arguments collect: #key)]]!
+- 	^MessageSend
+- 		receiver: (aMessageNode receiver isVariableNode
+- 					ifTrue: [aMessageNode receiver key isString
+- 								ifTrue: [aMessageNode receiver key]
+- 								ifFalse: [aMessageNode receiver key key]] "i.e. aMessageNode receiv=
+er key is a variable binding, e.g. #Object=3D>Object"
+- 					ifFalse: [self messageSendForMessage: aMessageNode receiver])
+- 		selector: aMessageNode selector key
+- 		arguments: (aMessageNode arguments collect: #key)!
+
+Item was added:
++ ----- Method: ChangeRecord>>wantsInteractiveErrorCorrection (in category 's=
+uppressing compiler warnings') -----
++ wantsInteractiveErrorCorrection
++ 	^false!
+
+
+--===============7112726913802808272==--
+
+
+From commits@source.squeak.org Wed Sep 11 10:28:24 2024
+From: commits@source.squeak.org
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Trunk: Tools-eem.1270.mcz
+Date: Sat, 07 Sep 2024 21:45:48 +0000
+Message-ID: <20240907214616.0F8EC5826BA@mail.squeak.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5238236266995557939=="
+
+--===============5238236266995557939==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Eliot Miranda uploaded a new version of Tools to project The Trunk:
+http://source.squeak.org/trunk/Tools-eem.1270.mcz
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Summary =3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Name: Tools-eem.1270
+Author: eem
+Time: 7 September 2024, 2:45:34.556522 pm
+UUID: 594060c4-637f-413a-a8be-326006e7206b
+Ancestors: Tools-eem.1269
+
+Allow the ChangeList to select doIts that have no selector (selects all scrat=
+ch doIts).
+
+Add Debugger select home for finding the home contexts of blocks in deeply ne=
+sted activations.
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D Diff against Tools-eem.1269 =3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+Item was changed:
+  ----- Method: ChangeList>>selectDefinitionsForThisSelector (in category 'me=
+nu actions') -----
+  selectDefinitionsForThisSelector
+  	self currentChange ifNotNil:
++ 		[:currentChange| | methodSelector |
++ 		methodSelector :=3D currentChange methodSelector.
++ 		self selectSuchThat:
++ 			[ :change | change methodSelector =3D=3D methodSelector]]!
+- 		[:currentChange|
+- 		currentChange methodSelector ifNotNil:
+- 			[:methodSelector|
+- 			self selectSuchThat:
+- 				[ :change | change methodSelector =3D=3D methodSelector]]]!
+
+Item was changed:
+  ----- Method: Debugger>>mainContextStackMenu: (in category 'context stack m=
+enu') -----
+  mainContextStackMenu: aMenu
+  	"Set up the menu appropriately for the context-stack-list, unshifted"
+  	<contextStackMenuShifted: false>
+ =20
+  	Preferences restartAlsoProceeds
+  		ifTrue: [
+  			aMenu
+  				addTranslatedList: #(=09
+  					('proceed top (p)' 				proceed)=20
+  					('proceed here (r)'				restart))]
+  		ifFalse: [
+  			aMenu
+  				addTranslatedList: #(=09
+  					('proceed (p)' 				proceed)=20
+  					('restart (r)' 				restart))].
+ =20
++ 	aMenu
+- 	^ aMenu
+  		addTranslatedList: #(=09
+  			-
+  			('step into (e)' 					stepInto)=20
+  			('step over (t)' 					stepOver)=20
+  			('step through (T)'	 			stepIntoBlock)=20
+  			-
+  			('show full stack (f)' 		showFullStack)=20
+  			('show where (w)' 			showWhere)
+  			-
+  			('tally it'					tally)
+  			('peel to first like this' 		peelToFirst) =20
+  			('return entered value' 		returnValue) );
+  		add: (self isBreakOnEntry ifTrue: ['<on>'] ifFalse: ['<off>']) , 'break o=
+n entry' translated
++ 			action: #toggleBreakOnEntry.
++ =09
++ 	self selectedContext ifNotNil:
++ 		[:ctxt|
++ 		ctxt isClosureContext ifTrue:
++ 			[aMenu addTranslatedList: #(('select home'	selectHomeContext))]].
++ 	aMenu
+- 			action: #toggleBreakOnEntry;
+  		addTranslatedList: #(
+  			-
+  			('senders of    (n)' 			browseSendersOfMessages)=20
+  			('implementors of    (m)' 	browseMessages)=20
+  			('inheritance (i)' 			methodHierarchy)=20
+  			('versions (v)' 				browseVersions)=20
+  			-=20
+  			('references    (r)' 			browseVariableReferences)=20
+  			('assignments    (a)' 		browseVariableAssignments)=20
+  			-=20
+  			('class refs (N)' 				browseClassRefs)=20
+  			('browse full (b)' 			browseMethodFull)=20
+  			('file out ' 			 		fileOutMessage)=20
+  			('remove method (x) ' 		removeMessage)=20
+  			-=20
++ 			('copy bug report to clipboard'	copyBugReportToClipboard)).
++ 	^aMenu!
+- 			('copy bug report to clipboard'	copyBugReportToClipboard));
+- 		yourself!
+
+Item was added:
++ ----- Method: Debugger>>selectHomeContext (in category 'context stack menu'=
+) -----
++ selectHomeContext
++ 	| homeIndex |
++ 	homeIndex :=3D contextStack identityIndexOf: self selectedContext home.
++ 	homeIndex > 0 ifTrue:
++ 		[self contextStackIndex: homeIndex oldContextWas: self selectedContext] !
+
+Item was changed:
+  ----- Method: Inspector>>updateStyler:requestor: (in category 'user interfa=
+ce - styling') -----
+  updateStyler: aStyler requestor: anObject
+  	"Use this method to update our fieldListStyler and all view stylers."
+  =09
+  	aStyler
+  		environment: self environment;
++ 		classOrMetaClass: (thisContext objectClass: self doItReceiver "do not sen=
+d #class, receiver could be a proxy");
+- 		classOrMetaClass: (self doItReceiver perform: #class "do not inline send =
+of #class, receiver could be a proxy");
+  		context: self doItContext;
+  		parseAMethod: false;
+  		workspace: nil "Normally we don't need this, but probably a workspace has=
+ been specified when the receiver was belonging to another class. See #inspec=
+t: and BlockClosureInspector >> #updateStyler:requestor:.".!
+
+
+--===============5238236266995557939==--
+
+
+From marcel.taeumel@hpi.de Wed Sep 11 10:28:44 2024
+From: Marcel Taeumel <marcel.taeumel@hpi.de>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Is the Squeak mailing list down?
+Date: Tue, 10 Sep 2024 16:36:37 +0200
+Message-ID: <902fda5c-86ce-439d-ba2a-1a6495362466@hpi.de>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============2380372529779637602=="
+
+--===============2380372529779637602==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Is the Squeak mailing list down? :-)
+
+Best,
+Marcel
+
+
+--===============2380372529779637602==--
+
+

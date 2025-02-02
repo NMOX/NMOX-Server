@@ -6,10 +6,10 @@ WORKDIR /usr/share/nginx/html
 RUN echo '<!DOCTYPE html>\n\
 <html>\n\
 <head>\n\
-    <title>NMOX - New Media On X</title>\n\
+    <title>Nginx in NMOX - New Media On X</title>\n\
 </head>\n\
 <body>\n\
-    <h1>Welcome to NMOX</h1>\n\
+    <h1>Welcome to Nginx inside of NMOX Server</h1>\n\
     <p>A Meta-Framework building on a central X object across languages.</p>\n\
 </body>\n\
 </html>' > index.html

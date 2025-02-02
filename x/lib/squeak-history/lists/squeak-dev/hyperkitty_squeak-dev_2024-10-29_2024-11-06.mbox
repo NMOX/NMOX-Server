@@ -1,0 +1,1022 @@
+From asqueaker@gmail.com Tue Oct 29 00:07:35 2024
+From: Chris Muller <asqueaker@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Saving preferences to an online repository
+Date: Mon, 28 Oct 2024 19:06:49 -0500
+Message-ID:
+ <CANzdToE3reaQdZq7WBAd-0BkpQAhWfmqaxee46PqkUp0fxu=Gw@mail.gmail.com>
+In-Reply-To: <6D463B2A-B9CC-4842-A6E5-24560AC5CB8F@rowledge.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6031553194126646280=="
+
+--===============6031553194126646280==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hi Tim,
+
+After some recent emails about preferences, followed by having to go to all
+> my machines (a bunch'o Pi, two servers and a Mac) to update them I started
+> wondering about a way to have a single point to find the prefs file. Unless
+> I've missed something the current code only looks for, and saves,
+> preference files in the default directory for the running image.
+
+
+Updating the Pi's seems like part of system management that wouldn't really
+involve anything inside the image.  I'm just trying to guess, but I'm
+doubtful that your *goal* is to "have a single point to find the prefs
+files," but that is in fact your initial solution to some other need.  I'm
+deducing that you want to get the values *within* the .prefs files into
+your running images.  Or...??
+
+The reason I ask is I really think there's an opportunity to retain a
+broader class of users by keeping the system centered solely around the
+idea of an *Object System* as much as possible, and leaving the concept of
+"the underlying computer" (and its file system) as opaque as possible.  At
+least as Squeak is shipped by default.  The "solution" above introduces or
+expands the "underlying computer" concept to users of Squeak which is
+currently barely visible.
+
+
+> I've somewhat subverted this fairly often on unixy machines by using soft
+> links, but it isn't the best solution. It might be nice to provide for a
+> URL based approach. But how?
+
+
+> Clearly we'd need a location, an identifier, and presumably a login of
+> some form.
+
+
+It seems like something that could be managed countless other ways that
+don't involve introducing any new concepts...
+
+
+> We wouldn't want some complex configuration for that either; sort of
+> defeats the object. I'm wondering if something using squeaksource could
+> work adequately. Perhaps some addition to the Member details? Or a project
+> named in some non-clashing manner?  Or a single global project configured
+> so each person can save a package version (which gets their initial
+> included anyway) and the loader only looks for packages with your own
+> initials?
+
+
+You mentioned, "the loader", there.  What is that, and what is it loading
+from?  Could it possibly be considered a "Configurator" and hard-set the
+preferences you need?  Then, they'd be preserved in your Monticello file
+versions.  Or, if you need .prefs files, you could load them from whatever
+directory contains the other files already being loaded.  Or, present some
+kind of Options dialog akin to our Welcome To Squeak that ships with new
+images?
+
+
+> Other options?
+>
+
+- Pre-load the .prefs file and save that image as your deployment image?
+- Deploy the .prefs files along with your .image files?
+- rsync .prefs file with your production staging directory(s)?
+
+I hope we will try to think of and keep Squeak *a user-friendly object
+environment*, and not an "IDE", even though we know it is that as well.
+
+Best,
+  Chris
+
+
+
+--===============6031553194126646280==
+Content-Type: text/html
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.html"
+MIME-Version: 1.0
+
+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0
+ciI+SGkgVGltLDwvZGl2PjxkaXYgZGlyPSJsdHIiPjxicj48L2Rpdj48ZGl2IGNsYXNzPSJnbWFp
+bF9xdW90ZSI+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFyZ2luOjBw
+eCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwyMDQpO3Bh
+ZGRpbmctbGVmdDoxZXgiPkFmdGVyIHNvbWUgcmVjZW50IGVtYWlscyBhYm91dCBwcmVmZXJlbmNl
+cywgZm9sbG93ZWQgYnkgaGF2aW5nIHRvIGdvIHRvIGFsbCBteSBtYWNoaW5lcyAoYSBidW5jaCYj
+Mzk7byBQaSwgdHdvIHNlcnZlcnMgYW5kIGEgTWFjKSB0byB1cGRhdGUgdGhlbSBJIHN0YXJ0ZWQg
+d29uZGVyaW5nIGFib3V0IGEgd2F5IHRvIGhhdmUgYSBzaW5nbGUgcG9pbnQgdG8gZmluZCB0aGUg
+cHJlZnMgZmlsZS4gVW5sZXNzIEkmIzM5O3ZlIG1pc3NlZCBzb21ldGhpbmcgdGhlIGN1cnJlbnQg
+Y29kZSBvbmx5IGxvb2tzIGZvciwgYW5kIHNhdmVzLCBwcmVmZXJlbmNlIGZpbGVzIGluIHRoZSBk
+ZWZhdWx0IGRpcmVjdG9yeSBmb3IgdGhlIHJ1bm5pbmcgaW1hZ2UuPC9ibG9ja3F1b3RlPjxkaXY+
+PGJyPjwvZGl2PjxkaXY+PGRpdj5VcGRhdGluZyB0aGUgUGkmIzM5O3Mgc2VlbXMgbGlrZSBwYXJ0
+IG9mIHN5c3RlbSBtYW5hZ2VtZW50IHRoYXQgd291bGRuJiMzOTt0IHJlYWxseSBpbnZvbHZlIGFu
+eXRoaW5nIGluc2lkZSB0aGUgaW1hZ2UuwqAgSSYjMzk7bSBqdXN0IHRyeWluZyB0byBndWVzcywg
+YnV0IEkmIzM5O20gZG91YnRmdWwgdGhhdCB5b3VyIDxpPmdvYWw8L2k+wqBpcyB0byAmcXVvdDto
+YXZlIGEgc2luZ2xlIHBvaW50IHRvIGZpbmQgdGhlIHByZWZzIGZpbGVzLCZxdW90OyBidXQgdGhh
+dCBpcyBpbiBmYWN0IHlvdXIgaW5pdGlhbCBzb2x1dGlvbiB0byBzb21lIG90aGVyIG5lZWQuwqAg
+SSYjMzk7bSBkZWR1Y2luZyB0aGF0IHlvdSB3YW50IHRvwqBnZXQgdGhlIHZhbHVlcyA8dT53aXRo
+aW48L3U+IHRoZSAucHJlZnMgZmlsZXMgaW50byB5b3VyIHJ1bm5pbmcgaW1hZ2VzLsKgIE9yLi4u
+Pz88L2Rpdj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PlRoZSByZWFzb24gSSBhc2sgaXMgSSBy
+ZWFsbHkgdGhpbmsgdGhlcmUmIzM5O3MgYW4gb3Bwb3J0dW5pdHkgdG8gcmV0YWluIGEgYnJvYWRl
+ciBjbGFzcyBvZiB1c2VycyBieSBrZWVwaW5nIHRoZSBzeXN0ZW0gY2VudGVyZWQgc29sZWx5IGFy
+b3VuZCB0aGUgaWRlYSBvZiBhbsKgPGk+PGI+T2JqZWN0IFN5c3RlbTwvYj48L2k+wqBhcyBtdWNo
+IGFzIHBvc3NpYmxlLCBhbmQgbGVhdmluZyB0aGUgY29uY2VwdCBvZiAmcXVvdDt0aGUgdW5kZXJs
+eWluZyBjb21wdXRlciZxdW90OyAoYW5kIGl0cyBmaWxlIHN5c3RlbSkgYXMgb3BhcXVlIGFzIHBv
+c3NpYmxlLsKgIEF0IGxlYXN0IGFzIFNxdWVhayBpcyBzaGlwcGVkIGJ5IGRlZmF1bHQuwqAgVGhl
+ICZxdW90O3NvbHV0aW9uJnF1b3Q7IGFib3ZlIGludHJvZHVjZXMgb3IgZXhwYW5kcyB0aGUgJnF1
+b3Q7dW5kZXJseWluZyBjb21wdXRlciZxdW90OyBjb25jZXB0IHRvIHVzZXJzIG9mIFNxdWVhayB3
+aGljaCBpcyBjdXJyZW50bHkgYmFyZWx5IHZpc2libGUuPC9kaXY+PGRpdj7CoDwvZGl2PjxibG9j
+a3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowcHggMHB4IDBweCAwLjhl
+eDtib3JkZXItbGVmdDoxcHggc29saWQgcmdiKDIwNCwyMDQsMjA0KTtwYWRkaW5nLWxlZnQ6MWV4
+Ij4gSSYjMzk7dmUgc29tZXdoYXQgc3VidmVydGVkIHRoaXMgZmFpcmx5IG9mdGVuIG9uIHVuaXh5
+IG1hY2hpbmVzIGJ5IHVzaW5nIHNvZnQgbGlua3MsIGJ1dCBpdCBpc24mIzM5O3QgdGhlIGJlc3Qg
+c29sdXRpb24uIEl0IG1pZ2h0IGJlIG5pY2UgdG8gcHJvdmlkZSBmb3IgYSBVUkwgYmFzZWQgYXBw
+cm9hY2guIEJ1dCBob3c/wqA8L2Jsb2NrcXVvdGU+PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1
+b3RlIiBzdHlsZT0ibWFyZ2luOjBweCAwcHggMHB4IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xp
+ZCByZ2IoMjA0LDIwNCwyMDQpO3BhZGRpbmctbGVmdDoxZXgiPgo8YnI+CkNsZWFybHkgd2UmIzM5
+O2QgbmVlZCBhIGxvY2F0aW9uLCBhbiBpZGVudGlmaWVyLCBhbmQgcHJlc3VtYWJseSBhIGxvZ2lu
+IG9mIHNvbWUgZm9ybS48L2Jsb2NrcXVvdGU+PGRpdj48YnI+PC9kaXY+PGRpdj5JdCBzZWVtcyBs
+aWtlIHNvbWV0aGluZyB0aGF0IGNvdWxkIGJlIG1hbmFnZWQgY291bnRsZXNzIG90aGVyIHdheXMg
+dGhhdCBkb24mIzM5O3QgaW52b2x2ZSBpbnRyb2R1Y2luZyBhbnkgbmV3IGNvbmNlcHRzLi4uPC9k
+aXY+PGRpdj7CoDwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1h
+cmdpbjowcHggMHB4IDBweCAwLjhleDtib3JkZXItbGVmdDoxcHggc29saWQgcmdiKDIwNCwyMDQs
+MjA0KTtwYWRkaW5nLWxlZnQ6MWV4Ij4gV2Ugd291bGRuJiMzOTt0IHdhbnQgc29tZSBjb21wbGV4
+IGNvbmZpZ3VyYXRpb24gZm9yIHRoYXQgZWl0aGVyOyBzb3J0IG9mIGRlZmVhdHMgdGhlIG9iamVj
+dC4gSSYjMzk7bSB3b25kZXJpbmcgaWYgc29tZXRoaW5nIHVzaW5nIHNxdWVha3NvdXJjZSBjb3Vs
+ZCB3b3JrIGFkZXF1YXRlbHkuIFBlcmhhcHMgc29tZSBhZGRpdGlvbiB0byB0aGUgTWVtYmVyIGRl
+dGFpbHM/IE9yIGEgcHJvamVjdCBuYW1lZCBpbiBzb21lIG5vbi1jbGFzaGluZyBtYW5uZXI/wqAg
+T3IgYSBzaW5nbGUgZ2xvYmFsIHByb2plY3QgY29uZmlndXJlZCBzbyBlYWNoIHBlcnNvbiBjYW4g
+c2F2ZSBhIHBhY2thZ2UgdmVyc2lvbiAod2hpY2ggZ2V0cyB0aGVpciBpbml0aWFsIGluY2x1ZGVk
+IGFueXdheSkgYW5kIHRoZSBsb2FkZXIgb25seSBsb29rcyBmb3IgcGFja2FnZXMgd2l0aCB5b3Vy
+IG93biBpbml0aWFscz88L2Jsb2NrcXVvdGU+PGRpdj48YnI+PC9kaXY+PGRpdj5Zb3UgbWVudGlv
+bmVkLCAmcXVvdDt0aGUgbG9hZGVyJnF1b3Q7LCB0aGVyZS7CoCBXaGF0IGlzIHRoYXQsIGFuZCB3
+aGF0IGlzIGl0IGxvYWRpbmcgZnJvbT/CoCBDb3VsZCBpdCBwb3NzaWJseSBiZSBjb25zaWRlcmVk
+IGEgJnF1b3Q7Q29uZmlndXJhdG9yJnF1b3Q7IGFuZMKgaGFyZC1zZXQgdGhlIHByZWZlcmVuY2Vz
+IHlvdSBuZWVkP8KgIFRoZW4sIHRoZXkmIzM5O2QgYmUgcHJlc2VydmVkIGluIHlvdXIgTW9udGlj
+ZWxsbyBmaWxlIHZlcnNpb25zLsKgIE9yLCBpZiB5b3UgbmVlZCAucHJlZnMgZmlsZXMsIHlvdSBj
+b3VsZCBsb2FkIHRoZW0gZnJvbSB3aGF0ZXZlciBkaXJlY3RvcnkgY29udGFpbnMgdGhlIG90aGVy
+IGZpbGVzIGFscmVhZHkgYmVpbmcgbG9hZGVkLsKgIE9yLCBwcmVzZW50IHNvbWUga2luZCBvZiBP
+cHRpb25zIGRpYWxvZyBha2luIHRvIG91ciBXZWxjb21lIFRvIFNxdWVhayB0aGF0IHNoaXBzIHdp
+dGggbmV3IGltYWdlcz/CoMKgPC9kaXY+PGRpdj7CoDwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJn
+bWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowcHggMHB4IDBweCAwLjhleDtib3JkZXItbGVmdDox
+cHggc29saWQgcmdiKDIwNCwyMDQsMjA0KTtwYWRkaW5nLWxlZnQ6MWV4Ij5PdGhlciBvcHRpb25z
+Pzxicj48L2Jsb2NrcXVvdGU+PGRpdj48YnI+PC9kaXY+PGRpdj4tIFByZS1sb2FkIHRoZSAucHJl
+ZnMgZmlsZSBhbmQgc2F2ZSB0aGF0IGltYWdlIGFzIHlvdXIgZGVwbG95bWVudCBpbWFnZT88L2Rp
+dj48ZGl2Pi0gRGVwbG95IHRoZSAucHJlZnMgZmlsZXMgYWxvbmcgd2l0aCB5b3VyIC5pbWFnZSBm
+aWxlcz88L2Rpdj48ZGl2Pi0gcnN5bmMgLnByZWZzIGZpbGUgd2l0aCB5b3VyIHByb2R1Y3Rpb24g
+c3RhZ2luZyBkaXJlY3Rvcnkocyk/PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj5JIGhvcGUgd2Ug
+d2lsbCB0cnkgdG8gdGhpbmsgb2YgYW5kIGtlZXAgU3F1ZWFrwqA8aT5hIHVzZXItZnJpZW5kbHkg
+b2JqZWN0IGVudmlyb25tZW50PC9pPiwgYW5kIG5vdCBhbiAmcXVvdDtJREUmcXVvdDssIGV2ZW4g
+dGhvdWdoIHdlIGtub3cgaXQgaXMgdGhhdCBhcyB3ZWxsLjwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxk
+aXY+QmVzdCw8L2Rpdj48ZGl2PsKgIENocmlzPC9kaXY+PGRpdj48YnI+PC9kaXY+PC9kaXY+PC9k
+aXY+CjwvZGl2Pgo8L2Rpdj4K
+
+--===============6031553194126646280==--
+
+
+From lewis@mail.msen.com Tue Oct 29 00:39:32 2024
+From: lewis@mail.msen.com
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Saving preferences to an online repository
+Date: Mon, 28 Oct 2024 20:32:40 -0400
+Message-ID: <1730162337-765570@mid.hostedemail.com>
+In-Reply-To: <6D463B2A-B9CC-4842-A6E5-24560AC5CB8F@rowledge.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5825263705067240086=="
+
+--===============5825263705067240086==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-10-28T16:16:04-07:00, tim(a)rowledge.org wrote:
+>=20
+> After some recent emails about preferences, followed by having to go to all=
+ my machines (a bunch'o Pi, two servers and a Mac) to update them I started w=
+ondering about a way to have a single point to find the prefs file. Unless I'=
+ve missed something the current code only looks for, and saves, preference fi=
+les in the default directory for the running image. I've somewhat subverted t=
+his fairly often on unixy machines by using soft links, but it isn't the best=
+ solution. It might be nice to provide for a URL based approach. But how?
+>=20
+> Clearly we'd need a location, an identifier, and presumably a login of some=
+ form. We wouldn't want some complex configuration for that either; sort of d=
+efeats the object. I'm wondering if something using squeaksource could work a=
+dequately. Perhaps some addition to the Member details? Or a project named in=
+ some non-clashing manner?  Or a single global project configured so each per=
+son can save a package version (which gets their initial included anyway) and=
+ the loader only looks for packages with your own initials?
+>=20
+> Other options?
+>=20
+> tim
+
+For one possible approach, look at SmalltalkImage>>sourcesFilePaths. Somethin=
+g similar might be done for a preferences file that could be found in a well =
+known shared location.
+
+We would not want to literally copy the sourcesFilePaths approach, but first =
+take a look at its logic. It searches a list of well-known locations to find =
+the first location that contains the sources file. The first well-known locat=
+ion is the VM directory path. The second is the image path. And the third ref=
+ers to a concept that does not (yet) exist in the image - a shared location f=
+or Squeak things.
+
+So currently we have:
+
+1) vmPath
+2) imagePath
+
+and we could consider adding a third concept:
+
+3) resourcePath
+
+If SmalltalkImage>>resourcePath were to exist in a platform-independent way, =
+it could be used to find the location of a shared preferences file that could=
+ be used for multiple images. It might also become a default location for sou=
+rces files and other shared resources.
+
+I don't know if resourcePath should be a path passed from the VM to the image=
+ (as with vmPath and imagePath) or if it might better be a URI that would hop=
+efully make sense independent of the current runtime platform. Maybe we could=
+ make it work both ways, with authentication required for network resources a=
+nd simple file paths sufficient otherwise. And of course if resourcePath coul=
+d not be resolved, the default would just be imagePath.
+
+Dave
+
+---
+Sent from Squeak Inbox Talk
+
+
+--===============5825263705067240086==--
+
+
+From tim@rowledge.org Tue Oct 29 17:03:30 2024
+From: Tim Rowledge <tim@rowledge.org>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Saving preferences to an online repository
+Date: Tue, 29 Oct 2024 10:03:21 -0700
+Message-ID: <C4F2BB36-32B6-46C9-9A6B-60728D006689@rowledge.org>
+In-Reply-To: <1730162337-765570@mid.hostedemail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4291096136509759595=="
+
+--===============4291096136509759595==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Chris, Dave,
+
+So...
+> On 2024-10-28, at 5:06 PM, Chris Muller <asqueaker(a)gmail.com> wrote:
+>=20
+> Updating the Pi's seems like part of system management that wouldn't really=
+ involve anything inside the image.  I'm just trying to guess, but I'm doubtf=
+ul that your goal is to "have a single point to find the prefs files," but th=
+at is in fact your initial solution to some other need.  I'm deducing that yo=
+u want to get the values within the .prefs files into your running images.  O=
+r...??
+>=20
+> The reason I ask is I really think there's an opportunity to retain a broad=
+er class of users by keeping the system centered solely around the idea of an=
+ Object System as much as possible, and leaving the concept of "the underlyin=
+g computer" (and its file system) as opaque as possible.  At least as Squeak =
+is shipped by default.  The "solution" above introduces or expands the "under=
+lying computer" concept to users of Squeak which is currently barely visible.
+
+That's all good stuff relating to deployed 'application' type situations, whi=
+ch is not the problem I'm trying to handle at the moment. Later, yes. I hope.
+
+> =20
+>> I've somewhat subverted this fairly often on unixy machines by using soft =
+links, but it isn't the best solution. It might be nice to provide for a URL =
+based approach. But how?=20
+>>=20
+> Clearly we'd need a location, an identifier, and presumably a login of some=
+ form.
+>=20
+> It seems like something that could be managed countless other ways that don=
+'t involve introducing any new concepts...
+
+That's why (ab!)using a monticello facility came to mind. It's already there,=
+ anyone doing development stuff is virtually certainly already hooked up, etc=
+ etc.
+
+> =20
+> We wouldn't want some complex configuration for that either; sort of defeat=
+s the object. I'm wondering if something using squeaksource could work adequa=
+tely. Perhaps some addition to the Member details? Or a project named in some=
+ non-clashing manner?  Or a single global project configured so each person c=
+an save a package version (which gets their initial included anyway) and the =
+loader only looks for packages with your own initials?
+>=20
+> You mentioned, "the loader", there.  What is that, and what is it loading f=
+rom?  Could it possibly be considered a "Configurator" and hard-set the prefe=
+rences you need?  Then, they'd be preserved in your Monticello file versions.=
+  Or, if you need .prefs files, you could load them from whatever directory c=
+ontains the other files already being loaded.  Or, present some kind of Optio=
+ns dialog akin to our Welcome To Squeak that ships with new images? =20
+> =20
+> Other options?
+>=20
+> - Pre-load the .prefs file and save that image as your deployment image?
+> - Deploy the .prefs files along with your .image files?
+> - rsync .prefs file with your production staging directory(s)?
+
+For a deployment image intended to run any sort of application (like my local=
+ & work group squeaksource, or the CCTV monitoring system) that is all sensib=
+le. It's a different situation. Applications do need assorted config data and=
+ for that I'm currently just hooking into the ExternalSettings class (which, =
+as it says in its own comments dating back to 2002, needs improving to someth=
+ing a bit more flexible) for each client instance.
+
+> On 2024-10-28, at 5:32 PM, lewis(a)mail.msen.com wrote:
+>=20
+>=20
+> For one possible approach, look at SmalltalkImage>>sourcesFilePaths. Someth=
+ing similar might be done for a preferences file that could be found in a wel=
+l known shared location.
+>=20
+> <snip>
+>=20
+> If SmalltalkImage>>resourcePath were to exist in a platform-independent way=
+, it could be used to find the location of a shared preferences file that cou=
+ld be used for multiple images. It might also become a default location for s=
+ources files and other shared resources.
+
+It looks, from a quick scan, like we have some of that in classes relating to=
+ saving & loading projects; ResourceManager, ResourceCollector et al.
+
+The problem with this idea is that it wouldn't work very easily across machin=
+es unless one had a well configured shared filing system connecting them all.=
+ Which I can't claim to have because I'm Not A SysAdmin. That's why a remote =
+source appealed, though of course a local remote resource (like a home instan=
+ce of squeaksource) would work well for many cases.
+
+The problem I'm needing to solve actually *is* for the IDE aspect of Squeak b=
+ecause I have many machines and do different project work  on each one at dif=
+ferent times. Hell, I have many images on most of them, used for different jo=
+bs. I'd love to be able to easily update the preferences on any of them when =
+some new option has attracted my attention - like the 'Menu request updates l=
+ist' choice! Right now my best choice is to update on copy of my prefs file, =
+save it to disk, copy it to each machine and load it. Adding a 'read prefs fr=
+om magic source' appeals as a possible improvement.
+
+tim
+--
+tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+Useful Latin Phrases:- Fac ut gaudeam =3D Make my day.
+
+
+
+--===============4291096136509759595==--
+
+
+From scott.gibson@posteo.net Fri Nov  1 10:50:00 2024
+From: Scott Gibson <scott.gibson@posteo.net>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] The Weekly Squeak news: Raspberry Pi Performance Update:
+ NUMA Memory Configuration Gains
+Date: Fri, 01 Nov 2024 10:49:41 +0000
+Message-ID: <36d05c5f-eea8-46ee-8847-76b7c66ccafe@posteo.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============8200845685193408636=="
+
+--===============8200845685193408636==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+The latest Weekly Squeak news article is now available.
+
+This article presents Tim's insights alongside the Raspberry Pi team's=20
+responses and recommended tweaks. While the information may not be new=20
+for this group, it could reach a wider audience and help raise awareness=20
+about potential performance improvements.
+
+https://news.squeak.org/2024/11/01/raspberry-pi-performance-update-numa-memor=
+y-configuration-gains/
+
+Thanks!
+Scott
+
+
+--===============8200845685193408636==
+Content-Type: application/pkcs7-signature
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+MIME-Version: 1.0
+
+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
+MAkGA1UEBhMCUEwxITAfBgNVBAoMGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEcMBoGA1UEAwwT
+Q2VydHVtIFNNSU1FIFJTQSBDQTAeFw0yNDA0MzAyMTE0MjZaFw0yNTA0MzAyMTE0MjVaMEoxIDAe
+BgNVBAMMF3Njb3R0LmdpYnNvbkBwb3N0ZW8ubmV0MSYwJAYJKoZIhvcNAQkBFhdzY290dC5naWJz
+b25AcG9zdGVvLm5ldDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANA+gfjphBFe06Ns
+gDCNXlPMU7KcDGdsje9neOrkbjsUz0dDoA65bU79ydRs700oxnSU6z2BywWU/NF1i6PzZtfffjYN
+w3phCBv682jHLujD3GKCuiJtYLiW1MBKtT3rV6JAKzHzYW+cwsF/IOhuEnbC741YtwAf6FgmErkH
+NmagaN+Ya4z489omUlG1bZ4t7ZlKJ/jb4N5slNrgZQQbftJuKgGQUlG53ueYVVGJ3Uf+UdIeVUCb
+XbmE2bWJz4DM6NSXJ5fMMYwgLD6nXYuxQRHo2bQNxCCkehdsvmXRN/InGCGpCVxq1wisw2pWS28y
+GtIRQJlub9pU0NxnJcwMu8+CJdLZ45XIP7C2NGiTi2rLTPlvWdRcf71r6Sdez6pQa6mKUX81oIiF
+IyCmcuvdFQwu/oK27OOG5B45yzqBN4B9w/+K+EajdJX2OdSgnDDd3OCIXcQSXSnNC1PNPOPn3JaR
+G+I4ha8fFSvA4gE5JPXhab/aKyrJrHK1FPNh4mXIfOFLmXsAz8vF0Ahwxx7EsNwC09QiFJBB+E0h
+dVBuzdzXyp6oZsCmPn9FoPS4uAkpOcwQW9m03XNBMeeiHLO/Uzi8tF5POvZGB4KTkJdO4NyE25YV
+O55jjTqvS3mGZGIPKFk7NL+PudPJ+Tr0fblMAivGSjENmpFkbBSAUSITqqspAgMBAAGjggG8MIIB
+uDAMBgNVHRMBAf8EAjAAMEEGA1UdHwQ6MDgwNqA0oDKGMGh0dHA6Ly9jc21pbWVyc2FjYS5jcmwu
+Y2VydHVtLnBsL2NzbWltZXJzYWNhLmNybDCBgwYIKwYBBQUHAQEEdzB1MC4GCCsGAQUFBzABhiJo
+dHRwOi8vY3NtaW1lcnNhY2Eub2NzcC1jZXJ0dW0uY29tMEMGCCsGAQUFBzAChjdodHRwOi8vY3Nt
+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
+qpcVrwAAAAAAAA==
+
+--===============8200845685193408636==--
+
+
+From tim@rowledge.org Fri Nov  1 16:22:24 2024
+From: Tim Rowledge <tim@rowledge.org>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: The Weekly Squeak news: Raspberry Pi Performance
+ Update: NUMA Memory Configuration Gains
+Date: Fri, 01 Nov 2024 09:22:12 -0700
+Message-ID: <F7514B58-6165-4F2F-AEF7-4CE8083A8FB1@rowledge.org>
+In-Reply-To: <36d05c5f-eea8-46ee-8847-76b7c66ccafe@posteo.net>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0909850988478856057=="
+
+--===============0909850988478856057==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+
+
+> On 2024-11-01, at 3:49 AM, Scott Gibson <scott.gibson(a)posteo.net> wrote:
+> 
+> The latest Weekly Squeak news article is now available.
+
++1 (at least!)
+
+tim
+--
+tim Rowledge; tim(a)rowledge.org; http://www.rowledge.org/tim
+A)bort, R)etry or S)elf-destruct?
+
+
+
+--===============0909850988478856057==--
+
+
+From lewis@mail.msen.com Sat Nov  2 20:07:30 2024
+From: lewis@mail.msen.com
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: Improved DirectoryEntry implementation
+Date: Sat, 02 Nov 2024 16:06:02 -0400
+Message-ID: <1730578015-573151@mid.hostedemail.com>
+In-Reply-To: <1727205208-500897@mid.hostedemail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4076394479604125027=="
+
+--===============4076394479604125027==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+The DirectoryEntry changes discussed in this thread have been in the inbox as=
+ Files-dtl.211, Files-dtl.212, Files-dtl.213 and Files-dtl.214. Reactions hav=
+e been mixed, so I am going to move them to the treated inbox.
+
+I use the updated DirectoryEntry in my own images, and it will be easy to pul=
+l it back into trunk at a later time if there is interest.
+
+Dave
+
+---
+Sent from Squeak Inbox Talk
+
+On 2024-09-24T15:08:33-04:00, lewis(a)mail.msen.com wrote:
+
+> Just some follow up observations: Chris' comments regarding performance and=
+ garbage collection prompted me to run a profile to check it out. I have quit=
+e a few files in my Squeak default directory, so I just did this:
+>=20
+> 	fd :=3D FileDirectory default.
+> 	TimeProfileBrowser onBlock: [10000 timesRepeat: [fd entries]].
+>=20
+> About 80% of the time goes into primitives. About 10% of the time goes into=
+ DirectoryEntry>>#convertFromSystemName to convert the raw string data from t=
+he primitive to the string that is saved in DirectoryEntry #name (this is exi=
+sting behavior in trunk). About 1.7% of the time goes into looking up DateAnd=
+Time>>localOffsetSeconds (new behavior associated with using DateAndTime rath=
+er than Integer). There are two DateAdTime instances for each DirectoryEntry,=
+ each with two slots containing immediate SmallIntegers on a 64 bit image, no=
+ fractions or other non-immediate numbers. The surprise for me was time going=
+ into convertFromSystemName, I had not noticed that before. The directory ent=
+ry primitives themselves have room for improvement but that's more of a VM to=
+pic.
+>=20
+> Dave
+>=20
+> ---
+> Sent from Squeak Inbox Talk
+>=20
+> On 2024-09-22T18:54:11-04:00, lewis(a)mail.msen.com wrote:
+>=20
+> > Hi Chris,
+> >=20
+> > I find your "I can't put my finger on it..." argument to be quite convinc=
+ing actually, thank you for that.
+> >=20
+> > The inbox submissions will probably end up in Treated but I hope you will=
+ indulge me be leaving in the Inbox for a few days for the sake of discussion.
+> >=20
+> > Dave
+> >=20
+> > ---
+> > Sent from Squeak Inbox Talk
+> >=20
+> > On 2024-09-21T14:44:02-05:00, asqueaker(a)gmail.com wrote:
+> >=20
+> > > I can't put my finger on why, but I *feel* like it's important -- for
+> > > DirectoryEntry and perhaps generally throughout the image -- to have
+> > > relatively raw, low-level representations of the objects from the VM.  =
+And
+> > > let the image implementations build on them seamlessly from there.  See=
+ing
+> > > the raw data in the inspectors even -- when I see the low-level "data"
+> > > objects (like with DirectoryEntry) it clearly "documents" for me what's=
+ in
+> > > the VM, what isn't, and therefore what translations the image is
+> > > responsible for.  Seeing first-class DateAndTimes next to everything el=
+se
+> > > that came from the VM (name, size) would be very confusing, in particul=
+ar
+> > > because, again, that's what 'attributes' dictionary is supposed to be f=
+or.
+> > > So, I would wonder, "did the VM return these DateAndTime instances??"
+> > >=20
+> > > Maybe it's just me, but I feel like the eager conversion of those fields
+> > > would actually *obscures* my understanding of what's going on.  The con=
+cern
+> > > about garbage and efficiency is actually the biggest issue, though.
+> > >=20
+> > > On Sat, Sep 21, 2024 at 2:16=E2=80=AFPM Chris Muller <asqueaker(a)gmail=
+.com> wrote:
+> > >=20
+> > > > Hi Dave,
+> > > >
+> > > > There are two intentions behind these updates:
+> > > >>
+> > > >> 1) Make the DirectoryEntry implementation easier to understand.
+> > > >>
+> > > >> 2) Prepare the image to handle a (currently nonexistent) improved
+> > > >> FilePlugin primitive to address several ancient issues.
+> > > >>
+> > > >
+> > > > That sounds good, however, there's more than that here, a
+> > > > significant functional change, in fact.
+> > > >
+> > > > But first, aren't DirectoryEntry>>#creationDateAndTime and
+> > > > #modificationDateAndTime currently residing in trunk simply wrong?  Y=
+our
+> > > > submission here has already informed me that we need to subtract the =
+local
+> > > > offset.
+> > > >
+> > > > And with that in Files-cmm.211, does it realign the conversation at a=
+ll?
+> > > >
+> > > >
+> > > >> Addressing 1) makes it easier to see why 2) is needed.
+> > > >>
+> > > >> The only compatibility issue I can think of would involve deserializ=
+ing a
+> > > >> previously saved DirectoryEntry instance. That could be an issue for=
+ image
+> > > >> segments, saved Squeak projects, or objects stored in Magma. On the =
+other
+> > > >> hand, I don't think that DirectoryEntry instances are likely to stor=
+ed in
+> > > >> that manner so it may be a non-issue.
+> > > >>
+> > > >
+> > > > Agree, DirectoryEntry are highly transient, and it's hard to imagine a
+> > > > case where they'd be persistent, although I suppose it's possible (wa=
+yback
+> > > > archive?).
+> > > >
+> > > > Overall, I think new theoretical FilePlugin numbers and calculations =
+are
+> > > > fine, but there's still the entirely separate issue of eager vs. lazy
+> > > > initialization.  I don't think eager initialization helps much in mak=
+ing it
+> > > > "easier to understand", because it's the same numerical translation t=
+hat
+> > > > has to be done, just in a different place.
+> > > >
+> > > > Here is an example of why it might help to make DirectoryEntry easier=
+ to
+> > > >> understand:
+> > > >>
+> > > >>         tempFileName :=3D 'foo.txt'.
+> > > >>         FileDirectory default deleteFileNamed: tempFileName.
+> > > >>         (FileStream newFileNamed: tempFileName) close. "new empty fi=
+le"
+> > > >>         entry :=3D FileDirectory default entries detect: [:e | e nam=
+e =3D
+> > > >> tempFileName].
+> > > >>         ctime :=3D entry creationTime.
+> > > >>         creationTime :=3D DateAndTime fromUnixTime: ctime.
+> > > >>         now :=3D DateAndTime now.
+> > > >>         creationTime - now. "=3D=3D> we would expect this to be a du=
+ration
+> > > >> close to zero, but it is not"
+> > > >>
+> > > >> Why? Because the FilePlugin primitives are still using the ancient (=
+and
+> > > >> undefinable) "seconds since the Smalltalk epoch in some local time z=
+one"
+> > > >> implemention. We cannot fix that without replacing the primitives, b=
+ut it's
+> > > >> hard for any of us to see the problem when a DirectoryEntry has time=
+ stamps
+> > > >> that just look like plausible big numbers.
+> > > >>
+> > > >
+> > > > Files-cmm.211 addresses the above, and it should be moved to trunk
+> > > > irregardless what we do beyond that.
+> > > >
+> > > > I'm basically just strongly against the eager initialization, and tha=
+t's
+> > > > all.
+> > > >
+> > > > Best,
+> > > >   Chris
+> > > >
+> > > >
+
+--===============4076394479604125027==--
+
+
+From drurowin@gmail.com Sun Nov  3 19:44:23 2024
+From: Lauren Pullen <drurowin@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] a new way to lose
+Date: Sun, 03 Nov 2024 12:44:09 -0700
+Message-ID: <9440f8df-faa1-c593-8f0d-307bce6d661b@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============4570487305289556160=="
+
+--===============4570487305289556160==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hi List,
+
+I was trying to draw something in four background threads and resume the
+UI thread with a chain of four Semaphore instances, but the background
+thread had an error.  No problem.  Fix the error, close the debugger,
+save, resume drawing.
+
+Long story short, something in the image file is waiting for a semaphore
+that will never signal, so opening the image does absolutely nothing and
+it is now a 157 MB e-brick.
+
+Now, if you'll excuse me, I need to grab a copy of my game.image out of
+the daily system snapshot.
+
+The moral of this story is to make backups.  Or maybe utilize 'save as
+new version'.  Or both.
+
+--===============4570487305289556160==--
+
+
+From eliot.miranda@gmail.com Mon Nov  4 17:28:06 2024
+From: Eliot Miranda <eliot.miranda@gmail.com>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Mon, 04 Nov 2024 09:27:45 -0800
+Message-ID: <6B2A4DB1-CB9C-418D-8FB3-3080E42D432C@gmail.com>
+In-Reply-To: <9440f8df-faa1-c593-8f0d-307bce6d661b@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1931745662230561999=="
+
+--===============1931745662230561999==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Lauren,
+
+     if you open the vm in a debugger you can put a breakpoint in interpret, =
+run u til you reach interpret a second time (first invocation does some initi=
+alization), use printAllProcesses to locate your stuck process, which (IIRC) =
+should print the semaphore the stuck process is waiting on, and then invoke s=
+ynchronousSignal with that semaphore to unstick it.
+
+_,,,^..^,,,_ (phone)
+
+> On Nov 3, 2024, at 11:44=E2=80=AFAM, Lauren Pullen <drurowin(a)gmail.com> w=
+rote:
+>=20
+> =EF=BB=BFHi List,
+>=20
+> I was trying to draw something in four background threads and resume the
+> UI thread with a chain of four Semaphore instances, but the background
+> thread had an error.  No problem.  Fix the error, close the debugger,
+> save, resume drawing.
+>=20
+> Long story short, something in the image file is waiting for a semaphore
+> that will never signal, so opening the image does absolutely nothing and
+> it is now a 157 MB e-brick.
+>=20
+> Now, if you'll excuse me, I need to grab a copy of my game.image out of
+> the daily system snapshot.
+>=20
+> The moral of this story is to make backups.  Or maybe utilize 'save as
+> new version'.  Or both.
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.o=
+rg
+
+--===============1931745662230561999==--
+
+
+From scott.gibson@posteo.net Mon Nov  4 18:37:12 2024
+From: Scott Gibson <scott.gibson@posteo.net>
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Mon, 04 Nov 2024 18:37:01 +0000
+Message-ID: <937f45ac-9955-4fd3-948a-fbf1356ce975@posteo.net>
+In-Reply-To: <9440f8df-faa1-c593-8f0d-307bce6d661b@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============6652267407757464287=="
+
+--===============6652267407757464287==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Yikes! Thankfully you had a backup.
+
+Saving a different image at times is not a bad idea. This is a practice=20
+I use. However, things still happen, and Eliot's wizardry is something I=20
+will check out!
+
+Hopefully you did not lost too much in the process. Thanks for sharing=20
+and for the reminder!
+
+Scott
+
+On 11/3/24 14:44, Lauren Pullen wrote:
+> Hi List,
+>
+> I was trying to draw something in four background threads and resume the
+> UI thread with a chain of four Semaphore instances, but the background
+> thread had an error.  No problem.  Fix the error, close the debugger,
+> save, resume drawing.
+>
+> Long story short, something in the image file is waiting for a semaphore
+> that will never signal, so opening the image does absolutely nothing and
+> it is now a 157 MB e-brick.
+>
+> Now, if you'll excuse me, I need to grab a copy of my game.image out of
+> the daily system snapshot.
+>
+> The moral of this story is to make backups.  Or maybe utilize 'save as
+> new version'.  Or both.
+> Squeak-dev mailing list -- squeak-dev(a)lists.squeakfoundation.org
+> To unsubscribe send an email to squeak-dev-leave(a)lists.squeakfoundation.o=
+rg
+
+
+--===============6652267407757464287==
+Content-Type: application/pkcs7-signature
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+MIME-Version: 1.0
+
+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
+MAkGA1UEBhMCUEwxITAfBgNVBAoMGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEcMBoGA1UEAwwT
+Q2VydHVtIFNNSU1FIFJTQSBDQTAeFw0yNDA0MzAyMTE0MjZaFw0yNTA0MzAyMTE0MjVaMEoxIDAe
+BgNVBAMMF3Njb3R0LmdpYnNvbkBwb3N0ZW8ubmV0MSYwJAYJKoZIhvcNAQkBFhdzY290dC5naWJz
+b25AcG9zdGVvLm5ldDCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBANA+gfjphBFe06Ns
+gDCNXlPMU7KcDGdsje9neOrkbjsUz0dDoA65bU79ydRs700oxnSU6z2BywWU/NF1i6PzZtfffjYN
+w3phCBv682jHLujD3GKCuiJtYLiW1MBKtT3rV6JAKzHzYW+cwsF/IOhuEnbC741YtwAf6FgmErkH
+NmagaN+Ya4z489omUlG1bZ4t7ZlKJ/jb4N5slNrgZQQbftJuKgGQUlG53ueYVVGJ3Uf+UdIeVUCb
+XbmE2bWJz4DM6NSXJ5fMMYwgLD6nXYuxQRHo2bQNxCCkehdsvmXRN/InGCGpCVxq1wisw2pWS28y
+GtIRQJlub9pU0NxnJcwMu8+CJdLZ45XIP7C2NGiTi2rLTPlvWdRcf71r6Sdez6pQa6mKUX81oIiF
+IyCmcuvdFQwu/oK27OOG5B45yzqBN4B9w/+K+EajdJX2OdSgnDDd3OCIXcQSXSnNC1PNPOPn3JaR
+G+I4ha8fFSvA4gE5JPXhab/aKyrJrHK1FPNh4mXIfOFLmXsAz8vF0Ahwxx7EsNwC09QiFJBB+E0h
+dVBuzdzXyp6oZsCmPn9FoPS4uAkpOcwQW9m03XNBMeeiHLO/Uzi8tF5POvZGB4KTkJdO4NyE25YV
+O55jjTqvS3mGZGIPKFk7NL+PudPJ+Tr0fblMAivGSjENmpFkbBSAUSITqqspAgMBAAGjggG8MIIB
+uDAMBgNVHRMBAf8EAjAAMEEGA1UdHwQ6MDgwNqA0oDKGMGh0dHA6Ly9jc21pbWVyc2FjYS5jcmwu
+Y2VydHVtLnBsL2NzbWltZXJzYWNhLmNybDCBgwYIKwYBBQUHAQEEdzB1MC4GCCsGAQUFBzABhiJo
+dHRwOi8vY3NtaW1lcnNhY2Eub2NzcC1jZXJ0dW0uY29tMEMGCCsGAQUFBzAChjdodHRwOi8vY3Nt
+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
+sMgtvgAAAAAAAA==
+
+--===============6652267407757464287==--
+
+
+From lewis@mail.msen.com Tue Nov  5 03:32:17 2024
+From: lewis@mail.msen.com
+To: squeak-dev@lists.squeakfoundation.org
+Subject: [squeak-dev] Re: a new way to lose
+Date: Mon, 04 Nov 2024 22:24:31 -0500
+Message-ID: <1730777502-108969@mid.hostedemail.com>
+In-Reply-To: <9440f8df-faa1-c593-8f0d-307bce6d661b@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============5153116232424522856=="
+
+--===============5153116232424522856==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+You may still be able to recover your broken image.
+
+Squeak provides a mechanism for inserting code or debugging very early in the=
+ image startup processing, and you may be able to use this to fix your broken=
+ image.
+
+The implemention is in class DoItFirst, which is placed in the image startup =
+list to let to insert things into the startup processing, including opening a=
+ debugger at the earliest possible time (see the DoItFirst class comment).
+
+For example, if you are on a unix-like system and your VM executable is "sque=
+akvm", and your broken image is "squeak.image", then you might do this:
+
+$ squeakvm squeak.image --help
+
+Which will display this help message on your console output:
+
+  DoItFirst image arguments:
+	--doit argumentlist "evaluate each argument as a doIt expression"
+	--evaluate arg "evaluate arg, print result then exit"
+	--file filename "evaluate contents of filename, print result then exit"
+	--filein filelist "file in each file named in fileList"
+	--cwd path "set FileDirectory defaultDirectory to path prior to evaluating o=
+ther options"
+	--debug "enter a debugger as soon as possible in the startUp processing"
+	--help "print this message"
+  some arguments have single character synonyms, -f is a synonym for --file, =
+-d for --doit
+  single '-' may be used instead of '--', -help is interpreted as --help
+
+This gives a summary of the available command line options. As a starting poi=
+nt, you might want to see if you can get into a debugger before something bad=
+ happens, so you might (for example) do this:
+
+$ squeakvm squeak.image --debug
+
+If that does not work, but if you have an good idea of the problem that you n=
+eed to fix, then you may be able to use the --doit command line option to pas=
+s a Smalltalk doIt expression to be evaluated before the bad things happen.
+
+See also Eliot's explanation of how to directly signal the semaphore from a d=
+ebugger on the VM. I'm not sure what is the best approach but this should giv=
+e you a few options.
+
+HTH,
+Dave
+
+
+
+---
+Sent from Squeak Inbox Talk
+
+On 2024-11-03T12:44:09-07:00, drurowin(a)gmail.com wrote:
+
+> Hi List,
+>=20
+> I was trying to draw something in four background threads and resume the
+> UI thread with a chain of four Semaphore instances, but the background
+> thread had an error.  No problem.  Fix the error, close the debugger,
+> save, resume drawing.
+>=20
+> Long story short, something in the image file is waiting for a semaphore
+> that will never signal, so opening the image does absolutely nothing and
+> it is now a 157 MB e-brick.
+>=20
+> Now, if you'll excuse me, I need to grab a copy of my game.image out of
+> the daily system snapshot.
+>=20
+> The moral of this story is to make backups.  Or maybe utilize 'save as
+> new version'.  Or both.
+
+--===============5153116232424522856==--
+
+
