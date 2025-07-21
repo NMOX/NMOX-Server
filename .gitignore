@@ -1,1 +1,31 @@
+# macOS
 .DS_Store
+*/.DS_Store
+
+# Build artifacts
+target/
+*.wasm
+*.o
+*.so
+*.dylib
+
+# Logs and debug files
+*.log
+SqueakDebug.log
+
+# NMOX development tools state
+.nmox-*
+
+# Temporary files
+*.tmp
+*.bak
+*~
+.swp
+
+# IDE files
+.vscode/
+.idea/
+
+# Package managers
+node_modules/
+package-cache/

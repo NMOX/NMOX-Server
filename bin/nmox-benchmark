@@ -1,0 +1,497 @@
+#!/bin/bash
+# NMOX Performance Benchmark Suite
+# Comprehensive performance testing across all language implementations
+
+set -e
+
+# Configuration
+NMOX_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+BENCHMARK_RESULTS_DIR="$NMOX_ROOT/.nmox-benchmarks"
+SQUEAK_IMAGE="$NMOX_ROOT/x/lib/NMOXSqueak6.0-22148-64bit.image"
+
+# Colors
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+NC='\033[0m'
+
+# Create benchmark results directory
+mkdir -p "$BENCHMARK_RESULTS_DIR"
+
+# Logging
+log() {
+    echo "$(date '+%H:%M:%S') $1" | tee -a "$BENCHMARK_RESULTS_DIR/benchmark.log"
+    echo -e "${2:-$YELLOW}$1$NC"
+}
+
+# Benchmark results storage
+declare -A benchmark_results
+
+# Record benchmark result
+record_benchmark() {
+    local test_name="$1"
+    local language="$2"
+    local time_ms="$3"
+    local operations="$4"
+    
+    local ops_per_sec=$((operations * 1000 / time_ms))
+    benchmark_results["$test_name:$language:time"]="$time_ms"
+    benchmark_results["$test_name:$language:ops"]="$ops_per_sec"
+    
+    log "  $language: ${time_ms}ms (${ops_per_sec} ops/sec)" "$CYAN"
+}
+
+# Benchmark X object creation
+benchmark_object_creation() {
+    log "Benchmarking X object creation (10,000 objects)..." "$BLUE"
+    
+    # Squeak Smalltalk
+    if [ -f "$SQUEAK_IMAGE" ]; then
+        log "  Testing Squeak Smalltalk..." "$YELLOW"
+        local result=$(echo "
+| startTime endTime objects |
+objects := 10000.
+startTime := Time millisecondClockValue.
+1 to: objects do: [:i | X new].
+endTime := Time millisecondClockValue.
+Transcript show: (endTime - startTime) printString.
+Transcript flush.
+" | squeak -headless "$SQUEAK_IMAGE" 2>/dev/null | grep -o '[0-9]*' | head -1)
+        
+        if [ -n "$result" ] && [ "$result" -gt 0 ]; then
+            record_benchmark "Object Creation" "Squeak" "$result" "10000"
+        else
+            log "  Squeak: FAILED" "$RED"
+        fi
+    else
+        log "  Squeak: SKIPPED (no image)" "$YELLOW"
+    fi
+    
+    # JavaScript
+    if command -v node >/dev/null 2>&1; then
+        log "  Testing JavaScript..." "$YELLOW"
+        local result=$(node -e "
+class X {
+    constructor() {
+        this.type = 'X';
+    }
+}
+
+const objects = 10000;
+const start = Date.now();
+for (let i = 0; i < objects; i++) {
+    new X();
+}
+const end = Date.now();
+console.log(end - start);
+" 2>/dev/null)
+        
+        if [ -n "$result" ] && [ "$result" -gt 0 ]; then
+            record_benchmark "Object Creation" "JavaScript" "$result" "10000"
+        else
+            log "  JavaScript: FAILED" "$RED"
+        fi
+    else
+        log "  JavaScript: SKIPPED (no Node.js)" "$YELLOW"
+    fi
+    
+    # Python
+    if command -v python3 >/dev/null 2>&1; then
+        log "  Testing Python..." "$YELLOW"
+        local result=$(python3 -c "
+import time
+
+class X:
+    def __init__(self):
+        self.type = 'X'
+
+objects = 10000
+start = int(time.time() * 1000)
+for i in range(objects):
+    X()
+end = int(time.time() * 1000)
+print(end - start)
+" 2>/dev/null)
+        
+        if [ -n "$result" ] && [ "$result" -gt 0 ]; then
+            record_benchmark "Object Creation" "Python" "$result" "10000"
+        else
+            log "  Python: FAILED" "$RED"
+        fi
+    else
+        log "  Python: SKIPPED (no Python 3)" "$YELLOW"
+    fi
+    
+    # Rust
+    if command -v rustc >/dev/null 2>&1; then
+        log "  Testing Rust..." "$YELLOW"
+        
+        cat > "$BENCHMARK_RESULTS_DIR/rust_bench.rs" << 'EOF'
+use std::time::Instant;
+
+struct X {
+    x_type: String,
+}
+
+impl X {
+    fn new() -> Self {
+        X {
+            x_type: "X".to_string(),
+        }
+    }
+}
+
+fn main() {
+    let objects = 10000;
+    let start = Instant::now();
+    
+    for _ in 0..objects {
+        let _x = X::new();
+    }
+    
+    let duration = start.elapsed();
+    println!("{}", duration.as_millis());
+}
+EOF
+        
+        if rustc "$BENCHMARK_RESULTS_DIR/rust_bench.rs" -O -o "$BENCHMARK_RESULTS_DIR/rust_bench" 2>/dev/null; then
+            local result=$("$BENCHMARK_RESULTS_DIR/rust_bench" 2>/dev/null)
+            if [ -n "$result" ] && [ "$result" -gt 0 ]; then
+                record_benchmark "Object Creation" "Rust" "$result" "10000"
+            else
+                log "  Rust: FAILED" "$RED"
+            fi
+            rm -f "$BENCHMARK_RESULTS_DIR/rust_bench"
+        else
+            log "  Rust: FAILED (compilation error)" "$RED"
+        fi
+        rm -f "$BENCHMARK_RESULTS_DIR/rust_bench.rs"
+    else
+        log "  Rust: SKIPPED (no rustc)" "$YELLOW"
+    fi
+}
+
+# Benchmark HTML rendering
+benchmark_html_rendering() {
+    log "Benchmarking HTML rendering (1,000 div elements)..." "$BLUE"
+    
+    # Squeak Smalltalk
+    if [ -f "$SQUEAK_IMAGE" ]; then
+        log "  Testing Squeak Smalltalk..." "$YELLOW"
+        local result=$(echo "
+| startTime endTime elements |
+elements := 1000.
+startTime := Time millisecondClockValue.
+1 to: elements do: [:i | (X div: 'Content ' , i printString) asString].
+endTime := Time millisecondClockValue.
+Transcript show: (endTime - startTime) printString.
+Transcript flush.
+" | squeak -headless "$SQUEAK_IMAGE" 2>/dev/null | grep -o '[0-9]*' | head -1)
+        
+        if [ -n "$result" ] && [ "$result" -gt 0 ]; then
+            record_benchmark "HTML Rendering" "Squeak" "$result" "1000"
+        else
+            log "  Squeak: FAILED" "$RED"
+        fi
+    else
+        log "  Squeak: SKIPPED (no image)" "$YELLOW"
+    fi
+    
+    # JavaScript
+    if command -v node >/dev/null 2>&1; then
+        log "  Testing JavaScript..." "$YELLOW"
+        local result=$(node -e "
+class XElement {
+    constructor(tag, content) {
+        this.tag = tag;
+        this.content = content;
+    }
+    
+    toString() {
+        return \`<\${this.tag}>\${this.content}</\${this.tag}>\`;
+    }
+}
+
+const elements = 1000;
+const start = Date.now();
+for (let i = 0; i < elements; i++) {
+    new XElement('div', 'Content ' + i).toString();
+}
+const end = Date.now();
+console.log(end - start);
+" 2>/dev/null)
+        
+        if [ -n "$result" ] && [ "$result" -gt 0 ]; then
+            record_benchmark "HTML Rendering" "JavaScript" "$result" "1000"
+        else
+            log "  JavaScript: FAILED" "$RED"
+        fi
+    else
+        log "  JavaScript: SKIPPED (no Node.js)" "$YELLOW"
+    fi
+}
+
+# Benchmark WebAssembly performance
+benchmark_wasm_performance() {
+    log "Benchmarking WebAssembly performance (Fibonacci 35)..." "$BLUE"
+    
+    if [ -f "$NMOX_ROOT/x/lib/wasm/pkg/fib_module.wasm" ]; then
+        log "  Testing WebAssembly module..." "$YELLOW"
+        
+        # Create a simple Node.js test for WASM
+        if command -v node >/dev/null 2>&1; then
+            cat > "$BENCHMARK_RESULTS_DIR/wasm_bench.js" << 'EOF'
+const fs = require('fs');
+const path = require('path');
+
+async function benchmarkWasm() {
+    try {
+        const wasmPath = path.join(process.cwd(), 'x/lib/wasm/pkg/fib_module.wasm');
+        
+        if (!fs.existsSync(wasmPath)) {
+            console.log('WASM file not found');
+            return;
+        }
+        
+        const wasmBuffer = fs.readFileSync(wasmPath);
+        const wasmModule = await WebAssembly.compile(wasmBuffer);
+        const wasmInstance = await WebAssembly.instantiate(wasmModule);
+        
+        // Test if fibonacci function exists
+        if (wasmInstance.exports.fibonacci) {
+            const start = Date.now();
+            const result = wasmInstance.exports.fibonacci(35);
+            const end = Date.now();
+            
+            console.log(`${end - start}`);
+        } else {
+            console.log('No fibonacci function in WASM');
+        }
+    } catch (e) {
+        console.log('WASM error: ' + e.message);
+    }
+}
+
+benchmarkWasm();
+EOF
+            
+            local result=$(node "$BENCHMARK_RESULTS_DIR/wasm_bench.js" 2>/dev/null)
+            if [ -n "$result" ] && [ "$result" -gt 0 ] 2>/dev/null; then
+                record_benchmark "WASM Fibonacci" "WebAssembly" "$result" "1"
+            else
+                log "  WebAssembly: FAILED ($result)" "$RED"
+            fi
+            
+            rm -f "$BENCHMARK_RESULTS_DIR/wasm_bench.js"
+        else
+            log "  WebAssembly: SKIPPED (no Node.js)" "$YELLOW"
+        fi
+    else
+        log "  WebAssembly: SKIPPED (no WASM module)" "$YELLOW"
+    fi
+}
+
+# Memory usage benchmark
+benchmark_memory_usage() {
+    log "Benchmarking memory usage..." "$BLUE"
+    
+    # Get system memory info
+    if command -v free >/dev/null 2>&1; then
+        local mem_info=$(free -m | grep "Mem:" | awk '{print $3 "/" $2 " MB"}')
+        log "  System memory usage: $mem_info" "$CYAN"
+    elif command -v vm_stat >/dev/null 2>&1; then
+        local pages_used=$(vm_stat | grep "Pages active" | awk '{print $3}' | sed 's/\.//')
+        local page_size=$(vm_stat | grep "page size" | awk '{print $8}')
+        if [ -n "$pages_used" ] && [ -n "$page_size" ]; then
+            local mem_mb=$((pages_used * page_size / 1024 / 1024))
+            log "  System memory usage: ~${mem_mb} MB active" "$CYAN"
+        fi
+    fi
+}
+
+# Generate performance report
+generate_benchmark_report() {
+    local report_file="$BENCHMARK_RESULTS_DIR/benchmark_report.html"
+    
+    cat > "$report_file" << EOF
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NMOX Performance Benchmark Report</title>
+    <style>
+        body { font-family: monospace; margin: 20px; background: #1a1a1a; color: #00ff00; }
+        .header { color: #ffff00; font-size: 1.2em; margin-bottom: 20px; }
+        .section { background: #2a2a2a; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .fastest { color: #00ff00; font-weight: bold; }
+        .slowest { color: #ff6666; }
+        .medium { color: #ffff99; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #333; padding: 8px; text-align: right; }
+        th { background: #333; text-align: center; }
+        .chart { margin: 20px 0; }
+        .bar { height: 20px; background: linear-gradient(90deg, #00ff00, #ffff00, #ff6666); margin: 2px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">NMOX Performance Benchmark Report</div>
+    <div class="header">Generated: $(date)</div>
+    
+    <div class="section">
+        <h3>System Information</h3>
+        <strong>OS:</strong> $(uname -s) $(uname -r)<br>
+        <strong>Architecture:</strong> $(uname -m)<br>
+        <strong>CPU:</strong> $(sysctl -n machdep.cpu.brand_string 2>/dev/null || grep "model name" /proc/cpuinfo | head -1 | cut -d: -f2 | xargs || echo "Unknown")<br>
+        <strong>NMOX Version:</strong> $(cat "$NMOX_ROOT/x/bin/nmox" 2>/dev/null | grep -o 'v[0-9]*' || echo "Unknown")
+    </div>
+EOF
+
+    # Object Creation Results
+    if [ -n "${benchmark_results[Object Creation:Squeak:time]}" ] || [ -n "${benchmark_results[Object Creation:JavaScript:time]}" ] || [ -n "${benchmark_results[Object Creation:Python:time]}" ] || [ -n "${benchmark_results[Object Creation:Rust:time]}" ]; then
+        cat >> "$report_file" << EOF
+    
+    <div class="section">
+        <h3>Object Creation Performance (10,000 objects)</h3>
+        <table>
+            <tr>
+                <th>Language</th>
+                <th>Time (ms)</th>
+                <th>Objects/sec</th>
+                <th>Relative Performance</th>
+            </tr>
+EOF
+
+        # Find fastest time for relative comparison
+        local fastest_time=999999
+        for lang in "Squeak" "JavaScript" "Python" "Rust"; do
+            local time="${benchmark_results[Object Creation:$lang:time]}"
+            if [ -n "$time" ] && [ "$time" -lt "$fastest_time" ]; then
+                fastest_time="$time"
+            fi
+        done
+
+        for lang in "Squeak" "JavaScript" "Python" "Rust"; do
+            local time="${benchmark_results[Object Creation:$lang:time]}"
+            local ops="${benchmark_results[Object Creation:$lang:ops]}"
+            
+            if [ -n "$time" ]; then
+                local relative=$(echo "scale=2; $time / $fastest_time" | bc 2>/dev/null || echo "1.00")
+                local class="medium"
+                [ "$time" -eq "$fastest_time" ] && class="fastest"
+                
+                cat >> "$report_file" << EOF
+            <tr>
+                <td>$lang</td>
+                <td class="$class">$time</td>
+                <td class="$class">$ops</td>
+                <td class="$class">${relative}x</td>
+            </tr>
+EOF
+            fi
+        done
+        
+        echo "        </table>" >> "$report_file"
+        echo "    </div>" >> "$report_file"
+    fi
+
+    # HTML Rendering Results
+    if [ -n "${benchmark_results[HTML Rendering:Squeak:time]}" ] || [ -n "${benchmark_results[HTML Rendering:JavaScript:time]}" ]; then
+        cat >> "$report_file" << EOF
+    
+    <div class="section">
+        <h3>HTML Rendering Performance (1,000 elements)</h3>
+        <table>
+            <tr>
+                <th>Language</th>
+                <th>Time (ms)</th>
+                <th>Elements/sec</th>
+            </tr>
+EOF
+
+        for lang in "Squeak" "JavaScript"; do
+            local time="${benchmark_results[HTML Rendering:$lang:time]}"
+            local ops="${benchmark_results[HTML Rendering:$lang:ops]}"
+            
+            if [ -n "$time" ]; then
+                cat >> "$report_file" << EOF
+            <tr>
+                <td>$lang</td>
+                <td>$time</td>
+                <td>$ops</td>
+            </tr>
+EOF
+            fi
+        done
+        
+        echo "        </table>" >> "$report_file"
+        echo "    </div>" >> "$report_file"
+    fi
+
+    # WebAssembly Results
+    if [ -n "${benchmark_results[WASM Fibonacci:WebAssembly:time]}" ]; then
+        cat >> "$report_file" << EOF
+    
+    <div class="section">
+        <h3>WebAssembly Performance</h3>
+        <p><strong>Fibonacci(35):</strong> ${benchmark_results[WASM Fibonacci:WebAssembly:time]}ms</p>
+        <p>WebAssembly module successfully executed mathematical computation.</p>
+    </div>
+EOF
+    fi
+
+    cat >> "$report_file" << EOF
+    
+    <div class="section">
+        <h3>Performance Summary</h3>
+        <p>This benchmark tests the core performance characteristics of NMOX's X object pattern across different language implementations.</p>
+        <p><strong>Key Insights:</strong></p>
+        <ul>
+            <li>Object creation speed varies significantly between languages</li>
+            <li>HTML rendering performance depends on string manipulation efficiency</li>
+            <li>WebAssembly provides predictable performance for compute-intensive tasks</li>
+            <li>Each language implementation has different strengths for different use cases</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <small>
+            Generated by NMOX Benchmark Suite<br>
+            Report saved: $report_file
+        </small>
+    </div>
+</body>
+</html>
+EOF
+
+    log "Benchmark report generated: $report_file" "$GREEN"
+}
+
+# Main execution
+main() {
+    log "Starting NMOX Performance Benchmark Suite" "$GREEN"
+    log "Testing performance across all language implementations" "$YELLOW"
+    
+    # Clear previous results
+    rm -f "$BENCHMARK_RESULTS_DIR"/*.log "$BENCHMARK_RESULTS_DIR"/*_bench.*
+    
+    # Run benchmarks
+    benchmark_object_creation
+    echo ""
+    benchmark_html_rendering
+    echo ""
+    benchmark_wasm_performance
+    echo ""
+    benchmark_memory_usage
+    
+    # Generate report
+    echo ""
+    generate_benchmark_report
+    
+    # Summary
+    log "Benchmark suite completed!" "$GREEN"
+    log "View detailed results in: $BENCHMARK_RESULTS_DIR/benchmark_report.html" "$CYAN"
+}
+
+# Run main function
+main "$@"

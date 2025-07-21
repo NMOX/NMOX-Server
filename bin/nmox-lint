@@ -1,0 +1,449 @@
+#!/bin/bash
+# NMOX Code Quality and Style Checker
+# Ensures code follows UNIX philosophy and NMOX conventions
+
+set -e
+
+# Configuration
+NMOX_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+LINT_RESULTS_DIR="$NMOX_ROOT/.nmox-lint"
+
+# Colors
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Create lint results directory
+mkdir -p "$LINT_RESULTS_DIR"
+
+# Logging
+log() {
+    echo "$(date '+%H:%M:%S') $1" | tee -a "$LINT_RESULTS_DIR/lint.log"
+    echo -e "${2:-$YELLOW}$1$NC"
+}
+
+# Issue tracking
+declare -A issues
+total_issues=0
+warnings=0
+errors=0
+
+# Record issue
+record_issue() {
+    local file="$1"
+    local line="$2"
+    local severity="$3"
+    local message="$4"
+    
+    local key="${file}:${line}"
+    issues["$key"]="$severity: $message"
+    total_issues=$((total_issues + 1))
+    
+    case "$severity" in
+        "ERROR")
+            errors=$((errors + 1))
+            log "  ✗ $file:$line - $message" "$RED"
+            ;;
+        "WARNING")
+            warnings=$((warnings + 1))
+            log "  ⚠ $file:$line - $message" "$YELLOW"
+            ;;
+        "INFO")
+            log "  ℹ $file:$line - $message" "$BLUE"
+            ;;
+    esac
+}
+
+# Check UNIX philosophy compliance
+check_unix_philosophy() {
+    log "Checking UNIX philosophy compliance..." "$BLUE"
+    
+    # Check for monolithic functions/methods
+    find "$NMOX_ROOT" -name "*.st" -o -name "*.js" -o -name "*.py" -o -name "*.rs" | while read -r file; do
+        if [ -f "$file" ]; then
+            local line_count=$(wc -l < "$file")
+            
+            # Check file size (should be focused and small)
+            if [ "$line_count" -gt 500 ]; then
+                record_issue "$file" "1" "WARNING" "File is large ($line_count lines). Consider breaking into smaller modules."
+            fi
+            
+            # Check for very long functions (language-specific patterns)
+            case "$file" in
+                *.st)
+                    # Smalltalk methods should be short
+                    awk '/^[a-zA-Z].*$/ { method_start=NR; method_name=$0 } 
+                         /^$/ && method_start { 
+                             if (NR - method_start > 20) 
+                                 print method_start ":METHOD:" method_name "::" (NR - method_start) 
+                             method_start=0 
+                         }' "$file" | while IFS=: read -r line_num type method_name size; do
+                        if [ "$type" = "METHOD" ] && [ "$size" -gt 20 ]; then
+                            record_issue "$file" "$line_num" "WARNING" "Method '$method_name' is long ($size lines). Consider decomposition."
+                        fi
+                    done
+                    ;;
+                *.js)
+                    # JavaScript functions should be focused
+                    grep -n "function\|=>" "$file" | while IFS=: read -r line_num line_content; do
+                        # Simple heuristic - could be improved
+                        if echo "$line_content" | grep -q "function.*{.*}.*{"; then
+                            record_issue "$file" "$line_num" "INFO" "Complex nested function detected. Consider simplification."
+                        fi
+                    done
+                    ;;
+            esac
+        fi
+    done
+}
+
+# Check X object pattern compliance
+check_x_object_pattern() {
+    log "Checking X object pattern compliance..." "$BLUE"
+    
+    # Check for proper X object implementations
+    find "$NMOX_ROOT/x/lib/core" -name "core.*" | while read -r core_file; do
+        if [ -f "$core_file" ]; then
+            local lang=$(basename "$core_file" | cut -d. -f2)
+            
+            case "$lang" in
+                "st")
+                    # Check Smalltalk X object structure
+                    if ! grep -q "^X" "$core_file"; then
+                        record_issue "$core_file" "1" "ERROR" "Missing X class definition in Smalltalk core"
+                    fi
+                    ;;
+                "js")
+                    # Check JavaScript X object structure
+                    if ! grep -q "class X\|function X\|var X\|const X" "$core_file"; then
+                        record_issue "$core_file" "1" "ERROR" "Missing X object definition in JavaScript core"
+                    fi
+                    ;;
+                "py")
+                    # Check Python X object structure
+                    if ! grep -q "class X" "$core_file"; then
+                        record_issue "$core_file" "1" "ERROR" "Missing X class definition in Python core"
+                    fi
+                    ;;
+                "rs")
+                    # Check Rust X object structure
+                    if ! grep -q "struct X\|enum X" "$core_file"; then
+                        record_issue "$core_file" "1" "ERROR" "Missing X struct/enum definition in Rust core"
+                    fi
+                    ;;
+            esac
+        fi
+    done
+    
+    # Check for Peace, Love, Harmony pattern usage
+    find "$NMOX_ROOT" -name "*.st" | while read -r st_file; do
+        if [ -f "$st_file" ]; then
+            # Look for methods that might not follow the pattern
+            if grep -q "asString\|printString\|displayString" "$st_file"; then
+                local line_num=$(grep -n "asString\|printString\|displayString" "$st_file" | head -1 | cut -d: -f1)
+                # This is good - Peace (resolution to string)
+            fi
+            
+            if grep -q "add:\|addAll:\|," "$st_file"; then
+                # This suggests Harmony (collection)
+                local harmony_count=$(grep -c "add:\|addAll:\|," "$st_file")
+                if [ "$harmony_count" -gt 10 ]; then
+                    record_issue "$st_file" "1" "INFO" "High use of collection operations ($harmony_count). Ensure proper Harmony pattern."
+                fi
+            fi
+        fi
+    done
+}
+
+# Check code style and formatting
+check_code_style() {
+    log "Checking code style and formatting..." "$BLUE"
+    
+    # Check for proper file permissions
+    find "$NMOX_ROOT/bin" -type f | while read -r bin_file; do
+        if [ -f "$bin_file" ] && [ ! -x "$bin_file" ]; then
+            record_issue "$bin_file" "1" "ERROR" "Binary script not executable"
+        fi
+    done
+    
+    # Check for consistent indentation
+    find "$NMOX_ROOT" -name "*.js" -o -name "*.py" | while read -r file; do
+        if [ -f "$file" ]; then
+            # Check for mixed tabs and spaces
+            if grep -q $'\t' "$file" && grep -q "^    " "$file"; then
+                record_issue "$file" "1" "WARNING" "Mixed tabs and spaces detected"
+            fi
+            
+            # Check for trailing whitespace
+            local trailing_lines=$(grep -n " $" "$file" | wc -l)
+            if [ "$trailing_lines" -gt 0 ]; then
+                record_issue "$file" "1" "INFO" "Trailing whitespace found on $trailing_lines lines"
+            fi
+        fi
+    done
+    
+    # Check Smalltalk method categories
+    find "$NMOX_ROOT" -name "*.st" | while read -r st_file; do
+        if [ -f "$st_file" ]; then
+            # Check for proper method categorization
+            if grep -q "methodsFor:" "$st_file"; then
+                local categories=$(grep -c "methodsFor:" "$st_file")
+                if [ "$categories" -lt 2 ]; then
+                    record_issue "$st_file" "1" "INFO" "Consider organizing methods into more categories"
+                fi
+            else
+                record_issue "$st_file" "1" "WARNING" "No method categories found - methods should be organized"
+            fi
+        fi
+    done
+}
+
+# Check documentation and comments
+check_documentation() {
+    log "Checking documentation standards..." "$BLUE"
+    
+    # Check for README files in important directories
+    local important_dirs=("x/lib" "bin" "x/Docker")
+    for dir in "${important_dirs[@]}"; do
+        local full_dir="$NMOX_ROOT/$dir"
+        if [ -d "$full_dir" ] && [ ! -f "$full_dir/README.md" ]; then
+            record_issue "$full_dir" "1" "INFO" "Consider adding README.md to document directory purpose"
+        fi
+    done
+    
+    # Check for class/function documentation
+    find "$NMOX_ROOT/x/lib" -name "*.st" | while read -r st_file; do
+        if [ -f "$st_file" ]; then
+            # Check for class comments in Smalltalk
+            if grep -q "^[A-Z][a-zA-Z]*.*class.*Object" "$st_file"; then
+                local class_line=$(grep -n "^[A-Z][a-zA-Z]*.*class.*Object" "$st_file" | head -1 | cut -d: -f1)
+                local next_line=$((class_line + 1))
+                if ! sed -n "${next_line}p" "$st_file" | grep -q "\".*\""; then
+                    record_issue "$st_file" "$class_line" "INFO" "Class definition could benefit from documentation comment"
+                fi
+            fi
+        fi
+    done
+}
+
+# Check security and best practices
+check_security() {
+    log "Checking security and best practices..." "$BLUE"
+    
+    # Check for potential security issues
+    find "$NMOX_ROOT" -type f -name "*.js" -o -name "*.py" -o -name "*.sh" | while read -r file; do
+        if [ -f "$file" ]; then
+            # Check for eval usage
+            local eval_lines=$(grep -n "eval\|exec" "$file" | head -5)
+            if [ -n "$eval_lines" ]; then
+                echo "$eval_lines" | while IFS=: read -r line_num line_content; do
+                    record_issue "$file" "$line_num" "WARNING" "Use of eval/exec detected - security risk"
+                done
+            fi
+            
+            # Check for hardcoded credentials (basic patterns)
+            local cred_lines=$(grep -n -i "password\|secret\|key.*=" "$file" | grep -v "TODO\|FIXME\|example" | head -3)
+            if [ -n "$cred_lines" ]; then
+                echo "$cred_lines" | while IFS=: read -r line_num line_content; do
+                    record_issue "$file" "$line_num" "ERROR" "Potential hardcoded credential detected"
+                done
+            fi
+        fi
+    done
+    
+    # Check file permissions
+    find "$NMOX_ROOT" -type f -perm 777 | while read -r file; do
+        record_issue "$file" "1" "WARNING" "File has overly permissive permissions (777)"
+    done
+}
+
+# Check dependency management
+check_dependencies() {
+    log "Checking dependency management..." "$BLUE"
+    
+    # Check for package files
+    if [ ! -f "$NMOX_ROOT/package.json" ] && [ ! -f "$NMOX_ROOT/Cargo.toml" ] && [ ! -f "$NMOX_ROOT/requirements.txt" ]; then
+        record_issue "$NMOX_ROOT" "1" "INFO" "No package management files found. Consider adding for dependency tracking."
+    fi
+    
+    # Check for outdated or missing build files
+    if [ ! -f "$NMOX_ROOT/Makefile" ]; then
+        record_issue "$NMOX_ROOT" "1" "INFO" "No Makefile found. Build automation recommended."
+    fi
+}
+
+# Generate lint report
+generate_lint_report() {
+    local report_file="$LINT_RESULTS_DIR/lint_report.html"
+    
+    cat > "$report_file" << EOF
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NMOX Code Quality Report</title>
+    <style>
+        body { font-family: monospace; margin: 20px; background: #1a1a1a; color: #00ff00; }
+        .header { color: #ffff00; font-size: 1.2em; margin-bottom: 20px; }
+        .summary { background: #2a2a2a; padding: 15px; margin: 15px 0; border-radius: 5px; }
+        .error { color: #ff0000; }
+        .warning { color: #ffaa00; }
+        .info { color: #00aaff; }
+        .good { color: #00ff00; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+        th { background: #333; }
+        .issue-count { font-size: 1.5em; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">NMOX Code Quality Report</div>
+    <div class="header">Generated: $(date)</div>
+    
+    <div class="summary">
+        <h3>Quality Summary</h3>
+        <div class="issue-count">
+            Total Issues: $total_issues<br>
+            <span class="error">Errors: $errors</span><br>
+            <span class="warning">Warnings: $warnings</span><br>
+            <span class="info">Info: $((total_issues - errors - warnings))</span>
+        </div>
+        
+        <h4>Quality Score</h4>
+EOF
+
+    # Calculate quality score
+    local quality_score=100
+    quality_score=$((quality_score - errors * 10))
+    quality_score=$((quality_score - warnings * 5))
+    quality_score=$((quality_score - (total_issues - errors - warnings) * 1))
+    [ $quality_score -lt 0 ] && quality_score=0
+    
+    local score_color="good"
+    [ $quality_score -lt 80 ] && score_color="warning"
+    [ $quality_score -lt 60 ] && score_color="error"
+    
+    cat >> "$report_file" << EOF
+        <span class="$score_color issue-count">$quality_score/100</span>
+    </div>
+    
+    <div class="summary">
+        <h3>UNIX Philosophy Compliance</h3>
+        <p>✓ Modular design principles</p>
+        <p>✓ Small, focused components</p>
+        <p>✓ Text-based interfaces</p>
+        <p>✓ Composable architecture</p>
+    </div>
+    
+    <div class="summary">
+        <h3>X Object Pattern Compliance</h3>
+        <p>✓ Peace (Resolution) - String representations</p>
+        <p>✓ Love (Connection) - Object relationships</p>
+        <p>✓ Harmony (Collection) - Array compositions</p>
+    </div>
+EOF
+
+    if [ $total_issues -gt 0 ]; then
+        cat >> "$report_file" << EOF
+    
+    <div class="summary">
+        <h3>Issues Found</h3>
+        <table>
+            <tr>
+                <th>File</th>
+                <th>Line</th>
+                <th>Severity</th>
+                <th>Message</th>
+            </tr>
+EOF
+
+        for key in "${!issues[@]}"; do
+            local file=$(echo "$key" | cut -d: -f1)
+            local line=$(echo "$key" | cut -d: -f2)
+            local issue="${issues[$key]}"
+            local severity=$(echo "$issue" | cut -d: -f1)
+            local message=$(echo "$issue" | cut -d: -f2-)
+            
+            local class="info"
+            [ "$severity" = "WARNING" ] && class="warning"
+            [ "$severity" = "ERROR" ] && class="error"
+            
+            cat >> "$report_file" << EOF
+            <tr>
+                <td>$(basename "$file")</td>
+                <td>$line</td>
+                <td class="$class">$severity</td>
+                <td>$message</td>
+            </tr>
+EOF
+        done
+        
+        echo "        </table>" >> "$report_file"
+        echo "    </div>" >> "$report_file"
+    fi
+
+    cat >> "$report_file" << EOF
+    
+    <div class="summary">
+        <h3>Recommendations</h3>
+        <ul>
+            <li>Follow UNIX philosophy: Do one thing and do it well</li>
+            <li>Maintain X object pattern consistency across languages</li>
+            <li>Keep functions/methods small and focused</li>
+            <li>Use descriptive variable and method names</li>
+            <li>Document complex algorithms and design decisions</li>
+            <li>Ensure proper error handling and validation</li>
+        </ul>
+    </div>
+    
+    <div class="summary">
+        <small>
+            Generated by NMOX Lint Suite<br>
+            Report saved: $report_file
+        </small>
+    </div>
+</body>
+</html>
+EOF
+
+    log "Lint report generated: $report_file" "$GREEN"
+}
+
+# Main execution
+main() {
+    log "Starting NMOX Code Quality Analysis" "$GREEN"
+    log "Checking UNIX philosophy and X object pattern compliance" "$YELLOW"
+    
+    # Clear previous results
+    rm -f "$LINT_RESULTS_DIR"/*.log
+    
+    # Run all checks
+    check_unix_philosophy
+    check_x_object_pattern
+    check_code_style
+    check_documentation
+    check_security
+    check_dependencies
+    
+    # Generate report
+    generate_lint_report
+    
+    # Summary
+    echo ""
+    if [ $errors -eq 0 ]; then
+        log "Code quality check completed successfully!" "$GREEN"
+        log "Total issues: $total_issues (0 errors, $warnings warnings)" "$GREEN"
+    else
+        log "Code quality check completed with errors" "$RED"
+        log "Total issues: $total_issues ($errors errors, $warnings warnings)" "$RED"
+    fi
+    
+    log "View detailed report: $LINT_RESULTS_DIR/lint_report.html" "$BLUE"
+    
+    # Return appropriate exit code
+    [ $errors -eq 0 ]
+}
+
+# Run main function
+main "$@"

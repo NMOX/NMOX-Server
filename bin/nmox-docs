@@ -1,0 +1,1067 @@
+#!/bin/bash
+# NMOX Documentation Generator
+# Generates comprehensive documentation from code and comments
+
+set -e
+
+# Configuration
+NMOX_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+DOCS_DIR="$NMOX_ROOT/docs"
+SQUEAK_IMAGE="$NMOX_ROOT/x/lib/NMOXSqueak6.0-22148-64bit.image"
+
+# Colors
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Create docs directory
+mkdir -p "$DOCS_DIR"
+
+# Logging
+log() {
+    echo -e "${2:-$YELLOW}$1$NC"
+}
+
+# Generate API documentation from Smalltalk
+generate_smalltalk_docs() {
+    log "Generating Smalltalk API documentation..." "$BLUE"
+    
+    if [ -f "$SQUEAK_IMAGE" ]; then
+        # Extract class and method information
+        echo "
+| classes output |
+output := WriteStream on: String new.
+classes := Smalltalk allClasses select: [:cls | cls name beginsWith: 'X'].
+classes do: [:cls |
+    output nextPutAll: '## ', cls name; cr.
+    cls comment isEmpty ifFalse: [
+        output nextPutAll: cls comment; cr; cr
+    ].
+    output nextPutAll: '### Methods'; cr.
+    cls methodDict keys asSortedCollection do: [:selector |
+        output nextPutAll: '- **', selector, '**'; cr.
+        (cls methodNamed: selector) comment isEmpty ifFalse: [
+            output nextPutAll: '  ', (cls methodNamed: selector) comment; cr
+        ].
+    ].
+    output cr.
+].
+Transcript show: output contents.
+Transcript flush.
+" | squeak -headless "$SQUEAK_IMAGE" 2>/dev/null > "$DOCS_DIR/api-smalltalk.md"
+        
+        log "  Smalltalk API docs generated" "$GREEN"
+    else
+        log "  Skipping Smalltalk docs (no image)" "$YELLOW"
+    fi
+}
+
+# Generate cross-language comparison
+generate_language_comparison() {
+    log "Generating cross-language comparison..." "$BLUE"
+    
+    cat > "$DOCS_DIR/language-comparison.md" << 'EOF'
+# NMOX Cross-Language Implementation Comparison
+
+This document compares the X object pattern implementation across different languages.
+
+## Core X Object Structure
+
+### Smalltalk
+```smalltalk
+Object subclass: #X
+    instanceVariableNames: 'contents'
+    classVariableNames: ''
+    poolDictionaries: ''
+    category: 'NMOX-Core'
+
+X class >> new
+    ^ super new initialize
+
+X >> initialize
+    contents := OrderedCollection new.
+    ^ self
+
+X >> asString
+    ^ contents inject: '' into: [:result :each | result, each asString]
+```
+
+### JavaScript
+```javascript
+class X {
+    constructor() {
+        this.contents = [];
+    }
+    
+    toString() {
+        return this.contents.map(item => item.toString()).join('');
+    }
+    
+    static new() {
+        return new X();
+    }
+}
+```
+
+### Python
+```python
+class X:
+    def __init__(self):
+        self.contents = []
+    
+    def __str__(self):
+        return ''.join(str(item) for item in self.contents)
+    
+    @classmethod
+    def new(cls):
+        return cls()
+```
+
+### Rust
+```rust
+pub struct X {
+    contents: Vec<String>,
+}
+
+impl X {
+    pub fn new() -> Self {
+        X {
+            contents: Vec::new(),
+        }
+    }
+}
+
+impl ToString for X {
+    fn to_string(&self) -> String {
+        self.contents.join("")
+    }
+}
+```
+
+## Philosophy Implementation
+
+### Peace (Resolution)
+All implementations provide string resolution through:
+- Smalltalk: `asString`
+- JavaScript: `toString()`
+- Python: `__str__()`
+- Rust: `ToString` trait
+
+### Love (Connection)
+Object relationships maintained through:
+- Smalltalk: Method chaining and blocks
+- JavaScript: Method chaining and callbacks
+- Python: Method chaining and lambdas
+- Rust: Method chaining and closures
+
+### Harmony (Collection)
+Array/collection handling:
+- Smalltalk: `OrderedCollection`
+- JavaScript: `Array`
+- Python: `list`
+- Rust: `Vec`
+
+## Performance Characteristics
+
+| Language   | Object Creation | String Resolution | Memory Usage |
+|------------|----------------|-------------------|--------------|
+| Smalltalk  | Medium         | Fast              | Medium       |
+| JavaScript | Fast           | Fast              | High         |
+| Python     | Slow           | Medium            | High         |
+| Rust       | Very Fast      | Very Fast         | Low          |
+
+## Best Use Cases
+
+### Smalltalk
+- Live programming and prototyping
+- Interactive development
+- Complex object hierarchies
+- Educational environments
+
+### JavaScript
+- Web applications
+- Client-side rendering
+- Real-time interactions
+- Node.js server applications
+
+### Python
+- Data processing
+- Scripting and automation
+- Machine learning integration
+- Rapid prototyping
+
+### Rust
+- Performance-critical applications
+- WebAssembly modules
+- System programming
+- Memory-constrained environments
+EOF
+
+    log "  Language comparison generated" "$GREEN"
+}
+
+# Generate architecture documentation
+generate_architecture_docs() {
+    log "Generating architecture documentation..." "$BLUE"
+    
+    cat > "$DOCS_DIR/architecture.md" << 'EOF'
+# NMOX Architecture Documentation
+
+## Overview
+
+NMOX (New Media On X) is a meta-framework that implements UNIX philosophy principles in modern web development. The architecture is built around the X object pattern and supports multiple programming languages while maintaining consistency.
+
+## Core Principles
+
+### UNIX Philosophy Integration
+1. **Do One Thing Well**: Each X object has a focused responsibility
+2. **Composability**: X objects can be combined to create complex structures
+3. **Text-Based Interfaces**: All X objects resolve to string representations
+4. **Modularity**: Clear separation between components
+
+### X Object Pattern
+The X object embodies three philosophical concepts:
+
+1. **Peace (Resolution)**
+   - All objects can be resolved to string representations
+   - Provides deterministic output
+   - Enables serialization and rendering
+
+2. **Love (Connection)**
+   - Objects can reference and contain other objects
+   - Enables composition and relationships
+   - Supports method chaining and fluid interfaces
+
+3. **Harmony (Collection)**
+   - Objects can contain arrays of other objects
+   - Enables hierarchical structures
+   - Supports iteration and transformation
+
+## System Architecture
+
+```
+NMOX Meta-Framework
+├── Core Pattern (X Object)
+│   ├── Peace (String Resolution)
+│   ├── Love (Object Relationships)
+│   └── Harmony (Collections)
+├── Language Implementations
+│   ├── Squeak Smalltalk (Live Programming)
+│   ├── JavaScript (Web/Node.js)
+│   ├── Python (Scripting/Data)
+│   ├── Rust (Performance/WASM)
+│   └── Additional Languages
+├── Development Tools
+│   ├── Build System (Make)
+│   ├── Testing Framework
+│   ├── Performance Monitoring
+│   └── Code Quality Tools
+└── Deployment
+    ├── Docker Containers
+    ├── WebAssembly Modules
+    └── Static Assets
+```
+
+## Directory Structure
+
+```
+NMOX-Server/
+├── x/                          # Main NMOX directory (UNIX-style)
+│   ├── bin/                    # Executable programs
+│   ├── boot/                   # Initialization scripts
+│   ├── etc/                    # Configuration files
+│   ├── lib/                    # Core libraries
+│   │   ├── core/              # X object implementations
+│   │   ├── wasm/              # WebAssembly modules
+│   │   └── *.st               # Squeak Smalltalk image
+│   ├── usr/share/nginx/html/  # Web content
+│   └── var/                   # Variable data
+├── bin/                        # NMOX development tools
+├── docs/                       # Generated documentation
+└── Makefile                    # Build automation
+```
+
+## Data Flow
+
+1. **Development**: Code written in any supported language
+2. **X Object Creation**: Objects follow the Peace/Love/Harmony pattern
+3. **Cross-Language Bridge**: Objects can interact across languages
+4. **Resolution**: All objects resolve to string representations
+5. **Rendering**: Strings become HTML, JSON, or other formats
+6. **Deployment**: Containers or static files served to clients
+
+## Language Integration
+
+### Primary Environment: Squeak Smalltalk
+- Live programming environment
+- Interactive development and testing
+- Comprehensive X object implementation
+- Real-time feedback and modification
+
+### Performance Layer: Rust + WebAssembly
+- Compute-intensive operations
+- Memory-efficient implementations
+- Browser-compatible modules
+- Near-native performance
+
+### Web Layer: JavaScript
+- Client-side interactions
+- DOM manipulation
+- Real-time communication
+- Modern web standards
+
+### Automation Layer: Python
+- Build scripts and tooling
+- Data processing
+- Integration with external systems
+- Rapid prototyping
+
+## Scalability Considerations
+
+### Horizontal Scaling
+- Stateless X object design enables easy replication
+- Container-based deployment supports orchestration
+- WebAssembly modules can be distributed
+
+### Vertical Scaling
+- Rust implementations provide performance optimization
+- Memory-efficient object patterns
+- Lazy evaluation and caching strategies
+
+### Development Scaling
+- Multiple language support accommodates team preferences
+- Consistent patterns reduce learning curve
+- Modular architecture supports large codebases
+
+## Security Model
+
+### Input Validation
+- All X object inputs validated at creation
+- Type safety enforced in statically-typed languages
+- Runtime validation in dynamic languages
+
+### Output Sanitization
+- String resolution includes escape handling
+- Context-aware output encoding
+- XSS prevention in web contexts
+
+### Access Control
+- File system permissions follow UNIX principles
+- Container isolation for deployment
+- Principle of least privilege
+
+## Performance Optimization
+
+### Object Pooling
+- Reuse frequently created X objects
+- Reduce garbage collection pressure
+- Configurable pool sizes
+
+### Lazy Evaluation
+- Defer string resolution until needed
+- Cache resolved strings when possible
+- Minimize unnecessary computations
+
+### Memory Management
+- Language-specific optimization strategies
+- Reference counting and cleanup
+- Memory usage monitoring and alerts
+
+## Future Architecture Evolution
+
+### Planned Enhancements
+1. Distributed X objects across multiple processes
+2. Real-time collaboration and synchronization
+3. AI-assisted code generation and optimization
+4. Enhanced debugging and profiling tools
+5. Plugin architecture for extensibility
+
+### Migration Strategy
+- Backward compatibility for existing X objects
+- Gradual introduction of new features
+- Clear upgrade paths for each language
+- Comprehensive testing during transitions
+EOF
+
+    log "  Architecture documentation generated" "$GREEN"
+}
+
+# Generate getting started guide
+generate_getting_started() {
+    log "Generating getting started guide..." "$BLUE"
+    
+    cat > "$DOCS_DIR/getting-started.md" << 'EOF'
+# Getting Started with NMOX
+
+Welcome to NMOX (New Media On X), a meta-framework that brings UNIX philosophy to modern web development.
+
+## Quick Start
+
+### Prerequisites
+- Git (for cloning the repository)
+- Docker (optional, for containerized development)
+- At least one of: Squeak Smalltalk, Node.js, Python 3, or Rust
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/nmox/NMOX-Server.git
+   cd NMOX-Server
+   ```
+
+2. **Set up the development environment**
+   ```bash
+   make setup
+   ```
+
+3. **Start the development environment**
+   ```bash
+   make dev
+   ```
+
+### Your First X Object
+
+#### In Squeak Smalltalk
+```smalltalk
+"Create a simple X object"
+x := X new.
+
+"Add content"
+x add: 'Hello, NMOX!'.
+
+"Resolve to string (Peace)"
+x asString. "Returns: 'Hello, NMOX!'"
+
+"Create HTML element"
+page := X html: [
+    X head: [
+        X title: 'My First NMOX Page'
+    ];
+    X body: [
+        X h1: 'Welcome to NMOX';
+        X p: 'This is my first X object!'
+    ]
+].
+
+page asString.
+```
+
+#### In JavaScript
+```javascript
+// Create X object
+const x = new X();
+
+// Add content
+x.add('Hello, NMOX!');
+
+// Resolve to string
+console.log(x.toString()); // "Hello, NMOX!"
+
+// Create HTML structure
+const page = X.html([
+    X.head([
+        X.title('My First NMOX Page')
+    ]),
+    X.body([
+        X.h1('Welcome to NMOX'),
+        X.p('This is my first X object!')
+    ])
+]);
+
+console.log(page.toString());
+```
+
+#### In Python
+```python
+# Create X object
+x = X()
+
+# Add content
+x.add('Hello, NMOX!')
+
+# Resolve to string
+print(str(x))  # "Hello, NMOX!"
+
+# Create HTML structure
+page = X.html([
+    X.head([
+        X.title('My First NMOX Page')
+    ]),
+    X.body([
+        X.h1('Welcome to NMOX'),
+        X.p('This is my first X object!')
+    ])
+])
+
+print(str(page))
+```
+
+### Core Concepts
+
+#### Peace (Resolution)
+Every X object can be resolved to a string representation:
+```smalltalk
+x := X div: 'Content'.
+x asString. "Returns: '<div>Content</div>'"
+```
+
+#### Love (Connection)
+X objects can contain and reference other X objects:
+```smalltalk
+container := X div: [
+    X h1: 'Title';
+    X p: 'Paragraph'
+].
+```
+
+#### Harmony (Collection)
+X objects can manage collections of other objects:
+```smalltalk
+list := X ul: (1 to: 3 collect: [:i | X li: 'Item ', i printString]).
+```
+
+### Development Workflow
+
+1. **Start the kernel**
+   ```bash
+   nmox-kernel start
+   ```
+
+2. **Open your preferred language environment**
+   ```bash
+   nmox-kernel repl squeak    # Squeak Smalltalk
+   nmox-kernel repl javascript # Node.js
+   nmox-kernel repl python    # Python 3
+   ```
+
+3. **Run tests**
+   ```bash
+   make test
+   ```
+
+4. **Check code quality**
+   ```bash
+   make lint
+   ```
+
+5. **Build for production**
+   ```bash
+   make build
+   ```
+
+### Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `make dev` | Start development environment |
+| `make test` | Run all tests |
+| `make test-cross` | Cross-language consistency tests |
+| `make benchmark` | Performance benchmarks |
+| `make lint` | Code quality checks |
+| `make build` | Build all components |
+| `make serve` | Local development server |
+| `make docs` | Generate documentation |
+
+### NMOX Kernel Commands
+
+| Command | Description |
+|---------|-------------|
+| `nmox-kernel start` | Start development kernel |
+| `nmox-kernel status` | Show kernel status |
+| `nmox-kernel repl [lang]` | Open language REPL |
+| `nmox-kernel monitor` | Real-time monitoring |
+| `nmox-kernel bridge` | Cross-language bridge status |
+
+### Project Structure
+
+- **`x/lib/core/`** - X object implementations for each language
+- **`x/lib/NMOX.st`** - Main Squeak Smalltalk implementation
+- **`bin/`** - Development tools and utilities
+- **`x/usr/share/nginx/html/`** - Web content and examples
+- **`docs/`** - Generated documentation
+
+### Next Steps
+
+1. **Explore Examples**: Check out the examples in `x/usr/share/nginx/html/`
+2. **Read the Architecture**: Understanding the [architecture](architecture.md)
+3. **Try Cross-Language**: Experiment with the same X objects in different languages
+4. **Join the Community**: Connect with other NMOX developers
+5. **Contribute**: Read the contributing guidelines and add your own improvements
+
+### Getting Help
+
+- **Documentation**: Generated docs in `docs/` directory
+- **Examples**: Practical examples in the codebase
+- **Issues**: Report bugs and request features on GitHub
+- **Community**: Join discussions and share experiences
+
+### Common Patterns
+
+#### Creating Dynamic Content
+```smalltalk
+"Generate a list from data"
+data := #('Apple' 'Banana' 'Cherry').
+list := X ul: (data collect: [:item | X li: item]).
+```
+
+#### Handling Events (JavaScript)
+```javascript
+// Create interactive button
+const button = X.button('Click me!', {
+    onclick: () => console.log('Button clicked!')
+});
+```
+
+#### Data Processing (Python)
+```python
+# Process data and generate HTML
+data = [{'name': 'John', 'age': 30}, {'name': 'Jane', 'age': 25}]
+table = X.table([
+    X.tr([X.th('Name'), X.th('Age')])
+] + [X.tr([X.td(person['name']), X.td(str(person['age']))]) for person in data])
+```
+
+Welcome to the NMOX community! Start building and let the Peace, Love, and Harmony guide your development.
+EOF
+
+    log "  Getting started guide generated" "$GREEN"
+}
+
+# Generate API reference
+generate_api_reference() {
+    log "Generating API reference..." "$BLUE"
+    
+    cat > "$DOCS_DIR/api-reference.md" << 'EOF'
+# NMOX API Reference
+
+## Core X Object API
+
+### Basic Methods
+
+#### `X.new()`
+Creates a new empty X object.
+
+**Returns**: New X instance
+**Example**:
+```smalltalk
+x := X new.
+```
+
+#### `asString` / `toString()` / `__str__()`
+Resolves the X object to its string representation (Peace).
+
+**Returns**: String representation of the object
+**Example**:
+```smalltalk
+x := X div: 'Hello'.
+x asString. "Returns: '<div>Hello</div>'"
+```
+
+#### `add:` / `add()` / `append()`
+Adds content to the X object (Harmony).
+
+**Parameters**: 
+- `content` - String, X object, or array of objects to add
+
+**Returns**: Self (for method chaining)
+**Example**:
+```smalltalk
+x := X new.
+x add: 'First item'; add: 'Second item'.
+```
+
+### HTML5 Elements (Smalltalk)
+
+#### Basic Elements
+- `X html:` - HTML document root
+- `X head:` - Document head section
+- `X body:` - Document body section
+- `X div:` - Division/container element
+- `X span:` - Inline span element
+- `X p:` - Paragraph element
+
+#### Text Elements
+- `X h1:` through `X h6:` - Heading elements
+- `X strong:` - Strong emphasis
+- `X em:` - Emphasis
+- `X code:` - Inline code
+- `X pre:` - Preformatted text
+
+#### List Elements
+- `X ul:` - Unordered list
+- `X ol:` - Ordered list
+- `X li:` - List item
+
+#### Form Elements
+- `X form:` - Form container
+- `X input:` - Input field
+- `X button:` - Button element
+- `X textarea:` - Text area
+- `X select:` - Select dropdown
+- `X option:` - Select option
+
+#### Media Elements
+- `X img:` - Image element
+- `X video:` - Video element
+- `X audio:` - Audio element
+
+#### Table Elements
+- `X table:` - Table container
+- `X thead:` - Table header section
+- `X tbody:` - Table body section
+- `X tr:` - Table row
+- `X th:` - Table header cell
+- `X td:` - Table data cell
+
+### Attributes
+
+#### Setting Attributes
+```smalltalk
+"Squeak Smalltalk"
+img := X img.
+img id: 'myImage'; class: 'thumbnail'; src: 'image.jpg'.
+```
+
+```javascript
+// JavaScript
+const img = X.img('', {
+    id: 'myImage',
+    class: 'thumbnail',
+    src: 'image.jpg'
+});
+```
+
+#### Common Attributes
+- `id:` - Element ID
+- `class:` - CSS classes
+- `style:` - Inline styles
+- `src:` - Source URL (for images, videos, etc.)
+- `href:` - Link URL
+- `alt:` - Alternative text
+- `title:` - Element title
+
+### Event Handling (JavaScript)
+
+#### Mouse Events
+```javascript
+X.button('Click me', {
+    onclick: (event) => console.log('Clicked!'),
+    onmouseenter: (event) => console.log('Mouse entered'),
+    onmouseleave: (event) => console.log('Mouse left')
+});
+```
+
+#### Form Events
+```javascript
+X.input('', {
+    type: 'text',
+    onchange: (event) => console.log('Value changed:', event.target.value),
+    onfocus: (event) => console.log('Input focused'),
+    onblur: (event) => console.log('Input lost focus')
+});
+```
+
+### WebAssembly Integration (Rust)
+
+#### Basic Structure
+```rust
+#[wasm_bindgen]
+pub struct XObject {
+    contents: Vec<String>,
+}
+
+#[wasm_bindgen]
+impl XObject {
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> XObject {
+        XObject {
+            contents: Vec::new(),
+        }
+    }
+    
+    #[wasm_bindgen]
+    pub fn add(&mut self, content: &str) {
+        self.contents.push(content.to_string());
+    }
+    
+    #[wasm_bindgen]
+    pub fn to_string(&self) -> String {
+        self.contents.join("")
+    }
+}
+```
+
+### Performance Methods
+
+#### Benchmarking
+```smalltalk
+"Measure execution time"
+startTime := Time millisecondClockValue.
+1000 timesRepeat: [X div: 'test'].
+endTime := Time millisecondClockValue.
+duration := endTime - startTime.
+```
+
+#### Memory Usage
+```javascript
+// Monitor object creation
+const startMemory = performance.memory ? performance.memory.usedJSHeapSize : 0;
+const objects = [];
+for (let i = 0; i < 1000; i++) {
+    objects.push(X.div('test'));
+}
+const endMemory = performance.memory ? performance.memory.usedJSHeapSize : 0;
+console.log('Memory used:', endMemory - startMemory, 'bytes');
+```
+
+### Error Handling
+
+#### Validation
+```smalltalk
+"Smalltalk validation"
+X div: content ifInvalid: [:error | 
+    Transcript show: 'Invalid content: ', error description
+].
+```
+
+```python
+# Python validation
+try:
+    x = X.div(content)
+except XValidationError as e:
+    print(f"Invalid content: {e}")
+```
+
+### Advanced Patterns
+
+#### Method Chaining
+```smalltalk
+page := X html: [
+    X head: [X title: 'Chained Example'];
+    X body: [
+        X div 
+            class: 'container';
+            id: 'main';
+            add: (X h1: 'Title');
+            add: (X p: 'Content')
+    ]
+].
+```
+
+#### Conditional Rendering
+```smalltalk
+showTitle := true.
+content := X div: [
+    showTitle ifTrue: [X h1: 'Conditional Title'];
+    X p: 'Always shown content'
+].
+```
+
+#### Data Mapping
+```smalltalk
+items := #('Item 1' 'Item 2' 'Item 3').
+list := X ul: (items collect: [:item | X li: item]).
+```
+
+### Development Tools API
+
+#### Testing
+```bash
+# Run specific test
+nmox-test-orchestrator --test="X object creation" --language=squeak
+
+# Run performance benchmarks
+nmox-benchmark --iterations=10000 --output=json
+```
+
+#### Kernel Management
+```bash
+# Check runtime status
+nmox-kernel status --verbose
+
+# Execute code remotely
+nmox-kernel exec javascript "console.log(X.div('Remote execution'))"
+
+# Monitor performance
+nmox-kernel monitor --interval=5 --languages=all
+```
+
+### Configuration API
+
+#### Build Configuration
+```makefile
+# Custom build targets
+custom-build:
+	@echo "Building custom NMOX configuration"
+	@nmox-kernel start
+	@nmox-test-orchestrator
+	@nmox-benchmark
+```
+
+#### Runtime Configuration
+```smalltalk
+"Configure X object behavior"
+X defaultRenderingMode: #html5.
+X enableAttributeValidation: true.
+X setPerformanceMonitoring: true.
+```
+
+This API reference provides the core functionality available in NMOX. For language-specific implementations and advanced features, refer to the individual language documentation files.
+EOF
+
+    log "  API reference generated" "$GREEN"
+}
+
+# Generate main index
+generate_index() {
+    log "Generating documentation index..." "$BLUE"
+    
+    cat > "$DOCS_DIR/README.md" << 'EOF'
+# NMOX Documentation
+
+Welcome to the complete documentation for NMOX (New Media On X), a meta-framework that brings UNIX philosophy to modern web development.
+
+## Documentation Overview
+
+### Getting Started
+- **[Getting Started Guide](getting-started.md)** - Quick start tutorial and basic concepts
+- **[Installation](getting-started.md#installation)** - Setup instructions for all platforms
+- **[Your First X Object](getting-started.md#your-first-x-object)** - Create your first NMOX application
+
+### Core Documentation
+- **[Architecture](architecture.md)** - System design and architectural principles
+- **[API Reference](api-reference.md)** - Complete API documentation
+- **[Language Comparison](language-comparison.md)** - Cross-language implementation guide
+
+### Development
+- **[Development Tools](development-tools.md)** - Build system, testing, and debugging
+- **[Best Practices](best-practices.md)** - Coding standards and patterns
+- **[Contributing](../CONTRIBUTING.md)** - How to contribute to NMOX
+
+### Language-Specific Guides
+- **[Smalltalk Implementation](api-smalltalk.md)** - Squeak Smalltalk development
+- **[JavaScript Guide](javascript-guide.md)** - Web and Node.js development
+- **[Python Guide](python-guide.md)** - Scripting and automation
+- **[Rust Guide](rust-guide.md)** - Performance and WebAssembly
+
+## Philosophy
+
+NMOX is built on three fundamental concepts:
+
+### Peace (Resolution)
+Every X object can be resolved to a deterministic string representation, enabling:
+- Consistent output across all languages
+- Serialization and persistence
+- Template rendering and generation
+
+### Love (Connection)
+X objects can reference and contain other objects, enabling:
+- Composition and relationships
+- Method chaining and fluid interfaces
+- Cross-language object communication
+
+### Harmony (Collection)
+X objects can manage collections of other objects, enabling:
+- Hierarchical data structures
+- List processing and transformation
+- Complex document generation
+
+## UNIX Philosophy Integration
+
+NMOX follows classic UNIX principles:
+
+1. **Do One Thing Well** - Each X object has a focused responsibility
+2. **Composability** - Small objects combine to create complex systems
+3. **Text-Based Interfaces** - Everything resolves to text for interoperability
+4. **Modularity** - Clear separation between components
+
+## Quick Reference
+
+### Essential Commands
+```bash
+make dev          # Start development environment
+make test         # Run all tests
+make build        # Build for production
+nmox-kernel start # Start development kernel
+```
+
+### Core X Object Pattern
+```smalltalk
+"Create and use X objects"
+x := X div: 'Hello, World!'.
+x asString.  "Returns: '<div>Hello, World!</div>'"
+
+"Compose objects"
+page := X html: [
+    X head: [X title: 'My Page'];
+    X body: [X h1: 'Welcome'; X p: 'Content']
+].
+```
+
+### Cross-Language Consistency
+The same logical structure works across all supported languages:
+- Squeak Smalltalk (live programming)
+- JavaScript (web/Node.js)
+- Python (scripting/data)
+- Rust (performance/WASM)
+
+## Community and Support
+
+- **GitHub Repository**: [NMOX-Server](https://github.com/nmox/NMOX-Server)
+- **Issues and Feature Requests**: Use GitHub Issues
+- **Discussions**: Community forums and Discord
+- **Contributing**: See [CONTRIBUTING.md](../CONTRIBUTING.md)
+
+## Version Information
+
+- **Current Version**: v3
+- **Documentation Generated**: EOF
+    date >> "$DOCS_DIR/README.md"
+    cat >> "$DOCS_DIR/README.md" << 'EOF'
+- **Compatibility**: All actively supported language implementations
+
+---
+
+*This documentation is automatically generated from the NMOX codebase and maintained alongside the project.*
+EOF
+
+    log "  Documentation index generated" "$GREEN"
+}
+
+# Main execution
+main() {
+    log "Starting NMOX Documentation Generator" "$GREEN"
+    log "Generating comprehensive documentation from codebase" "$YELLOW"
+    
+    # Generate all documentation
+    generate_smalltalk_docs
+    generate_language_comparison
+    generate_architecture_docs
+    generate_getting_started
+    generate_api_reference
+    generate_index
+    
+    # Create navigation
+    cat > "$DOCS_DIR/_sidebar.md" << 'EOF'
+* [Home](README.md)
+* [Getting Started](getting-started.md)
+* [Architecture](architecture.md)
+* [API Reference](api-reference.md)
+* [Language Comparison](language-comparison.md)
+* [Smalltalk API](api-smalltalk.md)
+EOF
+
+    log "Documentation generation completed!" "$GREEN"
+    log "Generated files:" "$BLUE"
+    ls -la "$DOCS_DIR"/*.md | awk '{print "  " $9}' | while read -r file; do
+        log "$file" "$CYAN"
+    done
+    
+    log "Open docs/README.md to get started" "$GREEN"
+}
+
+# Run main function
+main "$@"

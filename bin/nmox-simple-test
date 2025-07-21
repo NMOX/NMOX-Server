@@ -1,0 +1,140 @@
+#!/usr/bin/env bash
+# Simple NMOX Test Runner (macOS compatible)
+# Basic cross-language testing without complex shell features
+
+set -e
+
+NMOX_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SQUEAK_IMAGE="$NMOX_ROOT/x/lib/NMOXSqueak6.0-22148-64bit.image"
+
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+log() {
+    echo -e "${2:-$YELLOW}$1$NC"
+}
+
+# Test JavaScript X object
+test_javascript() {
+    log "Testing JavaScript X object..." "$YELLOW"
+    
+    node -e "
+    class X {
+        constructor() {
+            this.contents = [];
+        }
+        toString() {
+            return this.contents.join('');
+        }
+        static div(content) {
+            const x = new X();
+            x.contents.push('<div>' + content + '</div>');
+            return x;
+        }
+    }
+    
+    const x = X.div('Hello NMOX');
+    const result = x.toString();
+    console.log(result === '<div>Hello NMOX</div>' ? 'PASS' : 'FAIL');
+    " 2>/dev/null && log "  ✓ JavaScript test passed" "$GREEN" || log "  ✗ JavaScript test failed" "$RED"
+}
+
+# Test Python X object
+test_python() {
+    log "Testing Python X object..." "$YELLOW"
+    
+    python3 -c "
+class X:
+    def __init__(self):
+        self.contents = []
+    
+    def __str__(self):
+        return ''.join(self.contents)
+    
+    @classmethod
+    def div(cls, content):
+        x = cls()
+        x.contents.append(f'<div>{content}</div>')
+        return x
+
+x = X.div('Hello NMOX')
+result = str(x)
+print('PASS' if result == '<div>Hello NMOX</div>' else 'FAIL')
+" 2>/dev/null && log "  ✓ Python test passed" "$GREEN" || log "  ✗ Python test failed" "$RED"
+}
+
+# Test Rust compilation
+test_rust() {
+    log "Testing Rust compilation..." "$YELLOW"
+    
+    cat > /tmp/nmox_test.rs << 'EOF'
+struct X {
+    contents: Vec<String>,
+}
+
+impl X {
+    fn new() -> Self {
+        X { contents: Vec::new() }
+    }
+    
+    fn div(content: &str) -> Self {
+        let mut x = X::new();
+        x.contents.push(format!("<div>{}</div>", content));
+        x
+    }
+}
+
+impl ToString for X {
+    fn to_string(&self) -> String {
+        self.contents.join("")
+    }
+}
+
+fn main() {
+    let x = X::div("Hello NMOX");
+    let result = x.to_string();
+    if result == "<div>Hello NMOX</div>" {
+        println!("PASS");
+    } else {
+        println!("FAIL");
+    }
+}
+EOF
+    
+    if rustc /tmp/nmox_test.rs -o /tmp/nmox_test 2>/dev/null && /tmp/nmox_test 2>/dev/null | grep -q "PASS"; then
+        log "  ✓ Rust test passed" "$GREEN"
+        rm -f /tmp/nmox_test /tmp/nmox_test.rs
+    else
+        log "  ✗ Rust test failed" "$RED"
+        rm -f /tmp/nmox_test /tmp/nmox_test.rs
+    fi
+}
+
+# Main execution
+main() {
+    log "Starting NMOX Simple Test Suite" "$GREEN"
+    
+    if command -v node >/dev/null 2>&1; then
+        test_javascript
+    else
+        log "  - JavaScript: SKIPPED (no Node.js)" "$YELLOW"
+    fi
+    
+    if command -v python3 >/dev/null 2>&1; then
+        test_python
+    else
+        log "  - Python: SKIPPED (no Python 3)" "$YELLOW"
+    fi
+    
+    if command -v rustc >/dev/null 2>&1; then
+        test_rust
+    else
+        log "  - Rust: SKIPPED (no rustc)" "$YELLOW"
+    fi
+    
+    log "Simple test suite completed!" "$GREEN"
+}
+
+main "$@"

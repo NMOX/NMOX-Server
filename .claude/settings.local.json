@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(chmod:*)",
+      "Bash(make status:*)",
+      "Bash(bin/nmox-kernel:*)",
+      "Bash(make:*)",
+      "Bash(bin/nmox-test-orchestrator:*)",
+      "Bash(bin/nmox-simple-test:*)",
+      "Bash(bin/nmox-docs:*)",
+      "Bash(rm:*)"
+    ],
+    "deny": []
+  }
+}
