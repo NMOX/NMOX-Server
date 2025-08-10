@@ -1,0 +1,42 @@
+# Infrastructure Modernization Notes
+
+## Summary
+Complete infrastructure overhaul for NMOX Server v3, introducing modern DevOps practices while maintaining the project's unique philosophy.
+
+## Key Changes
+1. **Containerization**: Full Docker setup with multi-stage builds
+2. **Automation**: CI/CD pipeline via GitHub Actions
+3. **Tooling**: npm, Cargo, and Make integration
+4. **Testing**: Comprehensive test infrastructure
+5. **Development**: Enhanced DX with hot reload and VNC access
+
+## Migration Guide
+For existing users:
+1. Run `make setup` to initialize new environment
+2. Copy existing .env values to new .env file
+3. Run `make quickstart` for full setup
+4. Use `make dev` instead of old startup scripts
+
+## Breaking Changes
+- None for existing functionality
+- New directory requirements in x/lib/{rust,wasm}
+- Requires Node.js 20+ and Docker
+
+## Performance Impact
+- Reduced build times with Docker caching
+- Optimized WASM builds with proper profiles
+- Nginx caching for static assets
+
+## Security Improvements
+- Non-root Docker containers
+- Security headers in Nginx
+- Automated vulnerability scanning
+- Environment variable protection
+
+## Next Steps
+- Add Kubernetes manifests
+- Implement monitoring with Prometheus
+- Set up distributed tracing
+- Create Helm charts
+
+This modernization sets the foundation for scaling NMOX Server while preserving its UNIX philosophy and live programming capabilities.
