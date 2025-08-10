@@ -1,17 +1,50 @@
-# macOS
+# OS Files
 .DS_Store
 */.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Dependencies
+node_modules/
+.npm
+package-cache/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Rust/Cargo
+target/
+Cargo.lock
+**/*.rs.bk
+*.pdb
 
 # Build artifacts
-target/
 *.wasm
 *.o
 *.so
 *.dylib
+x/lib/wasm/pkg/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+.venv
 
 # Logs and debug files
+logs/
 *.log
 SqueakDebug.log
+x/var/log/*
+!x/var/log/.gitkeep
 
 # NMOX development tools state
 .nmox-*
@@ -20,12 +53,48 @@ SqueakDebug.log
 *.tmp
 *.bak
 *~
-.swp
+*.swp
+*.swo
+x/tmp/*
+!x/tmp/.gitkeep
 
 # IDE files
 .vscode/
 .idea/
+*.sublime-*
 
-# Package managers
-node_modules/
-package-cache/
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+x/var/db/*
+!x/var/db/.gitkeep
+
+# Cache
+.cache/
+x/var/cache/*
+!x/var/cache/.gitkeep
+
+# Squeak
+*.changes.bak
+*.image.bak
+
+# Certificates (except examples)
+*.pem
+*.key
+*.crt
+!*.example.*
+
+# Backups
+*.backup
+backup/

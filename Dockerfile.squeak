@@ -1,0 +1,78 @@
+# Squeak Smalltalk development environment with VNC access
+FROM ubuntu:22.04
+
+# Install dependencies and VNC server
+RUN apt-get update && apt-get install -y \
+    wget \
+    curl \
+    libgl1-mesa-glx \
+    libpulse0 \
+    libasound2 \
+    libcairo2 \
+    libpango-1.0-0 \
+    libssl3 \
+    x11vnc \
+    xvfb \
+    fluxbox \
+    novnc \
+    websockify \
+    supervisor \
+    && rm -rf /var/lib/apt/lists/*
+
+# Download and install Squeak
+RUN wget -q https://files.squeak.org/6.0/Squeak6.0-22148-64bit/Squeak6.0-22148-64bit-Linux-x64.tar.gz \
+    && tar -xzf Squeak6.0-22148-64bit-Linux-x64.tar.gz -C /opt \
+    && rm Squeak6.0-22148-64bit-Linux-x64.tar.gz \
+    && mv /opt/Squeak6.0-22148-64bit-Linux-x64 /opt/squeak
+
+# Set up VNC environment
+ENV DISPLAY=:0
+ENV DISPLAY_WIDTH=1280
+ENV DISPLAY_HEIGHT=720
+
+# Create supervisor config
+RUN mkdir -p /etc/supervisor/conf.d
+COPY <<EOF /etc/supervisor/conf.d/supervisord.conf
+[supervisord]
+nodaemon=true
+
+[program:xvfb]
+command=/usr/bin/Xvfb :0 -screen 0 %(ENV_DISPLAY_WIDTH)sx%(ENV_DISPLAY_HEIGHT)sx24
+autorestart=true
+priority=100
+
+[program:fluxbox]
+command=/usr/bin/fluxbox
+environment=DISPLAY=":0"
+autorestart=true
+priority=200
+
+[program:x11vnc]
+command=/usr/bin/x11vnc -display :0 -nopw -listen 0.0.0.0 -forever -xkb -shared
+autorestart=true
+priority=300
+
+[program:novnc]
+command=/usr/share/novnc/utils/launch.sh --vnc localhost:5900 --listen 8081
+autorestart=true
+priority=400
+EOF
+
+# Create startup script
+COPY <<'EOF' /start-squeak.sh
+#!/bin/bash
+sleep 5
+cd /opt/squeak
+DISPLAY=:0 ./squeak /opt/squeak/shared/NMOXSqueak6.0-22148-64bit.image
+EOF
+
+RUN chmod +x /start-squeak.sh
+
+# Expose VNC ports
+EXPOSE 5900 8081
+
+# Volume for Squeak image
+VOLUME /opt/squeak/shared
+
+# Start supervisor
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./x/srv:/srv
+      - ./x/var/www:/var/www
+      - ./x/var/log/nginx:/var/log/nginx
+    depends_on:
+      - app
+    networks:
+      - nmox-network
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "9009:9009"  # Squeak debug port
+    volumes:
+      - ./x/lib:/opt/nmox/lib
+      - ./x/srv:/srv
+      - ./x/var:/var
+      - ./x/tmp:/tmp
+      - ./bin:/opt/nmox/bin
+    environment:
+      - NMOX_ENV=development
+      - SQUEAK_IMAGE=/opt/nmox/lib/NMOXSqueak6.0-22148-64bit.image
+      - RUST_LOG=info
+    networks:
+      - nmox-network
+    restart: unless-stopped
+    command: ["/opt/nmox/bin/nmox-kernel", "start"]
+
+  # Optional: Squeak development environment
+  squeak-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.squeak
+    ports:
+      - "8081:8081"  # VNC port for Squeak GUI
+    volumes:
+      - ./x/lib:/opt/squeak
+    environment:
+      - DISPLAY=:0
+    networks:
+      - nmox-network
+    profiles:
+      - development
+
+  # Optional: PostgreSQL for data persistence
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=nmox
+      - POSTGRES_USER=nmox
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-nmox_dev_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./x/var/db:/docker-entrypoint-initdb.d
+    networks:
+      - nmox-network
+    profiles:
+      - with-database
+    restart: unless-stopped
+
+  # Optional: Redis for caching
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - nmox-network
+    profiles:
+      - with-cache
+    restart: unless-stopped
+
+networks:
+  nmox-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
